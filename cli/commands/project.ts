@@ -121,17 +121,28 @@ async function loadManifestAfterInstall(dest: string) {
   return loadManifest(dest)
 }
 
-/** daroms dev : serveur Expo avec QR (dev client par défaut, --go pour Expo Go, --web). */
+// modules dont le code natif n'existe pas dans Expo Go
+const NATIVE_ONLY = ['payments', 'push']
+
+/**
+ * daroms dev : serveur Expo et QR. Par défaut Expo Go (aperçu immédiat, rien à installer
+ * hormis l'app Expo Go) ; --dev-client pour un build de développement déjà installé.
+ */
 export async function dev(args: Args) {
   const root = appRoot()
-  const cmd = ['bunx', 'expo', 'start']
-  if (bool(args, 'go')) cmd.push('--go')
+  const devClient = bool(args, 'dev-client')
+  const cmd = ['bunx', 'expo', 'start', devClient ? '--dev-client' : '--go']
   if (bool(args, 'web')) cmd.push('--web')
   if (bool(args, 'android')) cmd.push('--android')
   if (bool(args, 'ios')) cmd.push('--ios')
   if (bool(args, 'tunnel')) cmd.push('--tunnel')
   if (bool(args, 'clear')) cmd.push('--clear')
   if (!existsSync(join(root, '.env'))) log.warn('.env absent : copier .env.example (Supabase désactivé en attendant)')
+  const native = Object.keys((await loadManifest(root)).modules).filter((m) => NATIVE_ONLY.includes(m))
+  if (!devClient && native.length) {
+    log.warn(`modules ${native.join(', ')} : limités dans Expo Go. Build de dev : bun daroms build development puis bun daroms dev --dev-client`)
+  }
+  if (!devClient) log.info("Téléphone : installer Expo Go, même Wi-Fi que l'ordinateur (sinon --tunnel), scanner le QR avec l'appareil photo.")
   await run(cmd, { cwd: root })
 }
 

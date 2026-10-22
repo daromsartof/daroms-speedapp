@@ -2,6 +2,8 @@
 
 | Symptôme | Cause probable | Action |
 |---|---|---|
+| iPhone : « aucune donnée utilisable » au scan du QR | QR de build de dev (`exp+<app>://`) sans build installé | `bun daroms dev` (Expo Go) ; build de dev : `bun daroms build development` puis `--dev-client` |
+| Le QR s'ouvre mais l'app ne charge pas | téléphone sur un autre réseau | même Wi-Fi, ou `bun daroms dev --tunnel` |
 | Écran blanc, erreur rouge | exception au rendu | `bun daroms shot /route` (message), `/daroms-fix` |
 | `Unable to resolve module` | paquet absent ou cache | `bunx expo install <paquet>` ; `bun daroms dev --clear` |
 | Module natif introuvable dans Expo Go | MMKV, RevenueCat, push | `bun daroms build development` (client de dev) |

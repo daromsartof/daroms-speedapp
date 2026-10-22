@@ -12,5 +12,5 @@ disable-model-invocation: true
    (bundle id par défaut `com.daroms.<slug>` ; `--bundle` pour un autre). Copier `app.spec.md` dans la nouvelle app.
 3. Dans l'app : `cp .env.example .env` ; demander à l'utilisateur l'URL et la clé publique Supabase (ne jamais lire `.env`), ou continuer sans backend.
 4. `bun daroms doctor --quick` : doit être vert.
-5. `bun daroms dev` (QR Expo ; `--go` pour Expo Go si aucun module natif) ou `bun daroms shot /` pour un contrôle sans téléphone.
+5. `bun daroms dev` (QR pour Expo Go, même Wi-Fi ou `--tunnel` ; `--dev-client` une fois un build de dev installé) ou `bun daroms shot /` pour un contrôle sans téléphone.
 6. **Stop** : donner le chemin de l'app et la commande de lancement.

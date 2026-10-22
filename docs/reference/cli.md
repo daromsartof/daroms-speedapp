@@ -5,7 +5,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `bun <cœur>/cli/daroms.ts <c
 | Commande | Rôle |
 |---|---|
 | `new <slug> [--name --variant blank|list-detail|tracker|ai-chat|social|shop --primary --accent --tone --radius --font --bundle --modules a,b --supabase ref --dir --core url --copy --link --no-git]` | crée une app complète |
-| `dev [--go --web --android --ios --tunnel --clear]` | serveur Expo et QR |
+| `dev [--dev-client --web --android --ios --tunnel --clear]` | serveur Expo et QR : Expo Go par défaut, build de dev avec `--dev-client` |
 | `doctor [--quick]` | Node, `.env`, manifest, i18n, règles, TypeScript, ESLint, expo-doctor |
 | `g screen <nom> [--tab --icon --title --title-en --route --force]` | écran complet (route, feature, i18n, test, manifest) |
 | `g feature <nom>` | feature sans route |

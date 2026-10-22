@@ -12,7 +12,7 @@ const lazy = <K extends string>(path: string, name: K) => async (args: Args) => 
 
 const COMMANDS: Record<string, Command> = {
   new: { describe: 'new <slug> [--name --variant --primary --accent --tone --radius --font --modules a,b --copy|--link]', run: lazy('./commands/project', 'newApp') },
-  dev: { describe: 'serveur Expo + QR [--go --web --android --ios --tunnel --clear]', run: lazy('./commands/project', 'dev') },
+  dev: { describe: 'serveur Expo + QR pour Expo Go [--dev-client --web --android --ios --tunnel --clear]', run: lazy('./commands/project', 'dev') },
   doctor: { describe: 'diagnostic complet (env, manifest, règles, types, lint, expo-doctor) [--quick]', run: lazy('./commands/project', 'doctor') },
   g: { describe: 'g screen|feature|table|module <nom> [options]', run: lazy('./commands/generate', 'generate') },
   icons: { describe: 'icons add <NomLucide...> : ajoute des icônes Lucide à l app', run: lazy('./commands/generate', 'icons') },
