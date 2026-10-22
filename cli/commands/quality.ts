@@ -28,13 +28,17 @@ async function ensureWebServer(root: string, port: number) {
   const hashFile = Bun.file(join(root, '.daroms', 'web.config-hash'))
   const hash = await configHash(root)
   const stale = (await hashFile.exists()) && (await hashFile.text()) !== hash
-  if ((await serverUp(port)) && !stale) return
-  if (stale) await stopWebServer(root, port)
-  log.step(`démarrage du serveur web Expo (port ${port}${stale ? ', cache vidé : manifest ou marque modifiés' : ''})`)
+  // un serveur sur ce port mais lancé depuis une autre app (pas de web.pid ici) est remplacé
+  const foreign = !(await Bun.file(join(root, '.daroms', 'web.pid')).exists())
+  const up = await serverUp(port)
+  if (up && !stale && !foreign) return
+  if (up) await stopWebServer(root, port)
+  // toujours --clear : le cache Metro est partagé entre projets et Expo y inline le manifest
+  log.step(`démarrage du serveur web Expo (port ${port}, cache vidé)`)
   mkdirSync(join(root, '.daroms'), { recursive: true })
   await Bun.write(hashFile, hash)
   const logFile = Bun.file(join(root, '.daroms', 'web-server.log'))
-  const server = Bun.spawn(['bunx', 'expo', 'start', '--web', '--port', String(port), ...(stale ? ['--clear'] : [])], {
+  const server = Bun.spawn(['bunx', 'expo', 'start', '--web', '--port', String(port), '--clear'], {
     cwd: root,
     env: { ...process.env, BROWSER: 'none', CI: '1' },
     stdout: logFile,
@@ -56,9 +60,11 @@ async function stopWebServer(root: string, port = 8099) {
   const pidFile = Bun.file(join(root, '.daroms', 'web.pid'))
   if (await pidFile.exists()) pids.add(Number(await pidFile.text()))
   if (has('lsof')) {
-    const { out } = await capture(['lsof', '-ti', `tcp:${port}`])
+    // seulement le processus en écoute (pas les connexions clientes, dont la nôtre)
+    const { out } = await capture(['lsof', '-ti', `tcp:${port}`, '-sTCP:LISTEN'])
     for (const line of out.split('\n')) if (/^\d+$/.test(line.trim())) pids.add(Number(line.trim()))
   }
+  pids.delete(process.pid)
   for (const pid of pids) {
     try {
       process.kill(pid, 'SIGTERM')
@@ -108,7 +114,14 @@ export async function shot(args: Args) {
   const port = Number(flag(args, 'port') ?? 8099)
   await ensureWebServer(root, port)
   const locale = flag(args, 'locale') ?? (await loadManifest(root)).defaultLocale
-  const storage = Object.fromEntries((flag(args, 'storage') ?? '').split(',').filter(Boolean).map((pair) => pair.split('=') as [string, string]))
+  const storage: Record<string, string> = Object.fromEntries((flag(args, 'storage') ?? '').split(',').filter(Boolean).map((pair) => pair.split('=') as [string, string]))
+  // --storage-file données.json : { "cle": valeur } (valeurs non textuelles sérialisées en JSON)
+  const storageFile = flag(args, 'storage-file')
+  if (storageFile) {
+    for (const [key, value] of Object.entries((await Bun.file(join(root, storageFile)).json()) as Record<string, unknown>)) {
+      storage[key] = typeof value === 'string' ? value : JSON.stringify(value)
+    }
+  }
   const report = await inspectPage({ url: `http://localhost:${port}`, route, dark, width: Number(flag(args, 'width') ?? 390), shotPath: file, forceShot: bool(args, 'capture'), locale, storage })
   printReport(report, report.shot)
   if (report.errors.length) process.exitCode = 1
@@ -118,11 +131,19 @@ export async function test(args: Args) {
   await run(['bunx', 'jest', '--passWithNoTests', ...args._], { cwd: appRoot() })
 }
 
-/** daroms e2e [flow] : Maestro sur l'appareil ou le simulateur connecté. */
+/** daroms e2e [flow] [--go] : Maestro sur l'appareil ou l'émulateur connecté (--go : app chargée dans Expo Go). */
 export async function e2e(args: Args) {
   const root = appRoot()
   if (!has('maestro')) fail('maestro introuvable : curl -fsSL "https://get.maestro.mobile.dev" | bash')
   const target = args._[0] ?? 'e2e'
   if (!existsSync(join(root, target))) fail(`flow introuvable : ${target}`)
-  await run(['maestro', 'test', target], { cwd: root, env: { MAESTRO_CLI_NO_ANALYTICS: '1' } })
+  const env: string[] = []
+  if (bool(args, 'go')) {
+    // Expo Go : Metro doit tourner (bun daroms dev --go) ; le port est redirigé vers l'appareil
+    if (has('adb')) await capture(['adb', 'reverse', 'tcp:8081', 'tcp:8081'])
+    env.push('-e', 'APP_ID=host.exp.exponent', '-e', 'APP_URL=exp://127.0.0.1:8081?__expo_disable_fab=1&__expo_disable_onboarding=1')
+  } else {
+    env.push('-e', `APP_ID=${(await loadManifest(root)).bundleId}`)
+  }
+  await run(['maestro', 'test', ...env, target], { cwd: root, env: { MAESTRO_CLI_NO_ANALYTICS: '1' } })
 }

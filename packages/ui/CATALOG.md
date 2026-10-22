@@ -14,7 +14,7 @@ Primitives de mise en page : `XStack`, `YStack`, `ScrollView`, `Separator`, `Spa
 | Dialog | open · onOpenChange · title · description · confirmLabel · cancelLabel · destructive · loading · onConfirm | `<Dialog open={confirm} onOpenChange={setConfirm} title={t('todo.deleteTitle')} destructive onConfirm={remove} />` |
 | EmptyState | icon · title · description · actionLabel + onAction (textes par défaut fournis) | `<EmptyState icon={ListChecks} title={t('todos.emptyTitle')} actionLabel={t('todos.add')} onAction={openSheet} />` |
 | ErrorState | error (AppError traduite automatiquement) · title · description · onRetry (bouton Réessayer) | `<ErrorState error={query.error} onRetry={() => query.refetch()} />` |
-| FormField | control · name · label · hint · + props Input (secureTextEntry, keyboardType...). Messages zod = clés i18n. | `<FormField control={form.control} name="email" label={t('auth.email')} keyboardType="email-address" />` |
+| FormField | control · name · label · hint · + props Input (secureTextEntry, keyboardType...). Messages zod = clés i18n. testID e2e : field-<name> | `<FormField control={form.control} name="email" label={t('auth.email')} keyboardType="email-address" />` |
 | Header | title · subtitle · back (true \| fn) · right · large | `<Header title={t('todo.title')} back right={<IconButton icon={Trash2} label={t('actions.delete')} onPress={remove} />} />` |
 | IconButton | icon (requis) · label (requis, a11y) · variant (défaut ghost) · size: sm\|md\|lg | `<IconButton icon={Settings} label={t('settings.title')} onPress={open} />` |
 | Image | source (uri ou require) · alt (requis) · ratio · rounded (défaut card) · contentFit · placeholder (blurhash) | `<Image source={product.image_url} alt={product.name} ratio={4 / 3} />` |

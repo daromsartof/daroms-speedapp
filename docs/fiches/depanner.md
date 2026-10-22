@@ -10,3 +10,5 @@
 | Manifest ignoré sur le web | cache Metro | `bun daroms shot` redémarre le serveur ; sinon `bun daroms dev --web --clear` |
 | Hook qui refuse une écriture | règle daroms | lire le message, corriger (pas de contournement) |
 | `.env` refusé | protection des secrets | lire `.env.example` ; demander les valeurs à l'humain |
+| Maestro : « driver did not start » ou gRPC UNAVAILABLE | émulateur très récent ou lent | `MAESTRO_DRIVER_STARTUP_TIMEOUT=240000` ; Maestro à jour ; émulateur API <= 36 |
+| Expo Go ne s'installe pas (`Fetching Expo Go` bloqué) | téléchargement lent | télécharger l'APK (adresse via `https://api.expo.dev/v2/versions`) puis `adb install` |

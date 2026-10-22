@@ -1,9 +1,17 @@
-# Flow principal (Maestro) : lancement, accueil visible, navigation de base.
-appId: __BUNDLE_ID__
+# Flow principal (Maestro). `bun daroms e2e` (build installé) ou `bun daroms e2e --go` (Expo Go).
+appId: ${APP_ID}
+env:
+  APP_ID: __BUNDLE_ID__
+  APP_URL: ''
 ---
 - launchApp:
     clearState: true
+- runFlow:
+    when:
+      true: ${APP_URL}
+    commands:
+      - openLink: ${APP_URL}
 - extendedWaitUntil:
-    visible: "Bienvenue|Welcome"
-    timeout: 20000
+    visible: 'Bienvenue|Welcome'
+    timeout: 60000
 - takeScreenshot: e2e/screens/home

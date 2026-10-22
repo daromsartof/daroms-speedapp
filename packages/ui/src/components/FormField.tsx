@@ -6,8 +6,9 @@ import { Label, YStack } from 'tamagui'
 import { Input, type InputProps } from './Input'
 import { Caption } from './Text'
 
-export type FormFieldProps<T extends FieldValues> = Omit<InputProps, 'value' | 'onChangeText' | 'onBlur' | 'invalid'> & {
-  control: Control<T>
+export type FormFieldProps<T extends FieldValues, TOutput extends FieldValues = T> = Omit<InputProps, 'value' | 'onChangeText' | 'onBlur' | 'invalid'> & {
+  /** Contrôle react-hook-form ; la sortie peut être transformée par zod (texte -> nombre). */
+  control: Control<T, unknown, TOutput>
   name: Path<T>
   label: string
   hint?: string
@@ -15,10 +16,10 @@ export type FormFieldProps<T extends FieldValues> = Omit<InputProps, 'value' | '
 
 /**
  * @catalog FormField
- * @props control · name · label · hint · + props Input (secureTextEntry, keyboardType...). Messages zod = clés i18n.
+ * @props control · name · label · hint · + props Input (secureTextEntry, keyboardType...). Messages zod = clés i18n. testID e2e : field-<name>
  * @example <FormField control={form.control} name="email" label={t('auth.email')} keyboardType="email-address" />
  */
-export function FormField<T extends FieldValues>({ control, name, label, hint, ...input }: FormFieldProps<T>) {
+export function FormField<T extends FieldValues, TOutput extends FieldValues = T>({ control, name, label, hint, ...input }: FormFieldProps<T, TOutput>) {
   const { field, fieldState } = useController({ control, name })
   const translate = useTranslateKey()
   const id = useId()
@@ -34,6 +35,7 @@ export function FormField<T extends FieldValues>({ control, name, label, hint, .
         onChangeText={field.onChange}
         onBlur={field.onBlur}
         invalid={Boolean(error)}
+        testID={`field-${name}`}
         {...input}
       />
       {error ? <Caption tone="danger">{translate(error)}</Caption> : hint ? <Caption>{hint}</Caption> : null}
