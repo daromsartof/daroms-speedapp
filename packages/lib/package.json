@@ -13,7 +13,8 @@
     "./format": "./src/format.ts",
     "./zod": "./src/zod.ts",
     "./manifest": "./src/manifest/index.ts",
-    "./manifest-schema": "./src/manifest/schema.ts"
+    "./manifest-schema": "./src/manifest/schema.ts",
+    "./id": "./src/id.ts"
   },
   "peerDependencies": {
     "expo-constants": "*",
