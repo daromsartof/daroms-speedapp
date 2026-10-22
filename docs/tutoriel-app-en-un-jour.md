@@ -6,7 +6,7 @@ Objectif : partir d'une idée le matin et installer l'app sur un téléphone le 
 
 - Node >= 22.18, Bun >= 1.3, Python 3, Git ; Android Studio (émulateur) ou Xcode (simulateur) facultatifs.
 - Comptes : Expo (EAS), Supabase ; Apple Developer et Google Play pour publier.
-- Le cœur : `git clone https://github.com/daromsartof/Daroms-Speed-App-.git daroms-speed-app && cd daroms-speed-app && bun install`.
+- Le cœur : `git clone https://github.com/daromsartof/Daroms-Speed-App.git daroms-speed-app && cd daroms-speed-app && bun install`.
 - Commande globale facultative : `bun link` dans le cœur, puis `daroms` partout.
 
 ## Matin : cadrer et créer (1 h)

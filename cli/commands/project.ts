@@ -12,7 +12,7 @@ import { regenerateRouteTypes } from '../lib/routes'
 import { generateAssets } from './assets'
 import { syncAi } from './ai'
 
-const DEFAULT_CORE_URL = 'https://github.com/daromsartof/Daroms-Speed-App-.git'
+const DEFAULT_CORE_URL = 'https://github.com/daromsartof/Daroms-Speed-App.git'
 const CORE_SKIP = /^(node_modules|\.git|\.daroms|coverage)(\/|$)|\/node_modules(\/|$)/
 
 type VariantScreen = { name: string; tab?: boolean; icon?: string; title?: string; titleEn?: string }
