@@ -1,0 +1,12 @@
+# Dépanner
+
+| Symptôme | Cause probable | Action |
+|---|---|---|
+| Écran blanc, erreur rouge | exception au rendu | `bun daroms shot /route` (message), `/daroms-fix` |
+| `Unable to resolve module` | paquet absent ou cache | `bunx expo install <paquet>` ; `bun daroms dev --clear` |
+| Module natif introuvable dans Expo Go | MMKV, RevenueCat, push | `bun daroms build development` (client de dev) |
+| Erreur de type sur une route | types de routes périmés | `bun daroms doctor` (les régénère) |
+| Données vides alors que la table est remplie | RLS | vérifier les politiques et `auth.uid()` ; utilisateur connecté ? |
+| Manifest ignoré sur le web | cache Metro | `bun daroms shot` redémarre le serveur ; sinon `bun daroms dev --web --clear` |
+| Hook qui refuse une écriture | règle daroms | lire le message, corriger (pas de contournement) |
+| `.env` refusé | protection des secrets | lire `.env.example` ; demander les valeurs à l'humain |

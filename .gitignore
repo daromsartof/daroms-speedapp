@@ -1,0 +1,12 @@
+node_modules/
+.expo/
+dist/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+!.env.example
+.daroms/
+coverage/
+_ai/hooks/__pycache__/
+_ai/hooks/tests/__pycache__/

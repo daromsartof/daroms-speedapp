@@ -1,0 +1,11 @@
+{
+  "title": "{{Name}}",
+  "description": "{{description}}",
+  "dependencies": [],
+  "requires": [],
+  "routes": [],
+  "tabs": [],
+  "env": [],
+  "migrations": [],
+  "defaultConfig": {}
+}

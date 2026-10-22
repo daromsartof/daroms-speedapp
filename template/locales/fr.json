@@ -1,0 +1,45 @@
+{
+  "tabs": {
+    "home": "Accueil"
+  },
+  "home": {
+    "title": "__APP_NAME__",
+    "welcome": "Bienvenue",
+    "intro": "Votre app est prête. Décrivez la suite à Claude, écran par écran.",
+    "kitchenSink": "Voir tous les composants"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "back": "Retour à l'accueil"
+  },
+  "dev": {
+    "kitchenSink": "Composants",
+    "light": "Clair",
+    "dark": "Sombre",
+    "actions": "Actions",
+    "display": "Affichage",
+    "feedback": "Retours",
+    "states": "États",
+    "primary": "Principal",
+    "secondary": "Secondaire",
+    "outline": "Contour",
+    "ghost": "Discret",
+    "danger": "Supprimer",
+    "like": "Aimer",
+    "settings": "Réglages",
+    "notify": "Notifier",
+    "toast": "Enregistré",
+    "toastError": "Erreur",
+    "placeholder": "Votre texte",
+    "person": "Ada Lovelace",
+    "caption": "Texte secondaire de démonstration",
+    "badge": "Actif",
+    "item": "Élément de liste",
+    "value": "Valeur",
+    "chip": "Filtre",
+    "tabA": "Tous",
+    "tabB": "Favoris",
+    "sheet": "Feuille",
+    "dialog": "Dialogue"
+  }
+}

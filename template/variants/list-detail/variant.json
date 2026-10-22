@@ -1,0 +1,29 @@
+{
+  "description": "Liste et détail : collection personnelle (notes, lieux, recettes) avec création en feuille",
+  "modules": {
+    "auth": {
+      "providers": [
+        "email",
+        "apple",
+        "google"
+      ],
+      "requireAuth": true
+    },
+    "settings": {}
+  },
+  "tables": [
+    {
+      "name": "items",
+      "fields": "title:text, notes:text?, favorite:bool=false"
+    }
+  ],
+  "screens": [
+    {
+      "name": "items",
+      "tab": true,
+      "icon": "List",
+      "title": "Éléments",
+      "titleEn": "Items"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "description": "Boutique : catalogue, panier, commandes (paiement à brancher)",
+  "modules": {
+    "auth": {
+      "providers": [
+        "email",
+        "apple",
+        "google"
+      ],
+      "requireAuth": false
+    },
+    "settings": {},
+    "analytics": {}
+  },
+  "tables": [
+    {
+      "name": "products",
+      "fields": "name:text, price:numeric, image_url:text?, description:text?"
+    },
+    {
+      "name": "orders",
+      "fields": "total:numeric, status:text=pending"
+    }
+  ],
+  "screens": [
+    {
+      "name": "products",
+      "tab": true,
+      "icon": "Store",
+      "title": "Boutique",
+      "titleEn": "Shop"
+    },
+    {
+      "name": "orders",
+      "tab": true,
+      "icon": "Package",
+      "title": "Commandes",
+      "titleEn": "Orders"
+    }
+  ],
+  "notes": "Catalogue en lecture publique et achats physiques : paiement par Stripe (hors achats intégrés) à ajouter en module."
+}

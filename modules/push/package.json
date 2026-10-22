@@ -1,0 +1,19 @@
+{
+  "name": "@daroms/module-push",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Notifications push Expo : permission, jeton stocké dans Supabase, liens profonds, envoi serveur",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/data": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "expo-device": "*",
+    "expo-notifications": "*"
+  }
+}

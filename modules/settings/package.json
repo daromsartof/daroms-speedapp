@@ -1,0 +1,15 @@
+{
+  "name": "@daroms/module-settings",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Écran Réglages : apparence, langue, haptique, sections des modules, à propos",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/lib": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  }
+}

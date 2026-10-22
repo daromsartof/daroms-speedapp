@@ -1,0 +1,22 @@
+{
+  "name": "@daroms/data",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Client Supabase, session auth, QueryClient TanStack, gestion d'erreurs",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@daroms/lib": "workspace:*"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": "^2.100.0",
+    "@tanstack/react-query": "^5.0.0",
+    "expo-network": "*",
+    "react": "*",
+    "react-native": "*",
+    "zod": "^4.0.0"
+  }
+}

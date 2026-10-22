@@ -1,0 +1,56 @@
+{
+  "title": "Onboarding",
+  "description": "Pages d'accueil au premier lancement (icône, titre, texte), affichées une fois",
+  "routes": [
+    {
+      "file": "app/onboarding.tsx",
+      "export": "OnboardingScreen"
+    }
+  ],
+  "defaultConfig": {
+    "version": 1,
+    "pages": [
+      {
+        "icon": "Sparkles",
+        "titleKey": "onboarding.page1Title",
+        "descriptionKey": "onboarding.page1Description"
+      },
+      {
+        "icon": "Zap",
+        "titleKey": "onboarding.page2Title",
+        "descriptionKey": "onboarding.page2Description"
+      },
+      {
+        "icon": "Heart",
+        "titleKey": "onboarding.page3Title",
+        "descriptionKey": "onboarding.page3Description"
+      }
+    ]
+  },
+  "appLocales": {
+    "onboarding.page1Title": {
+      "fr": "Bienvenue",
+      "en": "Welcome"
+    },
+    "onboarding.page1Description": {
+      "fr": "Tout ce qu'il faut, au même endroit.",
+      "en": "Everything you need, in one place."
+    },
+    "onboarding.page2Title": {
+      "fr": "Rapide",
+      "en": "Fast"
+    },
+    "onboarding.page2Description": {
+      "fr": "Quelques secondes suffisent pour commencer.",
+      "en": "Get started in seconds."
+    },
+    "onboarding.page3Title": {
+      "fr": "Pour vous",
+      "en": "Made for you"
+    },
+    "onboarding.page3Description": {
+      "fr": "Une expérience pensée pour votre quotidien.",
+      "en": "An experience built around your day."
+    }
+  }
+}

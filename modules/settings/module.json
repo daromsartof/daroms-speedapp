@@ -1,0 +1,7 @@
+{
+  "title": "Réglages",
+  "description": "Onglet Réglages : apparence, langue, haptique, compte, abonnement, notifications, à propos",
+  "routes": [{ "file": "app/(tabs)/settings.tsx", "export": "SettingsScreen" }],
+  "tabs": [{ "name": "settings", "icon": "Settings", "titleKey": "settings:title" }],
+  "defaultConfig": {}
+}

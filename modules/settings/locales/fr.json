@@ -1,0 +1,7 @@
+{
+  "title": "Réglages",
+  "appearance": { "section": "Apparence", "system": "Système", "light": "Clair", "dark": "Sombre" },
+  "preferences": { "section": "Préférences", "haptics": "Retour haptique", "language": "Langue" },
+  "languages": { "fr": "Français", "en": "English", "es": "Español", "de": "Deutsch", "it": "Italiano", "pt": "Português" },
+  "about": { "section": "À propos", "version": "Version", "privacy": "Confidentialité", "terms": "Conditions d'utilisation", "support": "Contacter le support" }
+}

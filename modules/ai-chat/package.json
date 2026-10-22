@@ -1,0 +1,16 @@
+{
+  "name": "@daroms/module-ai-chat",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Chat IA avec Claude : edge function en streaming (clé côté serveur), conversations stockées, écran de chat",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/data": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/lib": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  }
+}

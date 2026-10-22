@@ -1,0 +1,31 @@
+{
+  "description": "Réseau social léger : publications, profils, fil",
+  "modules": {
+    "auth": {
+      "providers": [
+        "email",
+        "apple",
+        "google"
+      ],
+      "requireAuth": true
+    },
+    "push": {},
+    "settings": {}
+  },
+  "tables": [
+    {
+      "name": "posts",
+      "fields": "body:text, image_url:text?"
+    }
+  ],
+  "screens": [
+    {
+      "name": "posts",
+      "tab": true,
+      "icon": "MessageCircle",
+      "title": "Fil",
+      "titleEn": "Feed"
+    }
+  ],
+  "notes": "Lecture publique des posts : ajouter une politique select to authenticated using (true) (voir daroms-supabase-advanced)."
+}

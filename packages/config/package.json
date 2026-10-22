@@ -1,0 +1,19 @@
+{
+  "name": "@daroms/config",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Configurations partagées : TypeScript strict, ESLint (règles daroms), Prettier, Jest",
+  "files": ["tsconfig.base.json", "eslint.js", "jest.js", "jest.setup.js", "mocks", "prettier.json"],
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./eslint": "./eslint.js",
+    "./jest": "./jest.js",
+    "./prettier": "./prettier.json"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "*",
+    "jest-expo": "*",
+    "typescript": "*"
+  }
+}

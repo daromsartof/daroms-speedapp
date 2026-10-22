@@ -1,0 +1,60 @@
+{
+  "actions": {
+    "retry": "Réessayer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "continue": "Continuer",
+    "skip": "Passer",
+    "done": "Terminer",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "restore": "Restaurer mes achats"
+  },
+  "states": {
+    "loading": "Chargement",
+    "emptyTitle": "Rien pour le moment",
+    "emptyDescription": "Les éléments apparaîtront ici.",
+    "errorTitle": "Une erreur est survenue",
+    "errorDescription": "Vérifiez votre connexion puis réessayez.",
+    "offline": "Vous êtes hors ligne"
+  },
+  "validation": {
+    "required": "Ce champ est obligatoire",
+    "email": "Adresse e-mail invalide",
+    "passwordMin": "8 caractères minimum",
+    "invalid": "Valeur invalide",
+    "url": "Lien invalide",
+    "date": "Date invalide",
+    "positive": "Doit être positif"
+  },
+  "errors": {
+    "network": "Connexion impossible. Vérifiez votre réseau.",
+    "unauthorized": "Session expirée, reconnectez-vous.",
+    "forbidden": "Action non autorisée.",
+    "notFound": "Élément introuvable.",
+    "conflict": "Cet élément existe déjà.",
+    "validation": "Certaines données sont invalides.",
+    "rateLimit": "Trop de tentatives, patientez un instant.",
+    "unknown": "Une erreur inattendue est survenue."
+  },
+  "paywall": {
+    "perPeriod": "{{price}} / {{period}}",
+    "month": "mois",
+    "year": "an",
+    "week": "semaine",
+    "lifetime": "à vie",
+    "trial": "{{days}} jours gratuits",
+    "legal": "Abonnement renouvelé automatiquement, résiliable à tout moment.",
+    "terms": "Conditions",
+    "privacy": "Confidentialité"
+  },
+  "a11y": {
+    "back": "Revenir en arrière",
+    "close": "Fermer",
+    "selected": "Sélectionné",
+    "progress": "Progression {{value}} pour cent"
+  }
+}

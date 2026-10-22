@@ -1,0 +1,40 @@
+{
+  "description": "Suivi d habitudes ou de progrès : entrées datées, progression, rappels",
+  "modules": {
+    "onboarding": {},
+    "auth": {
+      "providers": [
+        "email",
+        "apple",
+        "google"
+      ],
+      "requireAuth": true
+    },
+    "settings": {},
+    "push": {
+      "askOnLaunch": false
+    }
+  },
+  "tables": [
+    {
+      "name": "entries",
+      "fields": "label:text, value:numeric=1, done_on:date"
+    }
+  ],
+  "screens": [
+    {
+      "name": "entries",
+      "tab": true,
+      "icon": "Target",
+      "title": "Aujourd'hui",
+      "titleEn": "Today"
+    },
+    {
+      "name": "progress",
+      "tab": true,
+      "icon": "TrendingUp",
+      "title": "Progression",
+      "titleEn": "Progress"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Paiements",
+  "description": "Abonnements RevenueCat : paywall, statut Pro, restauration (paywall souple ou bloquant)",
+  "dependencies": ["react-native-purchases"],
+  "routes": [{ "file": "app/paywall.tsx", "export": "PaywallScreen" }],
+  "env": ["EXPO_PUBLIC_REVENUECAT_IOS_KEY", "EXPO_PUBLIC_REVENUECAT_ANDROID_KEY"],
+  "appLocales": {
+    "paywall.title": { "fr": "Passez à Pro", "en": "Go Pro" },
+    "paywall.subtitle": { "fr": "Débloquez toutes les fonctionnalités.", "en": "Unlock every feature." },
+    "paywall.feature1": { "fr": "Accès illimité", "en": "Unlimited access" },
+    "paywall.feature2": { "fr": "Sans publicité", "en": "No ads" },
+    "paywall.feature3": { "fr": "Nouveautés en avant-première", "en": "Early access to new features" },
+    "paywall.cta": { "fr": "Continuer", "en": "Continue" }
+  },
+  "defaultConfig": { "entitlement": "pro", "mode": "soft", "features": ["paywall.feature1", "paywall.feature2", "paywall.feature3"] }
+}

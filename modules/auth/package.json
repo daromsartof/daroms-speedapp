@@ -1,0 +1,30 @@
+{
+  "name": "@daroms/module-auth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Authentification Supabase : e-mail, Apple, Google ; gate de connexion ; profil ; suppression de compte",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/data": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/lib": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "expo-apple-authentication": "*",
+    "expo-crypto": "*",
+    "expo-linking": "*",
+    "expo-web-browser": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo-apple-authentication": {
+      "optional": true
+    },
+    "expo-crypto": {
+      "optional": true
+    }
+  }
+}

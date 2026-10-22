@@ -1,0 +1,19 @@
+{
+  "name": "@daroms/module-payments",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Abonnements et achats via RevenueCat : paywall, statut Pro, restauration, gate de paywall bloquant",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/data": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/lib": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "react-native-purchases": "^10.0.0"
+  }
+}

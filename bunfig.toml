@@ -1,0 +1,3 @@
+[install]
+# Metro et Expo fonctionnent au mieux avec un node_modules à plat.
+linker = "hoisted"

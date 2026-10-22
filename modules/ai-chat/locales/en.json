@@ -1,0 +1,10 @@
+{
+  "title": "Assistant",
+  "emptyTitle": "Ask a question",
+  "emptyDescription": "The assistant answers in seconds.",
+  "placeholder": "Your message",
+  "send": "Send",
+  "newChat": "New conversation",
+  "refused": "The assistant can't help with this request.",
+  "limit": "Daily limit reached, come back tomorrow."
+}

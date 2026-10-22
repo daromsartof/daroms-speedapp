@@ -1,0 +1,6 @@
+{
+  "title": "Analytique",
+  "description": "Événements et écrans vus, envoyés par lots dans Supabase (table analytics_events, écriture seule)",
+  "migrations": ["migrations/analytics_events.sql"],
+  "defaultConfig": { "sink": "supabase", "flushIntervalMs": 15000, "screens": true }
+}

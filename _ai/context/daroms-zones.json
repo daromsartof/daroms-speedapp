@@ -1,0 +1,237 @@
+{
+ "zones": [
+  {
+   "name": "marque et thème",
+   "keywords": [
+    "brand",
+    "theme",
+    "couleur",
+    "dark",
+    "sombre",
+    "palette",
+    "font"
+   ],
+   "paths": [
+    "brand.ts",
+    "tamagui.config.ts"
+   ],
+   "notes": "Changer brand.ts (5 valeurs) ; jamais de couleur en dur. /daroms-brand."
+  },
+  {
+   "name": "composants UI",
+   "keywords": [
+    "composant",
+    "bouton",
+    "button",
+    "card",
+    "carte",
+    "liste",
+    "list",
+    "sheet",
+    "dialog",
+    "toast"
+   ],
+   "paths": [
+    "core/packages/ui/CATALOG.md"
+   ],
+   "notes": "Lire CATALOG.md, pas les sources du cœur."
+  },
+  {
+   "name": "données Supabase",
+   "keywords": [
+    "database",
+    "supabase",
+    "rls",
+    "migration",
+    "requete",
+    "query",
+    "api"
+   ],
+   "paths": [
+    "supabase/migrations/",
+    "src/types/db.ts"
+   ],
+   "notes": "bun daroms g table ; RLS obligatoire ; accès dans features/x/api.ts."
+  },
+  {
+   "name": "textes et langues",
+   "keywords": [
+    "i18n",
+    "locales",
+    "traduction",
+    "texte"
+   ],
+   "paths": [
+    "locales/fr.json",
+    "locales/en.json"
+   ],
+   "notes": "Mêmes clés en FR et EN ; t('cle')."
+  },
+  {
+   "name": "navigation et onglets",
+   "keywords": [
+    "tabs",
+    "onglet",
+    "navigation",
+    "route",
+    "manifest"
+   ],
+   "paths": [
+    "app.manifest.ts",
+    "app/(tabs)/"
+   ],
+   "notes": "Onglets déclarés dans manifest.tabs ; routes minces."
+  },
+  {
+   "name": "icônes et assets",
+   "keywords": [
+    "icons",
+    "icon",
+    "splash",
+    "assets",
+    "logo"
+   ],
+   "paths": [
+    "assets/source/icon.svg",
+    "assets/"
+   ],
+   "notes": "bun daroms assets (icône, splash) ; bun daroms icons add (Lucide)."
+  },
+  {
+   "name": "publication",
+   "keywords": [
+    "build",
+    "eas",
+    "submit",
+    "store",
+    "testflight",
+    "ota",
+    "update",
+    "aso"
+   ],
+   "paths": [
+    "eas.json",
+    "app.manifest.ts"
+   ],
+   "notes": "/daroms-build, /daroms-submit, /daroms-store, /daroms-update."
+  },
+  {
+   "name": "tests",
+   "keywords": [
+    "test",
+    "tests",
+    "jest",
+    "maestro",
+    "e2e"
+   ],
+   "paths": [
+    "e2e/",
+    "src/features/"
+   ],
+   "notes": "bun daroms test ; flows Maestro dans e2e/."
+  },
+  {
+   "name": "auth",
+   "module": "auth",
+   "keywords": [
+    "auth",
+    "signin",
+    "signup",
+    "login",
+    "password",
+    "connexion",
+    "inscription",
+    "apple",
+    "google"
+   ],
+   "paths": [
+    "app/(auth)/",
+    "core/modules/auth/README.md"
+   ],
+   "notes": "Écrans du module auth (ne pas modifier core/) : config manifest.modules.auth, profil via useProfile()."
+  },
+  {
+   "name": "onboarding",
+   "module": "onboarding",
+   "keywords": [
+    "onboarding",
+    "bienvenue"
+   ],
+   "paths": [
+    "app.manifest.ts",
+    "locales/fr.json"
+   ],
+   "notes": "Pages dans manifest.modules.onboarding.pages ; textes onboarding.* dans locales."
+  },
+  {
+   "name": "réglages",
+   "module": "settings",
+   "keywords": [
+    "settings",
+    "reglages"
+   ],
+   "paths": [
+    "core/modules/settings/README.md"
+   ],
+   "notes": "Sections ajoutées par les modules via useSettings."
+  },
+  {
+   "name": "paiements",
+   "module": "payments",
+   "keywords": [
+    "payments",
+    "paywall",
+    "subscription",
+    "pro",
+    "abonnement"
+   ],
+   "paths": [
+    "core/modules/payments/README.md",
+    "app/paywall.tsx"
+   ],
+   "notes": "usePro(), <ProGate>, router.push('/paywall') ; config RevenueCat."
+  },
+  {
+   "name": "notifications",
+   "module": "push",
+   "keywords": [
+    "push",
+    "notifications"
+   ],
+   "paths": [
+    "core/modules/push/README.md",
+    "supabase/functions/send-push/"
+   ],
+   "notes": "Envoi serveur via la fonction send-push."
+  },
+  {
+   "name": "analytique",
+   "module": "analytics",
+   "keywords": [
+    "analytics",
+    "stats",
+    "evenement",
+    "tracking"
+   ],
+   "paths": [
+    "core/modules/analytics/README.md"
+   ],
+   "notes": "track('nom', props) depuis @daroms/module-analytics."
+  },
+  {
+   "name": "chat IA",
+   "module": "ai-chat",
+   "keywords": [
+    "chat",
+    "ai",
+    "assistant",
+    "claude"
+   ],
+   "paths": [
+    "core/modules/ai-chat/README.md",
+    "supabase/functions/ai-chat/"
+   ],
+   "notes": "Prompt système et modèle côté serveur (secrets Supabase)."
+  }
+ ]
+}

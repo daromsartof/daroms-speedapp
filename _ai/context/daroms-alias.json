@@ -1,0 +1,204 @@
+{
+ "profil": [
+  "profile",
+  "account",
+  "compte"
+ ],
+ "compte": [
+  "account",
+  "profile",
+  "auth"
+ ],
+ "reglages": [
+  "settings"
+ ],
+ "parametres": [
+  "settings"
+ ],
+ "accueil": [
+  "home",
+  "index"
+ ],
+ "connexion": [
+  "auth",
+  "signin",
+  "login"
+ ],
+ "inscription": [
+  "auth",
+  "signup"
+ ],
+ "deconnexion": [
+  "auth",
+  "signout"
+ ],
+ "motdepasse": [
+  "password",
+  "auth"
+ ],
+ "tache": [
+  "todo",
+  "todos",
+  "task",
+  "tasks"
+ ],
+ "taches": [
+  "todos",
+  "tasks"
+ ],
+ "panier": [
+  "cart"
+ ],
+ "commande": [
+  "order",
+  "orders"
+ ],
+ "commandes": [
+  "orders"
+ ],
+ "produit": [
+  "product",
+  "products"
+ ],
+ "produits": [
+  "products"
+ ],
+ "message": [
+  "chat",
+  "messages"
+ ],
+ "messages": [
+  "chat"
+ ],
+ "discussion": [
+  "chat"
+ ],
+ "assistant": [
+  "chat",
+  "ai"
+ ],
+ "ia": [
+  "ai",
+  "chat"
+ ],
+ "abonnement": [
+  "payments",
+  "paywall",
+  "subscription"
+ ],
+ "paiement": [
+  "payments",
+  "paywall"
+ ],
+ "achat": [
+  "payments",
+  "purchase"
+ ],
+ "notification": [
+  "push",
+  "notifications"
+ ],
+ "notifications": [
+  "push"
+ ],
+ "statistiques": [
+  "analytics",
+  "stats"
+ ],
+ "stats": [
+  "analytics"
+ ],
+ "theme": [
+  "brand",
+  "theme"
+ ],
+ "couleur": [
+  "brand",
+  "theme"
+ ],
+ "couleurs": [
+  "brand",
+  "theme"
+ ],
+ "marque": [
+  "brand"
+ ],
+ "police": [
+  "brand",
+  "font"
+ ],
+ "icone": [
+  "icons",
+  "assets"
+ ],
+ "icones": [
+  "icons"
+ ],
+ "traduction": [
+  "i18n",
+  "locales"
+ ],
+ "langue": [
+  "i18n",
+  "locales"
+ ],
+ "textes": [
+  "i18n",
+  "locales"
+ ],
+ "base": [
+  "database",
+  "supabase"
+ ],
+ "table": [
+  "database",
+  "supabase"
+ ],
+ "migration": [
+  "database",
+  "supabase"
+ ],
+ "ecran": [
+  "screen"
+ ],
+ "onglet": [
+  "tabs"
+ ],
+ "onglets": [
+  "tabs"
+ ],
+ "accueillir": [
+  "onboarding"
+ ],
+ "bienvenue": [
+  "onboarding"
+ ],
+ "store": [
+  "store",
+  "aso"
+ ],
+ "fiche": [
+  "store"
+ ],
+ "publication": [
+  "build",
+  "submit"
+ ],
+ "build": [
+  "build",
+  "eas"
+ ],
+ "favori": [
+  "favorites"
+ ],
+ "favoris": [
+  "favorites"
+ ],
+ "recherche": [
+  "search"
+ ],
+ "carte": [
+  "map",
+  "maps"
+ ]
+}

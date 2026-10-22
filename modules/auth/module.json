@@ -1,0 +1,17 @@
+{
+  "title": "Authentification",
+  "description": "Connexion e-mail, Apple et Google (Supabase Auth), profil, suppression de compte",
+  "dependencies": ["expo-apple-authentication", "expo-crypto"],
+  "requires": [],
+  "routes": [
+    { "file": "app/(auth)/_layout.tsx", "export": "AuthLayout" },
+    { "file": "app/(auth)/sign-in.tsx", "export": "SignInScreen" },
+    { "file": "app/(auth)/sign-up.tsx", "export": "SignUpScreen" },
+    { "file": "app/(auth)/forgot-password.tsx", "export": "ForgotPasswordScreen" }
+  ],
+  "tabs": [],
+  "env": [],
+  "migrations": ["migrations/profiles.sql"],
+  "functions": ["functions/delete-account"],
+  "defaultConfig": { "providers": ["email", "apple", "google"], "requireAuth": true }
+}

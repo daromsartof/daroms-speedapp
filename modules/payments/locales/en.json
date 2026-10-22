@@ -1,0 +1,13 @@
+{
+  "section": "Subscription",
+  "status": "Status",
+  "pro": "Pro",
+  "free": "Free",
+  "upgrade": "Upgrade to Pro",
+  "manage": "Manage subscription",
+  "restored": "Purchases restored",
+  "nothingToRestore": "No purchases to restore",
+  "unavailable": "Purchases are not available right now.",
+  "locked": "Pro feature",
+  "unlock": "Unlock"
+}

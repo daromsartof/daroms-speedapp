@@ -1,0 +1,21 @@
+{
+  "description": "Assistant IA : chat Claude en streaming, historique, abonnement Pro",
+  "modules": {
+    "onboarding": {},
+    "auth": {
+      "providers": [
+        "email",
+        "apple",
+        "google"
+      ],
+      "requireAuth": true
+    },
+    "ai-chat": {},
+    "payments": {
+      "mode": "soft"
+    },
+    "settings": {}
+  },
+  "tables": [],
+  "screens": []
+}

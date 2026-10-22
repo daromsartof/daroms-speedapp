@@ -1,0 +1,9 @@
+# Flow principal (Maestro) : lancement, accueil visible, navigation de base.
+appId: __BUNDLE_ID__
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Bienvenue|Welcome"
+    timeout: 20000
+- takeScreenshot: e2e/screens/home

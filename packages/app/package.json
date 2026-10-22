@@ -1,0 +1,35 @@
+{
+  "name": "@daroms/app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Assemblage d'une app : provider racine, système de modules, layouts racine et onglets pilotés par le manifest",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./expo-config": "./src/expo-config.ts",
+    "./testing": "./src/testing.tsx"
+  },
+  "dependencies": {
+    "@daroms/data": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/lib": "workspace:*",
+    "@daroms/theme": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "expo-font": "*",
+    "expo-router": "*",
+    "expo-splash-screen": "*",
+    "expo-status-bar": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-safe-area-context": "*",
+    "tamagui": "^3.1.2",
+    "zod": "^4.0.0",
+    "@tanstack/react-query": "^5.0.0",
+    "zustand": "^5.0.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Assistant",
+  "emptyTitle": "Posez une question",
+  "emptyDescription": "L'assistant répond en quelques secondes.",
+  "placeholder": "Votre message",
+  "send": "Envoyer",
+  "newChat": "Nouvelle conversation",
+  "refused": "L'assistant ne peut pas répondre à cette demande.",
+  "limit": "Limite quotidienne atteinte, revenez demain."
+}

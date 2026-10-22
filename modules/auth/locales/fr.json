@@ -1,0 +1,9 @@
+{
+  "signIn": { "title": "Connexion", "subtitle": "Heureux de vous revoir", "submit": "Se connecter", "noAccount": "Pas encore de compte ? Créer un compte", "forgot": "Mot de passe oublié ?" },
+  "signUp": { "title": "Créer un compte", "subtitle": "Quelques secondes suffisent", "submit": "Créer mon compte", "hasAccount": "Déjà un compte ? Se connecter", "checkEmail": "Vérifiez votre boîte mail pour confirmer votre compte." },
+  "forgot": { "title": "Mot de passe oublié", "subtitle": "Recevez un lien de réinitialisation", "submit": "Envoyer le lien", "sent": "Lien envoyé si un compte existe pour cet e-mail." },
+  "fields": { "email": "E-mail", "password": "Mot de passe", "name": "Prénom" },
+  "social": { "or": "ou", "google": "Continuer avec Google", "apple": "Continuer avec Apple" },
+  "account": { "section": "Compte", "signOut": "Se déconnecter", "delete": "Supprimer mon compte", "deleteTitle": "Supprimer le compte ?", "deleteDescription": "Toutes vos données seront effacées définitivement.", "deleted": "Compte supprimé" },
+  "errors": { "invalidCredentials": "E-mail ou mot de passe incorrect.", "cancelled": "Connexion annulée." }
+}

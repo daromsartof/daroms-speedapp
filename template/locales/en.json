@@ -1,0 +1,45 @@
+{
+  "tabs": {
+    "home": "Home"
+  },
+  "home": {
+    "title": "__APP_NAME__",
+    "welcome": "Welcome",
+    "intro": "Your app is ready. Describe what comes next to Claude, one screen at a time.",
+    "kitchenSink": "See all components"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "back": "Back to home"
+  },
+  "dev": {
+    "kitchenSink": "Components",
+    "light": "Light",
+    "dark": "Dark",
+    "actions": "Actions",
+    "display": "Display",
+    "feedback": "Feedback",
+    "states": "States",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "outline": "Outline",
+    "ghost": "Ghost",
+    "danger": "Delete",
+    "like": "Like",
+    "settings": "Settings",
+    "notify": "Notify",
+    "toast": "Saved",
+    "toastError": "Error",
+    "placeholder": "Your text",
+    "person": "Ada Lovelace",
+    "caption": "Sample secondary text",
+    "badge": "Active",
+    "item": "List item",
+    "value": "Value",
+    "chip": "Filter",
+    "tabA": "All",
+    "tabB": "Favorites",
+    "sheet": "Sheet",
+    "dialog": "Dialog"
+  }
+}

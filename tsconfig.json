@@ -1,0 +1,25 @@
+{
+  "extends": "./packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "bun"
+    ],
+    "paths": {}
+  },
+  "include": [
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "modules/**/*.ts",
+    "modules/**/*.tsx",
+    "cli/**/*.ts",
+    "generators/*.ts"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "template",
+    "generators/**/files",
+    "packages/config",
+    "modules/*/functions"
+  ]
+}

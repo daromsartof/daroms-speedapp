@@ -1,0 +1,60 @@
+{
+  "actions": {
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "continue": "Continue",
+    "skip": "Skip",
+    "done": "Done",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "restore": "Restore purchases"
+  },
+  "states": {
+    "loading": "Loading",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "Items will show up here.",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "Check your connection and try again.",
+    "offline": "You are offline"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email address",
+    "passwordMin": "At least 8 characters",
+    "invalid": "Invalid value",
+    "url": "Invalid link",
+    "date": "Invalid date",
+    "positive": "Must be positive"
+  },
+  "errors": {
+    "network": "Cannot connect. Check your network.",
+    "unauthorized": "Session expired, please sign in again.",
+    "forbidden": "Action not allowed.",
+    "notFound": "Item not found.",
+    "conflict": "This item already exists.",
+    "validation": "Some data is invalid.",
+    "rateLimit": "Too many attempts, please wait a moment.",
+    "unknown": "An unexpected error occurred."
+  },
+  "paywall": {
+    "perPeriod": "{{price}} / {{period}}",
+    "month": "month",
+    "year": "year",
+    "week": "week",
+    "lifetime": "lifetime",
+    "trial": "{{days}} days free",
+    "legal": "Auto-renewing subscription, cancel anytime.",
+    "terms": "Terms",
+    "privacy": "Privacy"
+  },
+  "a11y": {
+    "back": "Go back",
+    "close": "Close",
+    "selected": "Selected",
+    "progress": "Progress {{value}} percent"
+  }
+}

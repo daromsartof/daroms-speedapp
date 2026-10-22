@@ -1,0 +1,7 @@
+{
+  "title": "Settings",
+  "appearance": { "section": "Appearance", "system": "System", "light": "Light", "dark": "Dark" },
+  "preferences": { "section": "Preferences", "haptics": "Haptic feedback", "language": "Language" },
+  "languages": { "fr": "Français", "en": "English", "es": "Español", "de": "Deutsch", "it": "Italiano", "pt": "Português" },
+  "about": { "section": "About", "version": "Version", "privacy": "Privacy", "terms": "Terms of use", "support": "Contact support" }
+}

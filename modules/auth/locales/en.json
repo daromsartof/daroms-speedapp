@@ -1,0 +1,9 @@
+{
+  "signIn": { "title": "Sign in", "subtitle": "Good to see you again", "submit": "Sign in", "noAccount": "No account yet? Create one", "forgot": "Forgot password?" },
+  "signUp": { "title": "Create account", "subtitle": "It only takes a few seconds", "submit": "Create my account", "hasAccount": "Already have an account? Sign in", "checkEmail": "Check your inbox to confirm your account." },
+  "forgot": { "title": "Forgot password", "subtitle": "Get a reset link", "submit": "Send link", "sent": "Link sent if an account exists for this email." },
+  "fields": { "email": "Email", "password": "Password", "name": "First name" },
+  "social": { "or": "or", "google": "Continue with Google", "apple": "Continue with Apple" },
+  "account": { "section": "Account", "signOut": "Sign out", "delete": "Delete my account", "deleteTitle": "Delete account?", "deleteDescription": "All your data will be permanently erased.", "deleted": "Account deleted" },
+  "errors": { "invalidCredentials": "Wrong email or password.", "cancelled": "Sign in cancelled." }
+}

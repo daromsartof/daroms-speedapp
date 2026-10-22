@@ -1,0 +1,14 @@
+{
+  "title": "Chat IA",
+  "description": "Assistant Claude en streaming : edge function (clé API côté serveur), historique Supabase, onglet Chat",
+  "requires": ["auth"],
+  "routes": [{ "file": "app/(tabs)/chat.tsx", "export": "ChatScreen" }],
+  "tabs": [{ "name": "chat", "icon": "Sparkles", "titleKey": "aiChat:title" }],
+  "migrations": ["migrations/ai_chat.sql"],
+  "functions": ["functions/ai-chat"],
+  "appLocales": {
+    "aiChat.suggestion1": { "fr": "Donne-moi une idée pour aujourd'hui", "en": "Give me an idea for today" },
+    "aiChat.suggestion2": { "fr": "Résume-moi ce que je peux faire ici", "en": "Summarize what I can do here" }
+  },
+  "defaultConfig": { "suggestions": ["aiChat.suggestion1", "aiChat.suggestion2"] }
+}

@@ -1,0 +1,5 @@
+node_modules
+template/**/*.json
+**/CATALOG.md
+_ai/digest.md
+bun.lock

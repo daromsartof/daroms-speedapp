@@ -1,0 +1,9 @@
+{
+  "title": "Notifications push",
+  "description": "Notifications Expo : permission, jeton par utilisateur (Supabase), liens profonds, fonction d'envoi",
+  "dependencies": ["expo-notifications", "expo-device"],
+  "requires": ["auth"],
+  "migrations": ["migrations/push_tokens.sql"],
+  "functions": ["functions/send-push"],
+  "defaultConfig": { "askOnLaunch": false }
+}

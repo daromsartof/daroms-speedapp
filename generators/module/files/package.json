@@ -1,0 +1,14 @@
+{
+  "name": "@daroms/module-{{slug}}",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "{{description}}",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  }
+}

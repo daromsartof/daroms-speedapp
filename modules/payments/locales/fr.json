@@ -1,0 +1,13 @@
+{
+  "section": "Abonnement",
+  "status": "Statut",
+  "pro": "Pro",
+  "free": "Gratuit",
+  "upgrade": "Passer à Pro",
+  "manage": "Gérer l'abonnement",
+  "restored": "Achats restaurés",
+  "nothingToRestore": "Aucun achat à restaurer",
+  "unavailable": "Les achats ne sont pas disponibles pour le moment.",
+  "locked": "Fonctionnalité Pro",
+  "unlock": "Débloquer"
+}

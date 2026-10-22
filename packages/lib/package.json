@@ -1,0 +1,36 @@
+{
+  "name": "@daroms/lib",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Fonctions pures et utilitaires : formats, zod partagé, stockage (MMKV), haptique, manifest",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./storage": "./src/storage.ts",
+    "./haptics": "./src/haptics.ts",
+    "./format": "./src/format.ts",
+    "./zod": "./src/zod.ts",
+    "./manifest": "./src/manifest/index.ts",
+    "./manifest-schema": "./src/manifest/schema.ts"
+  },
+  "peerDependencies": {
+    "expo-constants": "*",
+    "expo-haptics": "*",
+    "expo-localization": "*",
+    "expo-sqlite": "*",
+    "react-native": "*",
+    "react-native-mmkv": "^4.0.0",
+    "zod": "^4.0.0",
+    "zustand": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-mmkv": {
+      "optional": true
+    },
+    "zustand": {
+      "optional": true
+    }
+  }
+}
