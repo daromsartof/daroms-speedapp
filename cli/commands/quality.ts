@@ -143,7 +143,12 @@ export async function e2e(args: Args) {
     if (has('adb')) await capture(['adb', 'reverse', 'tcp:8081', 'tcp:8081'])
     env.push('-e', 'APP_ID=host.exp.exponent', '-e', 'APP_URL=exp://127.0.0.1:8081?__expo_disable_fab=1&__expo_disable_onboarding=1')
   } else {
-    env.push('-e', `APP_ID=${(await loadManifest(root)).bundleId}`)
+    env.push('-e', `APP_ID=${(await loadManifest(root)).bundleId}`, '-e', 'APP_URL=')
   }
-  await run(['maestro', 'test', ...env, target], { cwd: root, env: { MAESTRO_CLI_NO_ANALYTICS: '1' } })
+  if (bool(args, 'driver') && has('adb')) {
+    // Android très récent : le pilote Maestro démarre mal tout seul ; on lance son instrumentation avant
+    Bun.spawn(['adb', 'shell', 'am', 'instrument', '-w', '-m', '-e', 'debug', 'false', '-e', 'class', 'dev.mobile.maestro.MaestroDriverService#grpcServer', 'dev.mobile.maestro.test/androidx.test.runner.AndroidJUnitRunner'], { stdout: 'ignore', stderr: 'ignore' }).unref()
+    await Bun.sleep(8000)
+  }
+  await run(['maestro', 'test', ...env, target], { cwd: root, env: { MAESTRO_CLI_NO_ANALYTICS: '1', MAESTRO_DRIVER_STARTUP_TIMEOUT: '180000' } })
 }

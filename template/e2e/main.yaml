@@ -1,8 +1,5 @@
-# Flow principal (Maestro). `bun daroms e2e` (build installé) ou `bun daroms e2e --go` (Expo Go).
+# Flow principal (Maestro). Lancer avec `bun daroms e2e` ou `bun daroms e2e --go` : la CLI fournit APP_ID et APP_URL.
 appId: ${APP_ID}
-env:
-  APP_ID: __BUNDLE_ID__
-  APP_URL: ''
 ---
 - launchApp:
     clearState: true
@@ -11,6 +8,17 @@ env:
       true: ${APP_URL}
     commands:
       - openLink: ${APP_URL}
+      # Expo Go réaffiche son menu de développement après clearState : le fermer
+      - extendedWaitUntil:
+          visible: 'Reload'
+          timeout: 60000
+          optional: true
+      - runFlow:
+          when:
+            visible: 'Reload'
+          commands:
+            - tapOn:
+                point: '90%,45%'
 - extendedWaitUntil:
     visible: 'Bienvenue|Welcome'
     timeout: 60000

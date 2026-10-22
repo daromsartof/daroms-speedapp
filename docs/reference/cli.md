@@ -14,7 +14,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `bun <cœur>/cli/daroms.ts <c
 | `icons add <Nom...>` | icônes Lucide supplémentaires (`@/icons`) |
 | `module add|remove|list [slug] [--no-install]` | modules |
 | `shot <route> [--dark --capture --width --locale --storage k=v --storage-file f.json --android --stop]` | contrôle visuel : erreurs, débordements, capture si utile |
-| `test [motif]` · `e2e [flow]` | jest-expo · Maestro |
+| `test [motif]` · `e2e [flow] [--go --driver]` | jest-expo · Maestro (build installé, ou Expo Go avec `--go`) |
 | `assets` | icône, adaptive icon, splash, favicon depuis `assets/source/icon.svg` |
 | `db new <nom> | push | types | reset` | migrations Supabase et types |
 | `build [preview|production|development] [--platform]` · `submit` · `update [canal] --message` | EAS |

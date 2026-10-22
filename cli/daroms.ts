@@ -19,7 +19,7 @@ const COMMANDS: Record<string, Command> = {
   module: { describe: 'module add|remove|list [slug]', run: lazy('./commands/module', 'moduleCommand') },
   shot: { describe: 'shot <route> [--dark --capture --locale en --storage cle=val --storage-file f.json --android --stop] : logs, erreurs, débordements, capture si utile', run: lazy('./commands/quality', 'shot') },
   test: { describe: 'tests unitaires (jest-expo) [motif]', run: lazy('./commands/quality', 'test') },
-  e2e: { describe: 'flows Maestro (e2e/*.yaml) [fichier] [--go : dans Expo Go]', run: lazy('./commands/quality', 'e2e') },
+  e2e: { describe: 'flows Maestro (e2e/*.yaml) [fichier] [--go : dans Expo Go] [--driver : pré-lance le pilote Android]', run: lazy('./commands/quality', 'e2e') },
   assets: { describe: 'icône, adaptive icon, splash, favicon depuis assets/source/icon.svg', run: lazy('./commands/assets', 'assets') },
   db: { describe: 'db new <nom> | push | types | reset', run: lazy('./commands/db', 'db') },
   build: { describe: 'build [preview|production|development] [--platform ios|android|all]', run: lazy('./commands/ship', 'build') },
