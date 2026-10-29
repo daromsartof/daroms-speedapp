@@ -1,0 +1,45 @@
+/* Tokens du site (vitrine et docs). Convention Starlight : sombre sur :root, clair sur [data-theme='light']. */
+:root {
+  --dsa-font: 'Archivo Variable', system-ui, sans-serif;
+  --dsa-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --dsa-bg: #0d1430;
+  --dsa-raised: #141c3d;
+  --dsa-sunken: #0a1028;
+  --dsa-text: #e6eaf6;
+  --dsa-muted: #a9b3cf;
+  --dsa-line: #2a3462;
+  --dsa-signal: #8c9bff;
+  --dsa-signal-fill: #3347ff;
+  --dsa-on-signal: #ffffff;
+  --dsa-sun: #ffc65a;
+  --dsa-ok: #5fd3a0;
+  --dsa-refuse: #ff8a7a;
+
+  /* panneaux de code et de terminal : encre profonde dans les deux thèmes */
+  --dsa-ink: #0a1028;
+  --dsa-ink-text: #dfe4f5;
+  --dsa-ink-muted: #8d97b8;
+  --dsa-ink-line: #232c55;
+
+  --dsa-radius: 14px;
+  --dsa-radius-sm: 8px;
+  --dsa-measure: 68ch;
+  --dsa-gutter: clamp(16px, 4vw, 40px);
+  --dsa-max: 1180px;
+}
+
+:root[data-theme='light'] {
+  --dsa-bg: #f5f7fb;
+  --dsa-raised: #ffffff;
+  --dsa-sunken: #eaeef6;
+  --dsa-text: #121a3a;
+  --dsa-muted: #4a5578;
+  --dsa-line: #d9dfec;
+  --dsa-signal: #2b3df0;
+  --dsa-signal-fill: #3347ff;
+  --dsa-on-signal: #ffffff;
+  --dsa-sun: #f2a100;
+  --dsa-ok: #0f8a5f;
+  --dsa-refuse: #c2412d;
+}

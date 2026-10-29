@@ -1,0 +1,86 @@
+---
+// Écran d'app factice (suivi de lecture) dessiné uniquement avec les variables de brand-preview.
+type Props = { style: string }
+const { style } = Astro.props
+const week = [
+  { day: 'L', value: 12 },
+  { day: 'M', value: 20 },
+  { day: 'M', value: 0 },
+  { day: 'J', value: 18, today: true },
+  { day: 'V', value: 0 },
+  { day: 'S', value: 0 },
+  { day: 'D', value: 0 },
+]
+const max = Math.max(...week.map((d) => d.value))
+---
+
+<figure class="device">
+  <div class="phone" id="preview-phone" data-scheme="light" style={style} aria-hidden="true">
+    <div class="p-status"><span>9:41</span><span class="p-notch"></span><span>100 %</span></div>
+    <div class="p-screen">
+      <div class="p-header">
+        <span class="p-title">Aujourd’hui</span>
+        <span class="p-caption">Jeudi 29 octobre</span>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat p-stat-brand"><span class="p-stat-value">18</span><span class="p-stat-label">pages lues</span></div>
+        <div class="p-stat">
+          <span class="p-stat-value"
+            ><svg viewBox="0 0 24 24" class="p-icon p-flame"
+              ><path
+                d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"
+              ></path></svg
+            >5</span
+          ><span class="p-stat-label">jours de suite</span>
+        </div>
+      </div>
+      <div class="p-card">
+        <span class="p-card-title">Cette semaine</span>
+        <div class="p-bars">
+          {
+            week.map((d) => (
+              <span class="p-bar" data-today={d.today ? '' : undefined}>
+                <span class="p-bar-fill" style={`--h:${Math.max(d.value / max, 0.04)}`} />
+                <span class="p-bar-day">{d.day}</span>
+              </span>
+            ))
+          }
+        </div>
+      </div>
+      <div class="p-card p-list">
+        <div class="p-item">
+          <span class="p-item-icon"
+            ><svg viewBox="0 0 24 24" class="p-icon"
+              ><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg
+            ></span
+          >
+          <span class="p-item-text"><span>Le Petit Prince</span><span class="p-caption">34 pages, hier</span></span>
+          <span class="p-badge">Fini</span>
+        </div>
+        <div class="p-item">
+          <span class="p-item-icon"
+            ><svg viewBox="0 0 24 24" class="p-icon"
+              ><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg
+            ></span
+          >
+          <span class="p-item-text"><span>Dune</span><span class="p-caption">18 pages, aujourd’hui</span></span>
+          <svg viewBox="0 0 24 24" class="p-icon p-chevron"><path d="m9 18 6-6-6-6"></path></svg>
+        </div>
+      </div>
+      <span class="p-button"><svg viewBox="0 0 24 24" class="p-icon"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>Ajouter une lecture</span>
+    </div>
+    <div class="p-tabs">
+      <span class="p-tab" data-active
+        ><svg viewBox="0 0 24 24" class="p-icon"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg
+        >Aujourd’hui</span
+      >
+      <span class="p-tab"
+        ><svg viewBox="0 0 24 24" class="p-icon"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"></path><path d="M16 7h6v6"></path></svg>Progression</span
+      >
+      <span class="p-tab"
+        ><svg viewBox="0 0 24 24" class="p-icon"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>Profil</span
+      >
+    </div>
+  </div>
+  <figcaption class="sr-only">Aperçu d’un écran d’app (suivi de lecture) rendu avec la marque ci-contre.</figcaption>
+</figure>

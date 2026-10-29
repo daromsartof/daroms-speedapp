@@ -1,0 +1,96 @@
+/* Starlight habillé aux couleurs du site. */
+:root {
+  --sl-font: var(--dsa-font);
+  --sl-font-mono: var(--dsa-mono);
+
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #e6eaf6;
+  --sl-color-gray-2: #c4cbe0;
+  --sl-color-gray-3: #8d97b8;
+  --sl-color-gray-4: #5a6488;
+  --sl-color-gray-5: #2a3462;
+  --sl-color-gray-6: #141c3d;
+  --sl-color-black: #0d1430;
+
+  --sl-color-accent-low: #1b2466;
+  --sl-color-accent: #5b6cff;
+  --sl-color-accent-high: #c3caff;
+
+  --sl-content-width: 46rem;
+}
+
+:root[data-theme='light'] {
+  --sl-color-white: #121a3a;
+  --sl-color-gray-1: #1c2549;
+  --sl-color-gray-2: #2e3a63;
+  --sl-color-gray-3: #4a5578;
+  --sl-color-gray-4: #7c87a6;
+  --sl-color-gray-5: #c3cadb;
+  --sl-color-gray-6: #e3e8f2;
+  --sl-color-gray-7: #eef1f7;
+  --sl-color-black: #f5f7fb;
+
+  --sl-color-accent-low: #dfe3ff;
+  --sl-color-accent: #3347ff;
+  --sl-color-accent-high: #1f2a99;
+}
+
+/* Titres : Archivo élargi, la largeur porte l'idée de vitesse */
+.sl-markdown-content :is(h2, h3),
+h1#_top {
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+h1#_top {
+  font-stretch: 118%;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.sl-markdown-content h2 {
+  font-weight: 750;
+}
+.sl-markdown-content h3 {
+  font-weight: 700;
+}
+
+.site-title {
+  font-stretch: 115%;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.sl-markdown-content code:not(pre code) {
+  font-size: 0.86em;
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+}
+
+/* Tableaux de référence : lisibles sans déborder sur mobile */
+.sl-markdown-content table {
+  display: block;
+  overflow-x: auto;
+  font-size: var(--sl-text-sm);
+}
+.sl-markdown-content th {
+  white-space: nowrap;
+}
+.sl-markdown-content td code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.sl-markdown-content h2 {
+  font-size: clamp(1.5rem, 2.4vw, 1.95rem);
+}
+.sl-markdown-content h3 {
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+}
+
+/* « Sombre », « Automatique » : la largeur par défaut coupe les libellés français */
+starlight-theme-select label {
+  --sl-select-width: 7.5em !important;
+}
+
+.site-title {
+  color: var(--sl-color-white);
+}

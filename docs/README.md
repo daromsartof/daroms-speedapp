@@ -1,14 +1,41 @@
 # Documentation Daroms Speed App
 
-| Besoin | Document |
+Site de documentation et vitrine du framework : Astro 7 + Starlight, en français. Publié sur https://daromsartof.github.io/daroms-speedapp/ (GitHub Pages, workflow `.github/workflows/docs.yml`).
+
+## Lancer
+
+```bash
+cd docs
+bun install
+bun run dev      # génère les pages de référence puis http://localhost:4321/daroms-speedapp/
+bun run check    # build complet + vérification des liens, ancres et fichiers pour agents
+```
+
+Adresse publique différente (domaine propre) : `SITE_URL=https://docs.exemple.fr BASE_PATH= bun run build`.
+
+## Où est quoi
+
+| Chemin | Contenu |
 |---|---|
-| Apprendre en faisant | [Tutoriel : ton app en un jour](tutoriel-app-en-un-jour.md) |
-| Réaliser une tâche précise | [Fiches pratiques](fiches/) |
-| Chercher une commande, une règle, un champ | [Référence](reference/) |
-| Comprendre les choix | [Explications](explications/) |
+| `src/content/docs/` | pages en Markdown : `demarrer/`, `guides/`, `reference/`, `explications/`, `agents/` |
+| `src/navigation.ts` | plan du site : barre latérale et ordre de `llms.txt` |
+| `src/pages/index.astro`, `src/components/landing/` | vitrine (l'éditeur `brand.ts` importe l'algorithme de `packages/theme`) |
+| `src/pages/llms.txt.ts`, `llms-full.txt.ts`, `[...slug].md.ts` | fichiers pour agents : index, doc complète, chaque page en Markdown |
+| `scripts/sync-content.ts` | génère les pages tirées des sources (voir ci-dessous) |
+| `scripts/check-agents.ts` | vérifie `dist/` après le build |
 
-Fiches : [écran](fiches/ajouter-un-ecran.md) · [données](fiches/ajouter-une-table.md) · [module](fiches/ajouter-un-module.md) · [marque](fiches/changer-la-marque.md) · [publier](fiches/publier.md) · [mettre à jour le cœur](fiches/mettre-a-jour-le-coeur.md) · [développer le cœur](fiches/developper-le-coeur.md) · [dépanner](fiches/depanner.md)
+## Pages générées (ne pas modifier)
 
-Référence : [CLI](reference/cli.md) · [règles](reference/regles.md) · [manifest et marque](reference/manifest.md) · [composants](../packages/ui/CATALOG.md) · [skills et agents](reference/skills.md)
+Créées à chaque `dev`/`build` depuis les sources du cœur, ignorées par git :
 
-Explications : [architecture](explications/architecture.md) · [couche IA](explications/couche-ia.md) · [Tamagui v3](explications/tamagui-v3.md)
+- `reference/composants.md` depuis `packages/ui/CATALOG.md`
+- `reference/modules/*.md` depuis `modules/<slug>/README.md`, `module.json`, `config.ts`, `index.ts`
+- `reference/regles.md` depuis `_ai/rules/` et `_ai/rules-ondemand/`
+- `reference/skills.md` depuis `_ai/skills/*/SKILL.md`, `_ai/agents/`, `_ai/skills/vendor/README.md`
+
+## Écrire une page
+
+- Frontmatter `title` et `description` (une phrase : elle sert dans `llms.txt`).
+- Liens internes absolus sans base : `[Ajouter une table](/guides/ajouter-une-table/)` ; la base est ajoutée au build.
+- Markdown simple (tableaux, blocs de code, `:::note`) : la version `.md` servie aux agents reste lisible.
+- Nouvelle page : l'ajouter dans `src/navigation.ts`.

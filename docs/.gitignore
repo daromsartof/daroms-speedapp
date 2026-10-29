@@ -1,0 +1,8 @@
+# Pages générées par scripts/sync-content.ts depuis les sources du cœur
+src/content/docs/reference/composants.md
+src/content/docs/reference/regles.md
+src/content/docs/reference/skills.md
+src/content/docs/reference/modules/
+src/generated/
+.astro/
+dist/
