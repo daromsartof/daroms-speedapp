@@ -1,0 +1,56 @@
+# Publication npm de daroms-speed-app à chaque tag vX.Y.Z (créé par `bun daroms release-core`).
+# Authentification : publication de confiance npm (OIDC, sans jeton) une fois configurée sur npmjs.com,
+# sinon secret NPM_TOKEN (jeton d'automatisation npm).
+name: publish
+
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: 'npm récent (publication de confiance, npm >= 11.5.1)'
+        run: npm install -g npm@11
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - name: Version du tag = VERSION = package.json
+        run: |
+          version="$(cat VERSION)"
+          pkg="$(node -p "require('./package.json').version")"
+          tag="${GITHUB_REF_NAME#v}"
+          echo "VERSION=$version package.json=$pkg tag=$tag"
+          test "$version" = "$pkg"
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then test "$tag" = "$version"; fi
+      - name: Version déjà sur npm ? (première publication faite à la main)
+        id: npm
+        run: |
+          name="$(node -p "require('./package.json').name")"
+          if npm view "$name@$(cat VERSION)" version >/dev/null 2>&1; then
+            echo "already=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::$name@$(cat VERSION) est déjà publiée : rien à faire"
+          fi
+      - name: Installer
+        if: steps.npm.outputs.already != 'true'
+        run: bun install --frozen-lockfile
+      - name: Publier (prepublishOnly lance bun run check)
+        if: steps.npm.outputs.already != 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
