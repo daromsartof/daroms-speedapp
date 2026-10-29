@@ -17,7 +17,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest",
-    "test:cli": "bun test cli generators",
+    "test:cli": "bun test ./cli",
     "test:hooks": "python3 -m unittest discover -s _ai/hooks/tests",
     "catalog": "bun cli/daroms.ts catalog",
     "check": "bun run typecheck && bun run lint && bun run test && bun run test:cli && bun run test:hooks"
