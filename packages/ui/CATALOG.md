@@ -8,6 +8,7 @@ Primitives de mise en page : `XStack`, `YStack`, `ScrollView`, `Separator`, `Spa
 |---|---|---|
 | Avatar | name (initiales de repli, a11y) · uri · size: sm\|md\|lg\|xl | `<Avatar name={profile.display_name} uri={profile.avatar_url} size="lg" />` |
 | Badge | tone: neutral\|brand\|accent\|success\|warning\|danger · children (texte court) | `<Badge tone="success">{t('order.paid')}</Badge>` |
+| BarChart | data[{ key, label, value }] · label (a11y, requis) · max (défaut : plus grande valeur) · tone: brand\|accent\|success · height (token, défaut 40) · highlight (key mise en avant) | `<BarChart data={lastDays(entries, (e) => e.date).map((d) => ({ key: d.day, label: formatWeekday(d.day, 'narrow'), value: d.value }))} label={t('stats.week')} />` |
 | Button | variant: primary\|secondary\|outline\|ghost\|danger · size: sm\|md\|lg (défaut lg) · loading · icon · iconAfter · fullWidth · haptic | `<Button icon={Plus} loading={create.isPending} onPress={submit}>{t('todos.add')}</Button>` |
 | Card | pressable (retour visuel) · flat (sans bordure) · padded (défaut true) · + props YStack | `<Card pressable onPress={() => open(item.id)}><Body>{item.title}</Body></Card>` |
 | Chip | label · selected · icon · onPress (filtres, tags) | `<Chip label={t('filters.today')} selected={filter === 'today'} onPress={() => setFilter('today')} />` |
@@ -30,6 +31,7 @@ Primitives de mise en page : `XStack`, `YStack`, `ScrollView`, `Separator`, `Spa
 | SettingsList | sections[{ key, title, items[{ key, label, icon, type: link\|toggle\|action, value, checked, selected, onToggle, onPress, destructive }] }] | `<SettingsList sections={sections} /> (utilisé par le module settings)` |
 | Sheet | open · onOpenChange · title · snapPoints (défaut [60]) · scroll | `<Sheet open={open} onOpenChange={setOpen} title={t('todos.new')}><TodoForm onDone={() => setOpen(false)} /></Sheet>` |
 | Skeleton | w · h (tokens) · rounded. SkeletonList : rows, avatar | `<Skeleton w="66%" h="5" /> · <SkeletonList rows={5} avatar />` |
+| Stat | value (nombre ou texte formaté) · label · tone: default\|brand\|accent\|success · icon. Carte qui s'étire (flex 1) : en XStack pour une rangée de chiffres clés | `<XStack gap="stack"><Stat value={week} label={t('stats.week')} tone="brand" /><Stat value={streak} label={t('stats.streak')} icon={Flame} /></XStack>` |
 | Tabs | tabs [{ value, label, count }] · value · onChange (onglets soulignés, défilants) | `<Tabs tabs={[{ value: 'all', label: t('tabs.all') }]} value={tab} onChange={setTab} />` |
 | Title | tone: default\|muted\|brand\|accent\|danger\|success · align: start\|center\|end | `<Title>{t('home.title')}</Title>` |
 | Heading | tone · align · level: 1\|2\|3 (taille 7, 6, 5) | `<Heading level={2}>{t('section.title')}</Heading>` |

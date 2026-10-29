@@ -40,6 +40,9 @@
     "tabA": "All",
     "tabB": "Favorites",
     "sheet": "Sheet",
-    "dialog": "Dialog"
+    "dialog": "Dialog",
+    "statPages": "Pages this week",
+    "statStreak": "Day streak",
+    "chart": "Last 7 days"
   }
 }
