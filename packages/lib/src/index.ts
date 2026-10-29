@@ -1,3 +1,4 @@
+export * from './dates'
 export * from './format'
 export * from './haptics'
 export * from './id'

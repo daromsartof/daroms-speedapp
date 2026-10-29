@@ -11,6 +11,7 @@
     "./storage": "./src/storage.ts",
     "./haptics": "./src/haptics.ts",
     "./format": "./src/format.ts",
+    "./dates": "./src/dates.ts",
     "./zod": "./src/zod.ts",
     "./manifest": "./src/manifest/index.ts",
     "./manifest-schema": "./src/manifest/schema.ts",
