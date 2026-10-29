@@ -3,7 +3,7 @@ title: CLI daroms
 description: Toutes les commandes de la CLI daroms (new, dev, doctor, g, icons, module, shot, test, e2e, assets, db, build, submit, update, sync-ai, catalog, release-core) avec leurs options.
 ---
 
-Dans une app : `bun daroms <commande>`. Hors app : `bun <cœur>/cli/daroms.ts <commande>`, ou `daroms <commande>` après `bun link` dans le cœur. `bun daroms --help` liste les commandes.
+Dans une app : `bun daroms <commande>`. Hors app : `bunx @daromsart/daroms-speed-app <commande>` (paquet npm), `daroms <commande>` après `bun add -g @daromsart/daroms-speed-app`, ou `bun <clone du cœur>/cli/daroms.ts <commande>`. `bun daroms --help` liste les commandes.
 
 ## Résumé
 
@@ -26,7 +26,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `bun <cœur>/cli/daroms.ts <c
 ## new
 
 ```bash
-bun <cœur>/cli/daroms.ts new <slug> [options]
+bunx @daromsart/daroms-speed-app new <slug> [options]
 ```
 
 | Option | Défaut | Effet |
@@ -42,7 +42,7 @@ bun <cœur>/cli/daroms.ts new <slug> [options]
 | `--modules a,b` | - | modules en plus de ceux de la variante |
 | `--supabase <ref>` | - | `manifest.supabase.projectRef` |
 | `--dir <dossier>` | dossier courant | où créer l'app |
-| `--core <url>` | remote du cœur | URL du sous-module |
+| `--core <url>` | dépôt du cœur | URL du sous-module (depuis npm : sous-module fixé sur le tag de la version, ou copie si le dépôt est inaccessible) |
 | `--copy` | - | copie le cœur (instantané, sans sous-module) |
 | `--link` | - | lien symbolique vers le cœur (développement du cœur) |
 | `--no-git` | - | ni `git init` ni commit initial |
@@ -150,4 +150,4 @@ Détail : [Publier](/guides/publier/).
 bun daroms release-core <patch|minor|major> [--dry]
 ```
 
-Dans le dépôt du cœur : nouvelle version dans `VERSION`, section de `CHANGELOG.md` depuis les commits conventionnels, commit et tag. L'arbre git doit être propre ; `--dry` affiche le résultat sans rien écrire.
+Dans le dépôt du cœur : nouvelle version dans `VERSION` et tous les `package.json`, section de `CHANGELOG.md` depuis les commits conventionnels, commit et tag. L'arbre git doit être propre ; `--dry` affiche le résultat sans rien écrire. `git push --follow-tags` déclenche ensuite la publication npm ([Développer le cœur](/guides/developper-le-coeur/#publier-une-version)).

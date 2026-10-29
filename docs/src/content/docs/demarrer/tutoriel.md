@@ -16,8 +16,7 @@ Objectif : partir d'une idée le matin et installer l'app sur un téléphone le 
 
 - Node >= 22.18, Bun >= 1.3, Python 3, Git ; Android Studio (émulateur) ou Xcode (simulateur) facultatifs.
 - Comptes : Expo (EAS), Supabase ; Apple Developer et Google Play pour publier.
-- Le cœur : `git clone https://github.com/daromsartof/daroms-speedapp.git daroms-speed-app && cd daroms-speed-app && bun install`.
-- Commande globale facultative : `bun link` dans le cœur, puis `daroms` partout.
+- La CLI : rien à installer, `bunx @daromsart/daroms-speed-app` la télécharge depuis npm ; ou `bun add -g @daromsart/daroms-speed-app` pour avoir `daroms` partout.
 
 Détail : [Installation](/demarrer/installation/).
 
@@ -27,7 +26,7 @@ Détail : [Installation](/demarrer/installation/).
 2. **Cadrage** (`/daroms-idea`) : Claude écrit `app.spec.md` (cible, boucle principale, 3 à 6 écrans, tables, modules, monétisation, nom, ton, variante). Relire et valider : c'est la source unique des étapes suivantes.
 3. **Création** (`/daroms-new`) : une commande crée l'app complète :
    ```bash
-   bun ../daroms-speed-app/cli/daroms.ts new lecture --name "Lecture" --variant tracker --primary "#0F766E" --accent "#F59E0B" --tone minimal
+   bunx @daromsart/daroms-speed-app new lecture --name "Lecture" --variant tracker --primary "#0F766E" --accent "#F59E0B" --tone minimal
    ```
    Template, sous-module `core/`, `brand.ts`, `app.manifest.ts`, modules de la variante, icônes générées, dépendances, couche IA (`.claude/`), commit initial.
 4. `cd lecture && cp .env.example .env` (URL et clé publique Supabase), puis `bun daroms dev` : scanner le QR avec Expo Go.

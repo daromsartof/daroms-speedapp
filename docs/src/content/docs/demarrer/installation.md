@@ -18,7 +18,33 @@ sidebar:
 
 Comptes : Expo (EAS) et Supabase pour développer ; Apple Developer et Google Play pour publier.
 
-## Installer le cœur
+## Créer une première app
+
+Le framework est publié sur npm (`@daromsart/daroms-speed-app`, organisation `daromsart`). Depuis le dossier qui contiendra tes projets :
+
+```bash
+bunx @daromsart/daroms-speed-app new mon-app --name "Mon app" --variant list-detail
+cd mon-app
+cp .env.example .env    # URL et clé publique Supabase
+bun daroms dev          # scanner le QR avec Expo Go
+```
+
+Commande globale facultative : `bun add -g @daromsart/daroms-speed-app`, puis `daroms new mon-app` partout. La CLI s'exécute avec Bun : `npx` sans Bun installé ne fonctionne pas.
+
+`daroms new` copie le template, ajoute le cœur en sous-module `core/`, écrit `brand.ts` et `app.manifest.ts`, active les modules de la variante, génère tables et écrans, les icônes, installe les dépendances, synchronise la couche IA dans `.claude/` et fait le commit initial. Toutes les options : [CLI, `new`](/reference/cli/#new).
+
+D'où vient `core/` :
+
+| Cas | Résultat |
+|---|---|
+| CLI installée depuis npm, dépôt du cœur accessible | sous-module git fixé sur le tag de la version installée (`v0.2.0`...) |
+| CLI installée depuis npm, dépôt inaccessible | copie du cœur contenu dans le paquet (sans sous-module) |
+| CLI lancée depuis un clone du cœur | sous-module du remote du clone, branche par défaut |
+| `--copy`, `--link`, `--core <url>` | copie, lien symbolique, sous-module de l'URL donnée |
+
+## Travailler sur le cœur lui-même
+
+Pour modifier le framework (pas pour créer une app) :
 
 ```bash
 git clone https://github.com/daromsartof/daroms-speedapp.git daroms-speed-app
@@ -27,20 +53,7 @@ bun install
 bun run check   # tsc, eslint, jest, tests CLI, tests des hooks
 ```
 
-Commande globale facultative : `bun link` dans le cœur, puis `daroms` fonctionne partout. Sinon, hors d'une app : `bun <chemin du cœur>/cli/daroms.ts <commande>`.
-
-## Créer une première app
-
-Depuis le dossier qui contiendra tes projets :
-
-```bash
-bun daroms-speed-app/cli/daroms.ts new mon-app --name "Mon app" --variant list-detail
-cd mon-app
-cp .env.example .env    # URL et clé publique Supabase
-bun daroms dev          # scanner le QR avec Expo Go
-```
-
-`daroms new` copie le template, ajoute le cœur en sous-module `core/`, écrit `brand.ts` et `app.manifest.ts`, active les modules de la variante, génère tables et écrans, les icônes, installe les dépendances, synchronise la couche IA dans `.claude/` et fait le commit initial. Toutes les options : [CLI, `new`](/reference/cli/#new).
+`bun link` dans le clone rend la commande `daroms` globale et pointée sur tes sources. Voir [Développer le cœur](/guides/developper-le-coeur/).
 
 :::tip[Sans Supabase pour commencer]
 `--local` garde les tables de la variante sur l'appareil (mêmes hooks). Sans `.env`, l'app démarre et Supabase reste désactivé.
