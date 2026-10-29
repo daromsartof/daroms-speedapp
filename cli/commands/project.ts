@@ -1,9 +1,9 @@
-import { existsSync, renameSync, symlinkSync } from 'node:fs'
+import { existsSync, readdirSync, renameSync, symlinkSync } from 'node:fs'
 import { basename, join, resolve } from 'node:path'
 
 import { bool, flag, type Args } from '../lib/args'
 import { capture, run } from '../lib/exec'
-import { copyDir, readJson, substitute } from '../lib/fsx'
+import { copyDir, readJson, substitute, writeJson } from '../lib/fsx'
 import { color, fail, log } from '../lib/log'
 import { loadManifest, saveManifest } from '../lib/manifest'
 import { addModule, installModules, writeRegistry } from '../lib/modules'
@@ -41,9 +41,21 @@ async function coreRemote(): Promise<string> {
   return code === 0 ? out.trim() : DEFAULT_CORE_URL
 }
 
+/** Bun ne suit pas un lien symbolique dans un motif de workspace (core/packages/*) : chemins explicites. */
+function expandCoreWorkspaces(dest: string) {
+  const file = join(dest, 'package.json')
+  const pkg = readJson<{ workspaces: string[] }>(file)
+  const packages = readdirSync(join(CORE_DIR, 'packages'))
+    .filter((name) => existsSync(join(CORE_DIR, 'packages', name, 'package.json')))
+    .map((name) => `core/packages/${name}`)
+  pkg.workspaces = [...new Set(pkg.workspaces.flatMap((w) => (w === 'core/packages/*' ? packages : [w])))]
+  writeJson(file, pkg)
+}
+
 async function attachCore(dest: string, args: Args) {
   if (bool(args, 'link')) {
     symlinkSync(CORE_DIR, join(dest, 'core'), 'dir')
+    expandCoreWorkspaces(dest)
     return log.ok('cœur lié (lien symbolique, développement du cœur)')
   }
   if (bool(args, 'copy')) {
