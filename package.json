@@ -1,7 +1,7 @@
 {
   "name": "@daromsart/daroms-speed-app",
   "version": "0.2.0",
-  "description": "Cœur Daroms Speed App : framework mobile Expo + Tamagui + Supabase piloté par Claude",
+  "description": "Framework mobile Expo + Tamagui v3 + Supabase pour Claude Code : thème, composants, données, modules, CLI daroms et couche IA, pour sortir une app par jour.",
   "license": "MIT",
   "author": "Daroms",
   "homepage": "https://daromsartof.github.io/daroms-speedapp/",
@@ -21,7 +21,11 @@
     "claude-code",
     "framework",
     "mobile",
-    "cli"
+    "cli",
+    "expo-router",
+    "eas",
+    "starter",
+    "ai"
   ],
   "engines": {
     "node": ">=22.18",
