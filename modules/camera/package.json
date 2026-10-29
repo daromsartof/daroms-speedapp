@@ -1,6 +1,6 @@
 {
   "name": "@daroms/module-camera",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "description": "Photos : appareil photo ou galerie (expo-image-picker), envoi dans Supabase Storage, composant PhotoPicker",

@@ -1,6 +1,6 @@
 {
   "name": "@daroms/lib",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "description": "Fonctions pures et utilitaires : formats, zod partagé, stockage (MMKV), haptique, manifest",

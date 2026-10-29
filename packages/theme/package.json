@@ -1,6 +1,6 @@
 {
   "name": "@daroms/theme",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "description": "Thème unique piloté par brand.ts : palettes, thèmes Tamagui v3, tokens, polices, animations",

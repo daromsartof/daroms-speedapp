@@ -1,6 +1,6 @@
 {
   "name": "@daroms/module-onboarding",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "description": "Écrans d'accueil au premier lancement (pages configurables), gate prioritaire",

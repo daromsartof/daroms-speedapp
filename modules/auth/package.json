@@ -1,6 +1,6 @@
 {
   "name": "@daroms/module-auth",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "description": "Authentification Supabase : e-mail, Apple, Google ; gate de connexion ; profil ; suppression de compte",
