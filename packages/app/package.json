@@ -1,6 +1,6 @@
 {
   "name": "@daroms/app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Assemblage d'une app : provider racine, système de modules, layouts racine et onglets pilotés par le manifest",

@@ -1,6 +1,6 @@
 {
   "name": "@daromsart/daroms-speed-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cœur Daroms Speed App : framework mobile Expo + Tamagui + Supabase piloté par Claude",
   "license": "MIT",
   "author": "Daroms",

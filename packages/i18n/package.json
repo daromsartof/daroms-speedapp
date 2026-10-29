@@ -1,6 +1,6 @@
 {
   "name": "@daroms/i18n",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Initialisation i18next + expo-localization, hook useT typé, textes du cœur (namespace daroms)",
   "main": "src/index.ts",
