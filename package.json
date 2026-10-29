@@ -1,6 +1,6 @@
 {
   "name": "@daromsart/daroms-speed-app",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Framework mobile Expo + Tamagui v3 + Supabase pour Claude Code : thème, composants, données, modules, CLI daroms et couche IA, pour sortir une app par jour.",
   "license": "MIT",
   "author": "Daroms",

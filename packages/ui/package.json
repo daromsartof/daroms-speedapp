@@ -1,6 +1,6 @@
 {
   "name": "@daroms/ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Composants Tamagui v3 du framework (états, a11y, haptique intégrés) et icônes Lucide. Catalogue : CATALOG.md",
   "main": "src/index.ts",

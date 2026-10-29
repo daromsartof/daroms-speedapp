@@ -1,6 +1,6 @@
 {
   "name": "@daroms/module-payments",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "description": "Abonnements et achats via RevenueCat : paywall, statut Pro, restauration, gate de paywall bloquant",

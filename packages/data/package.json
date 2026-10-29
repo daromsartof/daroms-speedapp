@@ -1,6 +1,6 @@
 {
   "name": "@daroms/data",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Client Supabase, session auth, QueryClient TanStack, gestion d'erreurs",
   "main": "src/index.ts",

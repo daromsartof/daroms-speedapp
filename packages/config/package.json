@@ -1,6 +1,6 @@
 {
   "name": "@daroms/config",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Configurations partagées : TypeScript strict, ESLint (règles daroms), Prettier, Jest",
   "files": [
