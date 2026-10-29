@@ -9,6 +9,7 @@ paths:
 > Supabase seulement dans features/x/api.ts via db() ; entrées et sorties validées zod ; hooks TanStack Query.
 
 - Générer : `bun daroms g table <table> --fields "titre:text, fait:bool=false, echeance:timestamptz?"` -> migration RLS, `schema.ts`, `api.ts`, types.
+- Données sur l'appareil seulement : `--local` -> `localTable('t', Schema)` (`list`, `get`, `insert`, `update`, `remove`), mêmes hooks ; jamais de `storage.getJSON` à la main pour une collection.
 - Lecture : `useQuery({ queryKey: keys.list(), queryFn: async () => parseOrThrow(Schema.array(), unwrap(await db().from('t').select('*'))) })`.
 - Écriture : `useMutation` + `Input.parse(values)` + `invalidateQueries({ queryKey: keys.all })`. Optimiste seulement si l'UX l'exige.
 - Erreurs : `unwrap()` et `toAppError()` (`@daroms/data`) ; l'UI affiche `ErrorState error={q.error}` (message traduit).

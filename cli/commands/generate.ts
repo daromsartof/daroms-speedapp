@@ -4,7 +4,7 @@ import { join } from 'node:path'
 import { bool, flag, type Args } from '../lib/args'
 import { writeDbTypes, readSchema, saveSchema } from '../lib/dbtypes'
 import { run } from '../lib/exec'
-import { parseFields, sqlColumn, zodInput, zodRow } from '../lib/fields'
+import { localRowImports, parseFields, sqlColumn, zodInput, zodLocalRow, zodRow } from '../lib/fields'
 import { camel, pascal, render, walk, writeFile } from '../lib/fsx'
 import { addLocaleKeys } from '../lib/locales'
 import { fail, log } from '../lib/log'
@@ -62,34 +62,43 @@ export async function screen(root: string, slug: string, args: Args, withRoute: 
   log.ok(`écran ${slug} : app/${route}.tsx -> src/features/${slug}/ (4 états, clés i18n, test)`)
 }
 
-/** g table <nom> --fields "title:text, done:bool=false" [--feature nom] [--singular nom] */
+/** g table <nom> --fields "title:text, done:bool=false" [--feature nom] [--singular nom] [--local] */
 export async function table(root: string, name: string, args: Args) {
   if (!/^[a-z][a-z0-9_]*$/.test(name)) fail('nom de table en snake_case pluriel (ex. todos)')
   const fields = parseFields(flag(args, 'fields') ?? fail('--fields "titre:text, fait:bool=false" requis'))
   const singular = flag(args, 'singular') ?? name.replace(/ies$/, 'y').replace(/s$/, '')
   const feature = flag(args, 'feature') ?? name.replace(/_/g, '-')
+  // --local : données sur l'appareil (localTable), sans migration ni Supabase ; mêmes hooks
+  const local = bool(args, 'local')
   const vars = {
     table: name,
     Singular: pascal(singular.replace(/_/g, '-')),
     Plural: pascal(name.replace(/_/g, '-')),
     camelPlural: camel(name.replace(/_/g, '-')),
     columns: fields.map(sqlColumn).join('\n'),
-    zodFields: fields.map(zodRow).join('\n'),
+    zodFields: fields.map(local ? zodLocalRow : zodRow).join('\n'),
     inputFields: fields.map(zodInput).join('\n'),
+    localImports: localRowImports(fields),
   }
-  const migrations = join(root, 'supabase', 'migrations')
-  const stamp = new Date().toISOString().replace(/\D/g, '').slice(0, 14)
-  if (!walk(migrations).some((f) => f.endsWith('_daroms_init.sql'))) {
-    writeFile(join(migrations, `${stamp.slice(0, 12)}00_daroms_init.sql`), tpl('table', 'init.sql', vars))
+  if (!local) {
+    const migrations = join(root, 'supabase', 'migrations')
+    const stamp = new Date().toISOString().replace(/\D/g, '').slice(0, 14)
+    if (!walk(migrations).some((f) => f.endsWith('_daroms_init.sql'))) {
+      writeFile(join(migrations, `${stamp.slice(0, 12)}00_daroms_init.sql`), tpl('table', 'init.sql', vars))
+    }
+    writeFile(join(migrations, `${stamp}_create_${name}.sql`), tpl('table', 'migration.sql', vars))
   }
-  writeFile(join(migrations, `${stamp}_create_${name}.sql`), tpl('table', 'migration.sql', vars))
   const dir = join(root, 'src', 'features', feature)
-  writeFile(join(dir, 'schema.ts'), tpl('table', 'schema.ts', vars))
-  writeFile(join(dir, 'api.ts'), tpl('table', 'api.ts', vars))
+  writeFile(join(dir, 'schema.ts'), tpl('table', local ? 'schema.local.ts' : 'schema.ts', vars))
+  writeFile(join(dir, 'api.ts'), tpl('table', local ? 'api.local.ts' : 'api.ts', vars))
   const schema = readSchema(root)
-  schema.tables[name] = { fields: fields.map(({ name: n, type, nullable, defaultValue }) => ({ name: n, type, nullable, defaultValue })) }
+  schema.tables[name] = {
+    ...(local ? { local: true } : {}),
+    fields: fields.map(({ name: n, type, nullable, defaultValue }) => ({ name: n, type, nullable, defaultValue })),
+  }
   saveSchema(root, schema)
   writeDbTypes(root)
+  if (local) return log.ok(`table locale ${name} : src/features/${feature}/{schema,api}.ts (appareil, sans migration)`)
   log.ok(`table ${name} : migration RLS, src/features/${feature}/{schema,api}.ts, types db.ts (hors ligne)`)
 }
 

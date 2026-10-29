@@ -44,6 +44,26 @@ export const sqlColumn = (f: Field) => `  ${f.name} ${f.spec.sql}${f.nullable ? 
 
 export const zodRow = (f: Field) => `  ${f.name}: ${f.spec.zod}${f.nullable ? '.nullable()' : ''},`
 
+/** Défaut SQL traduit en JS pour une table locale (now() -> horodatage ou jour local ; autre fonction : aucun). */
+function jsDefault(field: Field): string | undefined {
+  const raw = field.defaultValue
+  if (raw === undefined) return field.nullable ? 'null' : undefined
+  if (/^now\(\)$/i.test(raw)) return field.type === 'date' ? '() => dayKey()' : '() => new Date().toISOString()'
+  if (/\(\)$/.test(raw)) return undefined
+  return field.spec.ts === 'string' ? `'${raw.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'` : raw
+}
+
+/** Ligne d'une table locale : ids libres (pas forcément UUID) et défauts appliqués par zod. */
+export function zodLocalRow(f: Field): string {
+  const base = f.type === 'uuid' ? 'z.string()' : f.spec.zod
+  const fallback = jsDefault(f)
+  return `  ${f.name}: ${base}${f.nullable ? '.nullable()' : ''}${fallback === undefined ? '' : `.default(${fallback})`},`
+}
+
+/** Imports requis par les défauts d'une table locale (jour local : dayKey). */
+export const localRowImports = (fields: Field[]) =>
+  fields.some((f) => f.type === 'date' && /^now\(\)$/i.test(f.defaultValue ?? '')) ? "import { dayKey } from '@daroms/lib/dates'\n" : ''
+
 export function zodInput(f: Field): string {
   let schema = f.spec.zod
   if (f.type === 'text' && !f.nullable) schema = "z.string().trim().min(1, 'daroms:validation.required')"

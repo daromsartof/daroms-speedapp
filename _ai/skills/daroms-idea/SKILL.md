@@ -12,7 +12,7 @@ Idée : $ARGUMENTS
 2. Rédiger `app.spec.md` (format ci-dessous), en français, sans emoji ni tiret long :
    - **Pitch** (1 phrase), **Cible** (1 persona), **Boucle principale** (déclencheur, action, récompense, retour).
    - **Écrans** (3 à 6) : tableau `Écran | Rôle | Données | États` ; nom en kebab-case (= route et feature).
-   - **Données** : tableau `Table | Colonnes (nom:type) | RLS` au format de `bun daroms g table --fields`.
+   - **Données** : tableau `Table | Colonnes (nom:type) | RLS` au format de `bun daroms g table --fields` ; préciser **Supabase** (compte, synchro, partage) ou **local** (appareil seul, sans compte : `--local`).
    - **Modules** parmi `bun daroms module list` (auth, onboarding, settings, payments, push, analytics, ai-chat) avec leur config.
    - **Monétisation** (free, freemium, subscription) et ce qui est Pro.
    - **Nom** (3 propositions, choisir la 1re), **slug**, **ton** (playful, pro, minimal), couleur principale et accent (hex).

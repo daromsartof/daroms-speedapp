@@ -37,6 +37,11 @@ class CheckRules(unittest.TestCase):
 
     def test_api_may_use_supabase(self):
         self.assertEqual(rules.check("src/features/todos/api.ts", "import { db } from '@daroms/data'"), [])
+        self.assertEqual(rules.check("src/features/todos/api.ts", "import { localTable, queryKeys } from '@daroms/data'"), [])
+
+    def test_local_table_only_in_api(self):
+        problems = rules.check("src/features/todos/TodosScreen.tsx", "import { localTable } from '@daroms/data'")
+        self.assertIn("localTable", " ".join(problems))
 
     def test_thin_route(self):
         self.assertEqual(rules.check("app/x.tsx", "export { default } from '@/features/x/XScreen'\n"), [])

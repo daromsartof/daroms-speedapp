@@ -18,15 +18,17 @@ const CORE_SKIP = /^(node_modules|\.git|\.daroms|coverage)(\/|$)|\/node_modules(
 type VariantScreen = { name: string; tab?: boolean; icon?: string; title?: string; titleEn?: string }
 type Variant = {
   modules?: Record<string, Record<string, unknown>>
-  tables?: { name: string; fields: string; feature?: string }[]
+  tables?: { name: string; fields: string; feature?: string; local?: boolean }[]
   screens?: VariantScreen[]
   notes?: string
 }
 
-/** Exécute la recette de la variante avec les générateurs (tables puis écrans). */
-async function runVariant(dest: string, variant: Variant) {
+/** Exécute la recette de la variante avec les générateurs (tables puis écrans) ; local : tables sur l'appareil. */
+async function runVariant(dest: string, variant: Variant, local: boolean) {
   const { screen, table } = await import('./generate')
-  for (const t of variant.tables ?? []) await table(dest, t.name, { _: [], flags: { fields: t.fields, ...(t.feature ? { feature: t.feature } : {}) } })
+  for (const t of variant.tables ?? []) {
+    await table(dest, t.name, { _: [], flags: { fields: t.fields, ...(t.feature ? { feature: t.feature } : {}), local: local || Boolean(t.local) } })
+  }
   for (const s of variant.screens ?? []) {
     const flags: Record<string, string | boolean> = { tab: Boolean(s.tab), icon: s.icon ?? 'Inbox', title: s.title ?? s.name, 'title-en': s.titleEn ?? s.title ?? s.name }
     await screen(dest, s.name, { _: [], flags }, true)
@@ -101,7 +103,7 @@ export async function newApp(args: Args) {
   for (const [slugModule, config] of Object.entries(modules)) await addModule(dest, slugModule, { config })
   writeRegistry(dest, Object.keys((await loadManifest(dest)).modules))
   if (Object.keys(modules).length) await installModules(dest)
-  await runVariant(dest, extra)
+  await runVariant(dest, extra, bool(args, 'local'))
 
   await generateAssets(dest)
   await regenerateRouteTypes(dest)

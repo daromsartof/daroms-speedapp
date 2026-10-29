@@ -38,8 +38,8 @@ const baseRestrictedImports = ({ allowSupabase, allowRnPrimitives, allowRelative
       : [
           {
             name: '@daroms/data',
-            importNames: ['db', 'getSupabase'],
-            message: 'Accès Supabase uniquement dans src/features/<x>/api.ts.',
+            importNames: ['db', 'getSupabase', 'localTable'],
+            message: 'Accès aux données (Supabase ou table locale) uniquement dans src/features/<x>/api.ts.',
           },
         ]),
   ],
