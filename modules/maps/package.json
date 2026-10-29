@@ -1,0 +1,21 @@
+{
+  "name": "@daroms/module-maps",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Carte et marqueurs (react-native-maps, repli web), position de l'utilisateur, calculs de distance, ouverture dans l'app de cartes",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/data": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/lib": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.0.0",
+    "expo-location": "*",
+    "react-native-maps": "*"
+  }
+}

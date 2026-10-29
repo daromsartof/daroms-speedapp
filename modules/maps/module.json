@@ -1,0 +1,7 @@
+{
+  "title": "Cartes",
+  "description": "Carte avec marqueurs (react-native-maps, repli web), position de l'utilisateur (expo-location), ouverture dans Plans/Maps",
+  "dependencies": ["react-native-maps", "expo-location"],
+  "env": ["GOOGLE_MAPS_ANDROID_API_KEY"],
+  "defaultConfig": { "span": 0.05 }
+}

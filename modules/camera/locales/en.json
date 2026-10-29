@@ -1,0 +1,10 @@
+{
+  "title": "Photo",
+  "add": "Add a photo",
+  "change": "Change photo",
+  "take": "Take a photo",
+  "library": "Choose from library",
+  "remove": "Remove photo",
+  "denied": "Camera access denied: allow it in Settings.",
+  "failed": "Could not load the photo."
+}
