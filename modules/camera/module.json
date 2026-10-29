@@ -1,0 +1,8 @@
+{
+  "title": "Photos",
+  "description": "Photo prise ou choisie (expo-image-picker), envoyée dans Supabase Storage (dossier par utilisateur), composant PhotoPicker",
+  "dependencies": ["expo-image-picker"],
+  "requires": ["auth"],
+  "migrations": ["migrations/storage_images.sql"],
+  "defaultConfig": { "bucket": "images", "quality": 0.7 }
+}

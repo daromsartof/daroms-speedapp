@@ -1,7 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react-native'
 
 import { Plus } from '../icons'
-import { Badge, Body, Button, EmptyState, ErrorState, ListItem, ProgressBar, QueryView, SegmentedControl, Title } from '../index'
+import { Badge, BarChart, Body, Button, EmptyState, ErrorState, ListItem, ProgressBar, QueryView, SegmentedControl, Stat, Title } from '../index'
 import { renderUI } from '../testing/render'
 
 describe('@daroms/ui', () => {
@@ -49,5 +49,21 @@ describe('@daroms/ui', () => {
     )
     expect(screen.getByText('Titre')).toBeTruthy()
     expect(screen.getByLabelText('Progression 40 pour cent')).toBeTruthy()
+  })
+
+  it('BarChart et Stat exposent leurs valeurs aux lecteurs d écran', async () => {
+    const data = [
+      { key: 'l', label: 'L', value: 0 },
+      { key: 'm', label: 'M', value: 12 },
+    ]
+    await renderUI(
+      <>
+        <BarChart data={data} label="Pages" highlight="m" />
+        <Stat value={12} label="pages cette semaine" />
+      </>,
+    )
+    expect(screen.getByLabelText('Pages : L 0, M 12')).toBeTruthy()
+    expect(screen.getByLabelText('12 pages cette semaine')).toBeTruthy()
+    expect(screen.getByText('M')).toBeTruthy()
   })
 })

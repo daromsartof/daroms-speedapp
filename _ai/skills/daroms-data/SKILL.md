@@ -6,7 +6,7 @@ description: Crée la couche données depuis app.spec.md - tables Supabase avec 
 # /daroms-data : tables et API
 
 1. Lire `app.spec.md > Données`. Une table par entité ; colonnes au format `nom:type[?][=défaut]` (types : text, int, numeric, bool, date, timestamptz, uuid, jsonb, text[]).
-2. Pour chaque table : `bun daroms g table <table> --fields "..." [--feature <feature>]` (migration RLS propriétaire, `schema.ts`, `api.ts`, types hors ligne).
+2. Pour chaque table : `bun daroms g table <table> --fields "..." [--feature <feature>]` (migration RLS propriétaire, `schema.ts`, `api.ts`, types hors ligne). Données marquées **local** dans le cahier : ajouter `--local` (appareil, mêmes hooks, étapes 3 et 4 sans objet).
 3. Relations ou partage : compléter la migration générée à la main (clé étrangère + index + politique) ; lire `.claude/rules-ondemand/daroms-supabase-advanced.md`.
 4. Si `manifest.supabase.projectRef` est renseigné : `bun daroms db push` (pousse et régénère `src/types/db.ts`). Sinon types hors ligne (suffisants pour coder).
 5. `bun daroms doctor --quick`.

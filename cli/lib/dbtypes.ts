@@ -7,7 +7,8 @@ import { join } from 'node:path'
 import type { Field } from './fields'
 import { readJson, writeFile, writeJson } from './fsx'
 
-export type SchemaFile = { tables: Record<string, { fields: Pick<Field, 'name' | 'type' | 'nullable' | 'defaultValue'>[] }> }
+/** `local: true` : table sur l'appareil (g table --local), absente de Postgres et des types db.ts. */
+export type SchemaFile = { tables: Record<string, { local?: boolean; fields: Pick<Field, 'name' | 'type' | 'nullable' | 'defaultValue'>[] }> }
 
 const TS: Record<string, string> = {
   text: 'string', int: 'number', bigint: 'number', numeric: 'number', float: 'number', bool: 'boolean',
@@ -29,7 +30,7 @@ export function saveSchema(root: string, schema: SchemaFile) {
 const never = '{ [_ in never]: never }'
 
 export function renderDbTypes(schema: SchemaFile): string {
-  const tables = Object.entries(schema.tables).map(([name, { fields }]) => {
+  const tables = Object.entries(schema.tables).filter(([, t]) => !t.local).map(([name, { fields }]) => {
     const base = [
       { name: 'id', ts: 'string', optional: true, nullable: false },
       { name: 'user_id', ts: 'string', optional: true, nullable: false },

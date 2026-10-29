@@ -11,10 +11,10 @@ const lazy = <K extends string>(path: string, name: K) => async (args: Args) => 
 }
 
 const COMMANDS: Record<string, Command> = {
-  new: { describe: 'new <slug> [--name --variant --primary --accent --tone --radius --font --modules a,b --copy|--link]', run: lazy('./commands/project', 'newApp') },
+  new: { describe: 'new <slug> [--name --variant --local --primary --accent --tone --radius --font --modules a,b --copy|--link]', run: lazy('./commands/project', 'newApp') },
   dev: { describe: 'serveur Expo + QR pour Expo Go [--dev-client --web --android --ios --tunnel --clear]', run: lazy('./commands/project', 'dev') },
   doctor: { describe: 'diagnostic complet (env, manifest, règles, types, lint, expo-doctor) [--quick]', run: lazy('./commands/project', 'doctor') },
-  g: { describe: 'g screen|feature|table|module <nom> [options]', run: lazy('./commands/generate', 'generate') },
+  g: { describe: 'g screen|feature|table|module <nom> [options] (table --local : données sur l appareil)', run: lazy('./commands/generate', 'generate') },
   icons: { describe: 'icons add <NomLucide...> : ajoute des icônes Lucide à l app', run: lazy('./commands/generate', 'icons') },
   module: { describe: 'module add|remove|list [slug]', run: lazy('./commands/module', 'moduleCommand') },
   shot: { describe: 'shot <route> [--dark --capture --locale en --storage cle=val --storage-file f.json --android --stop] : logs, erreurs, débordements, capture si utile', run: lazy('./commands/quality', 'shot') },

@@ -1,9 +1,9 @@
-import { existsSync, renameSync, symlinkSync } from 'node:fs'
+import { existsSync, readdirSync, renameSync, symlinkSync } from 'node:fs'
 import { basename, join, resolve } from 'node:path'
 
 import { bool, flag, type Args } from '../lib/args'
 import { capture, run } from '../lib/exec'
-import { copyDir, readJson, substitute } from '../lib/fsx'
+import { copyDir, readJson, substitute, writeJson } from '../lib/fsx'
 import { color, fail, log } from '../lib/log'
 import { loadManifest, saveManifest } from '../lib/manifest'
 import { addModule, installModules, writeRegistry } from '../lib/modules'
@@ -18,15 +18,17 @@ const CORE_SKIP = /^(node_modules|\.git|\.daroms|coverage)(\/|$)|\/node_modules(
 type VariantScreen = { name: string; tab?: boolean; icon?: string; title?: string; titleEn?: string }
 type Variant = {
   modules?: Record<string, Record<string, unknown>>
-  tables?: { name: string; fields: string; feature?: string }[]
+  tables?: { name: string; fields: string; feature?: string; local?: boolean }[]
   screens?: VariantScreen[]
   notes?: string
 }
 
-/** Exécute la recette de la variante avec les générateurs (tables puis écrans). */
-async function runVariant(dest: string, variant: Variant) {
+/** Exécute la recette de la variante avec les générateurs (tables puis écrans) ; local : tables sur l'appareil. */
+async function runVariant(dest: string, variant: Variant, local: boolean) {
   const { screen, table } = await import('./generate')
-  for (const t of variant.tables ?? []) await table(dest, t.name, { _: [], flags: { fields: t.fields, ...(t.feature ? { feature: t.feature } : {}) } })
+  for (const t of variant.tables ?? []) {
+    await table(dest, t.name, { _: [], flags: { fields: t.fields, ...(t.feature ? { feature: t.feature } : {}), local: local || Boolean(t.local) } })
+  }
   for (const s of variant.screens ?? []) {
     const flags: Record<string, string | boolean> = { tab: Boolean(s.tab), icon: s.icon ?? 'Inbox', title: s.title ?? s.name, 'title-en': s.titleEn ?? s.title ?? s.name }
     await screen(dest, s.name, { _: [], flags }, true)
@@ -39,9 +41,21 @@ async function coreRemote(): Promise<string> {
   return code === 0 ? out.trim() : DEFAULT_CORE_URL
 }
 
+/** Bun ne suit pas un lien symbolique dans un motif de workspace (core/packages/*) : chemins explicites. */
+function expandCoreWorkspaces(dest: string) {
+  const file = join(dest, 'package.json')
+  const pkg = readJson<{ workspaces: string[] }>(file)
+  const packages = readdirSync(join(CORE_DIR, 'packages'))
+    .filter((name) => existsSync(join(CORE_DIR, 'packages', name, 'package.json')))
+    .map((name) => `core/packages/${name}`)
+  pkg.workspaces = [...new Set(pkg.workspaces.flatMap((w) => (w === 'core/packages/*' ? packages : [w])))]
+  writeJson(file, pkg)
+}
+
 async function attachCore(dest: string, args: Args) {
   if (bool(args, 'link')) {
     symlinkSync(CORE_DIR, join(dest, 'core'), 'dir')
+    expandCoreWorkspaces(dest)
     return log.ok('cœur lié (lien symbolique, développement du cœur)')
   }
   if (bool(args, 'copy')) {
@@ -101,7 +115,7 @@ export async function newApp(args: Args) {
   for (const [slugModule, config] of Object.entries(modules)) await addModule(dest, slugModule, { config })
   writeRegistry(dest, Object.keys((await loadManifest(dest)).modules))
   if (Object.keys(modules).length) await installModules(dest)
-  await runVariant(dest, extra)
+  await runVariant(dest, extra, bool(args, 'local'))
 
   await generateAssets(dest)
   await regenerateRouteTypes(dest)

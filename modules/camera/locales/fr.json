@@ -1,0 +1,10 @@
+{
+  "title": "Photo",
+  "add": "Ajouter une photo",
+  "change": "Changer la photo",
+  "take": "Prendre une photo",
+  "library": "Choisir dans la galerie",
+  "remove": "Retirer la photo",
+  "denied": "Accès à l'appareil photo refusé : autorisez-le dans les réglages.",
+  "failed": "Impossible de charger la photo."
+}

@@ -4,12 +4,12 @@ Dans une app : `bun daroms <commande>`. Hors app : `bun <cœur>/cli/daroms.ts <c
 
 | Commande | Rôle |
 |---|---|
-| `new <slug> [--name --variant blank|list-detail|tracker|ai-chat|social|shop --primary --accent --tone --radius --font --bundle --modules a,b --supabase ref --dir --core url --copy --link --no-git]` | crée une app complète |
+| `new <slug> [--name --variant blank|list-detail|tracker|ai-chat|social|shop --local --primary --accent --tone --radius --font --bundle --modules a,b --supabase ref --dir --core url --copy --link --no-git]` | crée une app complète (`--local` : tables de la variante sur l'appareil) |
 | `dev [--dev-client --web --android --ios --tunnel --clear]` | serveur Expo et QR : Expo Go par défaut, build de dev avec `--dev-client` |
 | `doctor [--quick]` | Node, `.env`, manifest, i18n, règles, TypeScript, ESLint, expo-doctor |
 | `g screen <nom> [--tab --icon --title --title-en --route --force]` | écran complet (route, feature, i18n, test, manifest) |
 | `g feature <nom>` | feature sans route |
-| `g table <table> --fields "..." [--feature --singular]` | migration RLS, zod, hooks, types |
+| `g table <table> --fields "..." [--feature --singular --local]` | migration RLS, zod, hooks, types ; `--local` : table sur l'appareil, mêmes hooks, sans Supabase |
 | `g module <slug> [--description]` | squelette de module du cœur |
 | `icons add <Nom...>` | icônes Lucide supplémentaires (`@/icons`) |
 | `module add|remove|list [slug] [--no-install]` | modules |

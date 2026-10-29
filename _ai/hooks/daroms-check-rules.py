@@ -32,7 +32,7 @@ RULES: list[tuple[re.Pattern[str], str, tuple[str, ...]]] = [
     (re.compile(r">\s*[A-Za-zÀ-ÿ][^<>{}\n]*[A-Za-zÀ-ÿ.!?:]\s*</[A-Za-z]"), "texte en dur dans le JSX : t('cle') + clés FR/EN dans locales/", (".tsx",)),
     (re.compile("\u2014"), "tiret long interdit dans les textes", (".ts", ".tsx", ".json")),
 ]
-SUPABASE_IMPORT = re.compile(r"from\s+['\"]@supabase/|import\s*\{[^}]*\b(?:db|getSupabase)\b[^}]*\}\s*from\s+['\"]@daroms/data['\"]")
+SUPABASE_IMPORT = re.compile(r"from\s+['\"]@supabase/|import\s*\{[^}]*\b(?:db|getSupabase|localTable)\b[^}]*\}\s*from\s+['\"]@daroms/data['\"]")
 UI_LIBS = re.compile(r"from\s+['\"](?:react-native-paper|native-base|@rneui/|@expo/vector-icons|react-native-vector-icons|lucide-react-native|@tamagui/lucide-icons)")
 REEXPORT = re.compile(r"^export\s*(?:\{[^}]*\}|\*)\s*from\s*['\"][^'\"]+['\"];?$")
 SKIP = ("src/generated/", "src/types/db.ts", "src/icons/lucide/", "supabase/functions/")
@@ -66,7 +66,7 @@ def check(rel: str, text: str, full: str | None = None) -> list[str]:
             problems.append(f"ligne {number} : emoji interdit")
         if suffix in (".ts", ".tsx"):
             if SUPABASE_IMPORT.search(line) and not rel.endswith("/api.ts"):
-                problems.append(f"ligne {number} : Supabase uniquement dans src/features/<x>/api.ts")
+                problems.append(f"ligne {number} : données (Supabase, localTable) uniquement dans src/features/<x>/api.ts")
             if UI_LIBS.search(line):
                 problems.append(f"ligne {number} : librairie UI/icônes tierce : @daroms/ui et @daroms/ui/icons")
     content = full if full is not None else text

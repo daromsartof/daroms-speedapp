@@ -232,6 +232,43 @@
     "supabase/functions/ai-chat/"
    ],
    "notes": "Prompt système et modèle côté serveur (secrets Supabase)."
+  },
+  {
+   "name": "photos",
+   "module": "camera",
+   "keywords": [
+    "photo",
+    "camera",
+    "appareil",
+    "galerie",
+    "image",
+    "upload",
+    "storage",
+    "avatar"
+   ],
+   "paths": [
+    "core/modules/camera/README.md"
+   ],
+   "notes": "PhotoPicker dans l'écran, uploadPhoto dans api.ts (bucket images)."
+  },
+  {
+   "name": "cartes",
+   "module": "maps",
+   "keywords": [
+    "carte",
+    "map",
+    "maps",
+    "localisation",
+    "position",
+    "gps",
+    "lieu",
+    "distance",
+    "itineraire"
+   ],
+   "paths": [
+    "core/modules/maps/README.md"
+   ],
+   "notes": "Map, useCurrentLocation, sortByDistance, openInMaps depuis @daroms/module-maps."
   }
  ]
 }

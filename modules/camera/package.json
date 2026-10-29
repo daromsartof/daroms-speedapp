@@ -1,0 +1,19 @@
+{
+  "name": "@daroms/module-camera",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Photos : appareil photo ou galerie (expo-image-picker), envoi dans Supabase Storage, composant PhotoPicker",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/data": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/lib": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "expo-image-picker": "*"
+  }
+}

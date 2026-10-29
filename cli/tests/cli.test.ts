@@ -3,7 +3,7 @@ import { describe, expect, it } from 'bun:test'
 import { bumpVersion, changelogSection } from '../commands/core'
 import { parseArgs } from '../lib/args'
 import { renderDbTypes } from '../lib/dbtypes'
-import { parseFields, sqlColumn, zodInput } from '../lib/fields'
+import { localRowImports, parseFields, sqlColumn, zodInput, zodLocalRow } from '../lib/fields'
 import { camel, pascal, render } from '../lib/fsx'
 import { toTs } from '../lib/manifest'
 
@@ -30,6 +30,20 @@ describe('champs de table', () => {
     expect(zodInput(fields[1]!)).toBe('  done: z.boolean().optional(),')
     expect(zodInput(fields[2]!)).toBe('  due_at: z.string().nullable().optional(),')
   })
+  it('traduit les défauts SQL pour une table locale', () => {
+    const local = parseFields("title:text, done:bool=false, due_at:timestamptz?, status:text=l'un, owner:uuid, at:timestamptz=now(), on:date=now()")
+    expect(local.map(zodLocalRow)).toEqual([
+      '  title: z.string(),',
+      '  done: z.boolean().default(false),',
+      '  due_at: z.string().nullable().default(null),',
+      "  status: z.string().default('l\\'un'),",
+      '  owner: z.string(),',
+      '  at: z.string().default(() => new Date().toISOString()),',
+      '  on: z.string().default(() => dayKey()),',
+    ])
+    expect(localRowImports(local)).toBe("import { dayKey } from '@daroms/lib/dates'\n")
+    expect(localRowImports(parseFields('title:text'))).toBe('')
+  })
   it('refuse un type inconnu', () => {
     expect(() => parseFields('x:money')).toThrow()
   })
@@ -55,6 +69,10 @@ describe('types db hors ligne', () => {
     expect(out).toContain('title: string')
     expect(out).toContain('id?: string')
     expect(out).toContain('Relationships: []')
+  })
+  it('ignore les tables locales', () => {
+    const out = renderDbTypes({ tables: { books: { local: true, fields: [{ name: 'title', type: 'text', nullable: false }] } } })
+    expect(out).not.toContain('books')
   })
 })
 

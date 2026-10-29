@@ -1,6 +1,7 @@
 export { configureSupabase, db, getSupabase, getSupabaseEnv, isSupabaseConfigured, moduleDb } from './client'
 export { AppError, toAppError, unwrap, type AppErrorCode } from './errors'
 export { parseOrThrow, queryKeys } from './helpers'
+export { localTable, type LocalRow, type LocalTable } from './local'
 export { createQueryClient, QueryProvider } from './query'
 export type { AppDatabase, AppSupabaseClient, FallbackDatabase, Register } from './register'
 export { SessionProvider, useSession, useUser } from './session'

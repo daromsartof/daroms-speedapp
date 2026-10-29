@@ -1,7 +1,9 @@
 import { useT } from '@daroms/i18n'
+import { addDays, formatWeekday } from '@daroms/lib'
 import {
   Avatar,
   Badge,
+  BarChart,
   Body,
   Button,
   Caption,
@@ -17,11 +19,12 @@ import {
   ProgressBar,
   Sheet,
   Skeleton,
+  Stat,
   Tabs,
   XStack,
   YStack,
 } from '@daroms/ui'
-import { Bell, Heart, Plus, Settings, Star } from '@daroms/ui/icons'
+import { Bell, Flame, Heart, Plus, Settings, Star } from '@daroms/ui/icons'
 import { useState } from 'react'
 
 export function ActionsSection() {
@@ -46,6 +49,8 @@ export function ActionsSection() {
     </YStack>
   )
 }
+
+const WEEK = [3, 5, 0, 8, 4, 6, 2]
 
 export function DisplaySection() {
   const t = useT()
@@ -75,6 +80,13 @@ export function DisplaySection() {
       </XStack>
       <Tabs tabs={[{ value: 'a', label: t('dev.tabA') }, { value: 'b', label: t('dev.tabB'), count: 3 }]} value={tab} onChange={setTab} />
       <ProgressBar value={0.62} />
+      <XStack gap="inline">
+        <Stat value={42} label={t('dev.statPages')} />
+        <Stat value={7} label={t('dev.statStreak')} icon={Flame} tone="accent" />
+      </XStack>
+      <Card>
+        <BarChart data={WEEK.map((value, i) => ({ key: String(i), label: formatWeekday(addDays(new Date(), i - 6), 'narrow'), value }))} label={t('dev.chart')} highlight="6" />
+      </Card>
     </YStack>
   )
 }

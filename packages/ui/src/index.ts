@@ -1,6 +1,7 @@
 // @daroms/ui : lire CATALOG.md plutôt que les sources.
 export { Avatar, type AvatarProps } from './components/Avatar'
 export { Badge, type BadgeTone } from './components/Badge'
+export { BarChart, type BarDatum } from './components/BarChart'
 export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from './components/Button'
 export { Card } from './components/Card'
 export { Chip, type ChipProps } from './components/Chip'
@@ -23,6 +24,7 @@ export { SegmentedControl, type SegmentOption } from './components/SegmentedCont
 export { SettingsList, type SettingsItem, type SettingsSection } from './components/SettingsList'
 export { Sheet, type SheetProps } from './components/Sheet'
 export { Skeleton, SkeletonList } from './components/Skeleton'
+export { Stat } from './components/Stat'
 export { Tabs, type TabItem } from './components/Tabs'
 export { Body, Caption, Heading, Title } from './components/Text'
 export { notify, Toaster } from './components/Toast'
