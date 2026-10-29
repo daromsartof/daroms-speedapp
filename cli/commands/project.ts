@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, renameSync, symlinkSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, realpathSync, renameSync, symlinkSync } from 'node:fs'
 import { basename, join, resolve } from 'node:path'
 
 import { bool, flag, type Args } from '../lib/args'
@@ -12,7 +12,7 @@ import { regenerateRouteTypes } from '../lib/routes'
 import { generateAssets } from './assets'
 import { syncAi } from './ai'
 
-const DEFAULT_CORE_URL = 'https://github.com/daromsartof/Daroms-Speed-App.git'
+const DEFAULT_CORE_URL = 'https://github.com/daromsartof/daroms-speedapp.git'
 const CORE_SKIP = /^(node_modules|\.git|\.daroms|coverage|docs\/dist|docs\/\.astro)(\/|$)|\/node_modules(\/|$)/
 
 type VariantScreen = { name: string; tab?: boolean; icon?: string; title?: string; titleEn?: string }
@@ -36,7 +36,14 @@ async function runVariant(dest: string, variant: Variant, local: boolean) {
   if (variant.notes) log.warn(variant.notes)
 }
 
-async function coreRemote(): Promise<string> {
+/** Cœur cloné (développement) ou installé depuis npm (dossier node_modules, éventuellement dans un autre dépôt git). */
+async function coreIsCheckout(): Promise<boolean> {
+  const { code, out } = await capture(['git', '-C', CORE_DIR, 'rev-parse', '--show-toplevel'])
+  return code === 0 && realpathSync(out.trim()) === realpathSync(CORE_DIR)
+}
+
+async function coreRemote(checkout: boolean): Promise<string> {
+  if (!checkout) return DEFAULT_CORE_URL
   const { code, out } = await capture(['git', '-C', CORE_DIR, 'remote', 'get-url', 'origin'])
   return code === 0 ? out.trim() : DEFAULT_CORE_URL
 }
@@ -62,9 +69,22 @@ async function attachCore(dest: string, args: Args) {
     copyDir(CORE_DIR, join(dest, 'core'), (rel) => CORE_SKIP.test(rel))
     return log.ok('cœur copié (instantané local, sans sous-module)')
   }
-  const url = flag(args, 'core') ?? (await coreRemote())
-  await run(['git', 'submodule', 'add', url, 'core'], { cwd: dest })
+  const checkout = await coreIsCheckout()
+  const url = flag(args, 'core') ?? (await coreRemote(checkout))
+  // installé depuis npm : sans accès au dépôt, on copie le cœur installé plutôt que d'échouer
+  const added = await run(['git', 'submodule', 'add', url, 'core'], { cwd: dest, allowFailure: !checkout, env: checkout ? {} : { GIT_TERMINAL_PROMPT: '0' } })
+  if (added !== 0) {
+    log.warn(`dépôt ${url} inaccessible : copie du cœur installé à la place (relancer avec --core <url> pour un sous-module)`)
+    copyDir(CORE_DIR, join(dest, 'core'), (rel) => CORE_SKIP.test(rel))
+    return log.ok('cœur copié (instantané du paquet npm, sans sous-module)')
+  }
   log.ok(`cœur ajouté en sous-module (${url})`)
+  if (checkout) return
+  // paquet npm : le sous-module suit la version de la CLI qui crée l'app
+  const tag = `v${readFileSync(join(CORE_DIR, 'VERSION'), 'utf8').trim()}`
+  const pinned = await run(['git', '-C', 'core', 'checkout', '-q', tag], { cwd: dest, allowFailure: true })
+  if (pinned === 0) log.ok(`sous-module core/ fixé sur ${tag}`)
+  else log.warn(`tag ${tag} introuvable sur ${url} : core/ reste sur la branche par défaut`)
 }
 
 function applyVariant(dest: string, name: string): Variant {
