@@ -46,7 +46,22 @@ Les pages Composants, Modules, Règles et Skills sont générées depuis les sou
 
 ```bash
 bun daroms release-core minor --dry   # aperçu : version et section de changelog
-bun daroms release-core minor         # version, CHANGELOG.md, commit et tag
+bun daroms release-core minor         # VERSION, package.json, CHANGELOG.md, commit et tag vX.Y.Z
+git push --follow-tags                # le tag déclenche .github/workflows/publish.yml
 ```
 
-L'arbre git doit être propre. Ensuite, chaque app suit [Mettre à jour le cœur](/guides/mettre-a-jour-le-coeur/).
+Le workflow `publish` vérifie que tag, `VERSION` et `package.json` concordent, installe, lance `bun run check` (via `prepublishOnly`) puis `npm publish` du paquet `@daromsart/daroms-speed-app`. Si la version est déjà sur npm, il ne fait rien. Ensuite, chaque app suit [Mettre à jour le cœur](/guides/mettre-a-jour-le-coeur/).
+
+Le paquet contient `cli/`, `packages/`, `modules/`, `template/`, `generators/`, `_ai/`, `VERSION`, `CHANGELOG.md`, sans tests ni docs. Vérifier son contenu : `npm pack --dry-run`.
+
+### Configurer npm (une fois)
+
+1. Compte sur npmjs.com, membre de l'organisation `daromsart`, puis `npm login` dans le terminal.
+2. Première publication, depuis `main` après `release-core` : `npm publish` (lance `bun run check`), puis `git push --follow-tags`.
+3. Sur npmjs.com, paquet `@daromsart/daroms-speed-app` > Settings > Trusted publishing : GitHub Actions, dépôt `daromsartof/daroms-speedapp`, workflow `publish.yml`. Les versions suivantes partent du CI sans jeton.
+
+Sans publication de confiance : créer un jeton npm d'automatisation et l'ajouter au dépôt comme secret `NPM_TOKEN` (`gh secret set NPM_TOKEN`).
+
+## Documentation en ligne
+
+Le workflow `docs` publie le site sur GitHub Pages (https://daromsartof.github.io/daroms-speedapp/) à chaque push sur `main` qui touche la doc ou ses sources. Source Pages du dépôt : GitHub Actions.

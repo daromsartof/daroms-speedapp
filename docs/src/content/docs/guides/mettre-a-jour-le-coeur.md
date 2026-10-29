@@ -16,3 +16,4 @@ git add core && git commit -m "chore(core): passe à v0.2.0"
 - Lire `core/CHANGELOG.md` avant : les ruptures n'arrivent qu'en version majeure.
 - Les fichiers `app-*` de `.claude/` ne sont jamais touchés ; les `daroms-*` sont écrasés.
 - `daroms-sync` (hook de début de session) resynchronise aussi la couche IA automatiquement quand `core/_ai` a changé.
+- App créée avec un cœur copié (sans sous-module) : remplacer `core/` par la nouvelle version, ou le transformer en sous-module (`git rm -r core && git submodule add https://github.com/daromsartof/daroms-speedapp.git core`), puis les mêmes commandes.
