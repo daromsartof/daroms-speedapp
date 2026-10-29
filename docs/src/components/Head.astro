@@ -1,0 +1,8 @@
+---
+// En-tête Starlight + préchargement de la police des titres (évite le décalage au chargement).
+import Default from '@astrojs/starlight/components/Head.astro'
+import archivo from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url'
+---
+
+<link rel="preload" href={archivo} as="font" type="font/woff2" crossorigin />
+<Default />

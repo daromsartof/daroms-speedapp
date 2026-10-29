@@ -1,11 +1,54 @@
 {
-  "name": "daroms-speed-app",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@daromsart/daroms-speed-app",
+  "version": "0.2.0",
   "description": "Cœur Daroms Speed App : framework mobile Expo + Tamagui + Supabase piloté par Claude",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "author": "Daroms",
+  "homepage": "https://daromsartof.github.io/daroms-speedapp/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daromsartof/daroms-speedapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/daromsartof/daroms-speedapp/issues"
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "tamagui",
+    "supabase",
+    "claude",
+    "claude-code",
+    "framework",
+    "mobile",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=22.18",
+    "bun": ">=1.3"
+  },
   "bin": {
-    "daroms": "./cli/daroms.ts"
+    "daroms": "cli/daroms.ts"
+  },
+  "files": [
+    "cli",
+    "!cli/tests",
+    "packages",
+    "modules",
+    "!modules/__typetest__",
+    "template",
+    "generators",
+    "_ai",
+    "!_ai/hooks/tests",
+    "!**/__tests__",
+    "!**/__typetest__",
+    "!**/__pycache__",
+    "VERSION",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "workspaces": [
     "packages/*",
@@ -20,7 +63,10 @@
     "test:cli": "bun test ./cli",
     "test:hooks": "python3 -m unittest discover -s _ai/hooks/tests",
     "catalog": "bun cli/daroms.ts catalog",
-    "check": "bun run typecheck && bun run lint && bun run test && bun run test:cli && bun run test:hooks"
+    "docs:dev": "cd docs && bun install && bun run dev",
+    "docs:check": "cd docs && bun install && bun run check",
+    "check": "bun run typecheck && bun run lint && bun run test && bun run test:cli && bun run test:hooks",
+    "prepublishOnly": "bun run check"
   },
   "devDependencies": {
     "@hookform/resolvers": "^6.0.0",

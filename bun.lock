@@ -116,6 +116,36 @@
         "expo-crypto",
       ],
     },
+    "modules/camera": {
+      "name": "@daroms/module-camera",
+      "version": "0.1.0",
+      "dependencies": {
+        "@daroms/app": "workspace:*",
+        "@daroms/data": "workspace:*",
+        "@daroms/i18n": "workspace:*",
+        "@daroms/lib": "workspace:*",
+        "@daroms/ui": "workspace:*",
+      },
+      "peerDependencies": {
+        "expo-image-picker": "*",
+      },
+    },
+    "modules/maps": {
+      "name": "@daroms/module-maps",
+      "version": "0.1.0",
+      "dependencies": {
+        "@daroms/app": "workspace:*",
+        "@daroms/data": "workspace:*",
+        "@daroms/i18n": "workspace:*",
+        "@daroms/lib": "workspace:*",
+        "@daroms/ui": "workspace:*",
+      },
+      "peerDependencies": {
+        "@tanstack/react-query": "^5.0.0",
+        "expo-location": "*",
+        "react-native-maps": "*",
+      },
+    },
     "modules/onboarding": {
       "name": "@daroms/module-onboarding",
       "version": "0.1.0",
@@ -482,6 +512,10 @@
     "@daroms/module-analytics": ["@daroms/module-analytics@workspace:modules/analytics"],
 
     "@daroms/module-auth": ["@daroms/module-auth@workspace:modules/auth"],
+
+    "@daroms/module-camera": ["@daroms/module-camera@workspace:modules/camera"],
+
+    "@daroms/module-maps": ["@daroms/module-maps@workspace:modules/maps"],
 
     "@daroms/module-onboarding": ["@daroms/module-onboarding@workspace:modules/onboarding"],
 

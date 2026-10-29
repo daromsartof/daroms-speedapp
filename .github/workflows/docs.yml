@@ -1,0 +1,60 @@
+# Site de documentation : build, vérification des liens et des fichiers pour agents, publication GitHub Pages.
+name: docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'packages/ui/CATALOG.md'
+      - 'packages/theme/src/**'
+      - 'modules/**'
+      - '_ai/**'
+      - 'cli/daroms.ts'
+      - 'template/variants/**'
+      - 'VERSION'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # dates « Dernière mise à jour » tirées de git
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - name: Installer
+        working-directory: docs
+        run: bun install --frozen-lockfile
+      - name: Construire et vérifier
+        working-directory: docs
+        run: bun run check
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

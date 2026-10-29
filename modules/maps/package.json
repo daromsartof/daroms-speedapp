@@ -1,6 +1,6 @@
 {
   "name": "@daroms/module-maps",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Carte et marqueurs (react-native-maps, repli web), position de l'utilisateur, calculs de distance, ouverture dans l'app de cartes",

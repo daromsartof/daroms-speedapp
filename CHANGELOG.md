@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.0 (2026-10-29)
+
+### Documentation
+- installation par npm et procédure de publication
+- site de documentation et vitrine (Astro + Starlight)
+
+### Divers
+- paquet public @daromsart/daroms-speed-app (MIT) et publication sur tag
+- scripts docs:dev et docs:check, README, copie du cœur sans build du site
+- build, vérification et publication GitHub Pages
+
+### Nouveautés
+- daroms new depuis le paquet npm
+- camera (photos vers Supabase Storage) et maps (carte, position)
+- tables locales (localTable, g table --local, new --local)
+- BarChart et Stat (graphique en barres, chiffre clé)
+- jours calendaires (dayKey, lastDays, streak, formatWeekday)
+
+### Corrections
+- new --link installe à nouveau les paquets du cœur
+- test:cli n'exécute plus les gabarits des générateurs
+- QR pour Expo Go par défaut, build de dev avec --dev-client
+
 ## v0.1.0 (2026-10-22)
 
 ### Nouveautés
