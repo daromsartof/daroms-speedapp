@@ -1,0 +1,248 @@
+---
+// Vitrine : ce que le framework fait, montré avec son propre code.
+import BrandPlayground from '../components/landing/BrandPlayground.astro'
+import core from '../generated/core.json'
+import Landing from '../layouts/Landing.astro'
+import { REPO_URL, SITE_DESCRIPTION, SITE_TITLE } from '../site'
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+const link = (path: string) => `${base}${path}`
+const abs = (path: string) => new URL(link(path), Astro.site).href
+const createCommand = 'bun cli/daroms.ts new mon-app --variant tracker'
+const agentPrompt = `Lis ${abs('/llms.txt')}, puis ajoute un écran « Livres » à mon app daroms en suivant le guide « Ajouter un écran ».`
+
+const day = [
+  {
+    moment: 'Matin',
+    length: '1 h',
+    title: 'Cadrer et créer',
+    skills: ['/daroms-idea', '/daroms-new'],
+    text: 'Claude écrit le cahier app.spec.md avec toi, puis une commande crée l’app complète et affiche le QR d’aperçu.',
+  },
+  {
+    moment: 'Midi',
+    length: '2 h',
+    title: 'Marque, design, données',
+    skills: ['/daroms-brand', '/daroms-design', '/daroms-data'],
+    text: 'Cinq valeurs dans brand.ts et l’icône, des wireframes texte par écran, puis les tables Supabase avec RLS.',
+  },
+  {
+    moment: 'Après-midi',
+    length: '3 h',
+    title: 'Écrans et modules',
+    skills: ['/daroms-screen', '/daroms-module', '/daroms-check'],
+    text: 'Chaque écran est généré puis rempli avec @daroms/ui ; paiements, notifications ou chat IA s’ajoutent en module.',
+  },
+  {
+    moment: 'Soir',
+    length: '1 h',
+    title: 'Publier',
+    skills: ['/daroms-store', '/daroms-build', '/daroms-submit'],
+    text: 'Fiche store FR et EN, build EAS, envoi vers TestFlight et la piste interne de Google Play.',
+  },
+]
+
+const provided = [
+  {
+    need: 'Le thème clair et sombre',
+    answer: `brand.ts et ses 5 valeurs : palettes OKLCH de 11 nuances, 8 sous-thèmes, rayons, espacements et ressorts déduits du ton.`,
+    href: '/reference/marque/',
+    cta: 'La marque',
+  },
+  {
+    need: 'Les composants',
+    answer: `${core.components} composants @daroms/ui avec chargement, vide, erreur, accessibilité et haptique intégrés, et ${core.icons} icônes Lucide.`,
+    href: '/reference/composants/',
+    cta: 'Le catalogue',
+  },
+  {
+    need: 'La couche données',
+    answer: 'g table écrit la migration avec RLS, le schéma zod et les hooks TanStack Query. Avec --local, les mêmes hooks gardent les données sur l’appareil.',
+    href: '/guides/ajouter-une-table/',
+    cta: 'Ajouter une table',
+  },
+  {
+    need: 'Les fonctionnalités courantes',
+    answer: `${core.modules.length} modules activables en une commande : ${core.modules.map((m) => m.slug).join(', ')}.`,
+    href: '/reference/modules/auth/',
+    cta: 'Les modules',
+  },
+  {
+    need: 'Le point de départ',
+    answer: `${core.variants.length} variantes d’app : ${core.variants.join(', ')}. Chacune arrive avec ses modules, ses tables et ses écrans.`,
+    href: '/reference/variantes/',
+    cta: 'Les variantes',
+  },
+  {
+    need: 'L’outillage',
+    answer: `${core.commands.length} commandes daroms, de new à submit, et ${core.skills} skills Claude qui les enchaînent.`,
+    href: '/reference/cli/',
+    cta: 'La CLI',
+  },
+]
+---
+
+<Landing title={`${SITE_TITLE} : une app mobile par jour avec Claude`} description={SITE_DESCRIPTION}>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <h1 id="hero-title">Une idée le matin, l’app sur ton téléphone le soir.</h1>
+    <div class="hero-body">
+      <p class="lede">
+        Daroms Speed App est un framework mobile Expo, Tamagui et Supabase conçu pour Claude Code. Le cœur fournit le thème, les composants, les
+        données, les modules et la publication. Claude n’écrit que ce qui rend ton app unique, sous des règles vérifiées à chaque fichier.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href={link('/demarrer/tutoriel/')}>Suivre le tutoriel</a>
+        <a class="button" href={link('/demarrer/introduction/')}>Lire la documentation</a>
+      </div>
+      <div class="command">
+        <span class="command-label" id="create-label">Créer une app</span>
+        <code aria-labelledby="create-label" translate="no">{createCommand}</code>
+        <button type="button" class="copy" data-copy={createCommand} aria-label="Copier la commande de création">Copier</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <BrandPlayground />
+  </div>
+
+  <section class="day wrap" aria-labelledby="day-title">
+    <div class="section-head">
+      <h2 id="day-title">Une journée en quatre étapes</h2>
+      <p>
+        <code>/daroms-day</code> enchaîne les étapes et attend ta validation entre chacune. Les durées sont celles de l’app pilote.
+      </p>
+    </div>
+    <ol class="timeline">
+      {
+        day.map((step) => (
+          <li class="step">
+            <p class="step-when">
+              <span class="step-moment">{step.moment}</span>
+              <span class="step-length">{step.length}</span>
+            </p>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+            <p class="step-skills">
+              {step.skills.map((s) => (
+                <code>{s}</code>
+              ))}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="more"><a href={link('/demarrer/tutoriel/')}>Le tutoriel complet, commande par commande</a></p>
+  </section>
+
+  <section class="provided wrap" aria-labelledby="provided-title">
+    <div class="section-head">
+      <h2 id="provided-title">Ce que tu n’écris plus</h2>
+      <p>Le cœur est un sous-module git versionné. Ton app ne contient que son spécifique : features, textes, migrations, marque et manifest.</p>
+    </div>
+    <dl class="provided-list">
+      {
+        provided.map((item) => (
+          <div class="provided-row">
+            <dt>{item.need}</dt>
+            <dd>
+              <p>{item.answer}</p>
+              <a href={link(item.href)}>{item.cta}</a>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="rules wrap" aria-labelledby="rules-title">
+    <div class="rules-text">
+      <h2 id="rules-title">Les règles sont vérifiées, pas suggérées</h2>
+      <p>
+        Chaque écriture de Claude passe par un hook. Une couleur en dur, un appel Supabase dans un composant ou un texte hors i18n est refusé avec un
+        message court&nbsp;; Claude corrige et réécrit. Ensuite <code>tsc</code> et ESLint tournent sur le seul fichier touché.
+      </p>
+      <ul class="rule-list">
+        <li>Routes minces&nbsp;: <code>app/**</code> ne fait que réexporter un écran.</li>
+        <li>Styles&nbsp;: composants <code>@daroms/ui</code> et tokens Tamagui v3, rien d’autre.</li>
+        <li>Données&nbsp;: Supabase seulement dans <code>features/x/api.ts</code>, validé par zod.</li>
+        <li>Base&nbsp;: RLS sur chaque table, jamais de clé <code>service_role</code> dans l’app.</li>
+        <li>Écrans&nbsp;: chargement, vide, erreur avec réessai, données.</li>
+      </ul>
+      <p class="more"><a href={link('/reference/regles/')}>Les {core.rules + core.rulesOnDemand} règles et ce qui les vérifie</a></p>
+    </div>
+    <figure class="terminal">
+      <figcaption>Session Claude Code dans une app daroms</figcaption>
+      <pre translate="no"><code><span class="t-dim">Write  src/features/books/BooksScreen.tsx</span>
+<span class="t-del">-  &lt;YStack bg="#0F766E" p=&#123;14&#125;&gt;</span>
+
+<span class="t-refuse">daroms-check-rules refuse src/features/books/BooksScreen.tsx :</span>
+<span class="t-refuse">- couleur hex : utiliser un token (bg="card", color="color-11", brand-500)</span>
+<span class="t-refuse">- nombre magique de style : token (p="4", gap="stack", rounded="card")</span>
+<span class="t-dim">Corriger puis réécrire (voir CATALOG.md pour les tokens).</span>
+
+<span class="t-dim">Write  src/features/books/BooksScreen.tsx</span>
+<span class="t-add">+  &lt;YStack theme="brand" bg="background" p="gutter"&gt;</span>
+
+<span class="t-ok">daroms-typecheck : tsc et eslint sans erreur</span></code></pre>
+    </figure>
+  </section>
+
+  <section class="agents wrap" aria-labelledby="agents-title">
+    <div class="section-head">
+      <h2 id="agents-title">Une documentation que ton agent lit aussi</h2>
+      <p>Chaque page existe en Markdown à la même adresse, avec le suffixe <code>.md</code>. Un index au format llms.txt pointe vers toutes.</p>
+    </div>
+    <div class="agents-grid">
+      <ul class="agent-files">
+        <li>
+          <a href={link('/llms.txt')}><code>/llms.txt</code></a>
+          <p>L’index : une ligne par page avec son résumé, et ce qu’un agent doit savoir avant d’écrire du code daroms.</p>
+        </li>
+        <li>
+          <a href={link('/llms-full.txt')}><code>/llms-full.txt</code></a>
+          <p>Toute la documentation en un seul fichier, dans l’ordre de lecture.</p>
+        </li>
+        <li>
+          <a href={link('/guides/ajouter-une-table.md')}><code>/guides/ajouter-une-table.md</code></a>
+          <p>N’importe quelle page en Markdown, annoncée dans son HTML par <code>rel="alternate"</code>.</p>
+        </li>
+      </ul>
+      <div class="prompt">
+        <p class="prompt-label" id="prompt-label">À coller dans ton agent</p>
+        <p class="prompt-text" aria-labelledby="prompt-label">{agentPrompt}</p>
+        <button type="button" class="copy" data-copy={agentPrompt}>Copier le message</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot" slot="footer">
+    <div class="wrap foot-row">
+      <p>{SITE_TITLE}, cœur v{core.version}. Expo SDK 58, Tamagui v3, Supabase.</p>
+      <ul>
+        <li><a href={link('/demarrer/introduction/')}>Documentation</a></li>
+        <li><a href={link('/llms.txt')}>llms.txt</a></li>
+        <li><a href={`${REPO_URL}/blob/main/CHANGELOG.md`}>Changelog</a></li>
+        <li><a href={REPO_URL}>GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+</Landing>
+
+<script>
+  const status = document.querySelector('#live-status')!
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    const label = button.textContent
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy!)
+        button.textContent = 'Copié'
+        status.textContent = 'Copié dans le presse-papiers.'
+      } catch {
+        button.textContent = 'Copie impossible'
+        status.textContent = 'Copie impossible : sélectionner le texte et le copier à la main.'
+      }
+      setTimeout(() => (button.textContent = label), 2000)
+    })
+  })
+</script>

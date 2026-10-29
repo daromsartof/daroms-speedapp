@@ -1,0 +1,84 @@
+---
+// Gabarit de la vitrine : même thème clair/sombre que la doc (clé starlight-theme), en-tête léger.
+import '@fontsource-variable/archivo/wdth.css'
+import '@fontsource-variable/jetbrains-mono'
+import '@fontsource-variable/inter'
+import '../styles/tokens.css'
+import '../styles/landing.css'
+
+import archivo from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url'
+import inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url'
+
+import logo from '../assets/logo.svg?raw'
+import { REPO_URL, SITE_TITLE } from '../site'
+
+type Props = { title: string; description: string }
+const { title, description } = Astro.props
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+const canonical = new URL(Astro.url.pathname, Astro.site).href
+const nav = [
+  { href: `${base}/demarrer/introduction/`, label: 'Documentation' },
+  { href: `${base}/reference/cli/`, label: 'Référence' },
+  { href: `${base}/agents/utiliser-avec-un-agent/`, label: 'Pour les agents' },
+]
+---
+
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <link rel="alternate" type="text/plain" title="llms.txt" href={`${base}/llms.txt`} />
+    <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
+    <meta name="theme-color" content="#f5f7fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d1430" media="(prefers-color-scheme: dark)" />
+    <link rel="preload" href={archivo} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={inter} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="fr_FR" />
+    <script is:inline>
+      // même logique que Starlight : choix enregistré, sinon préférence du système
+      try {
+        const stored = localStorage.getItem('starlight-theme')
+        const theme = stored === 'light' || stored === 'dark' ? stored : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+        document.documentElement.dataset.theme = theme
+      } catch {
+        if (matchMedia('(prefers-color-scheme: light)').matches) document.documentElement.dataset.theme = 'light'
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+    <header class="top">
+      <div class="wrap top-row">
+        <a class="brand" href={`${base}/`} aria-label={`${SITE_TITLE}, accueil`}>
+          <span class="brand-mark" set:html={logo} />
+          <span class="brand-name" translate="no">{SITE_TITLE}</span>
+        </a>
+        <nav aria-label="Principale">
+          <ul class="nav">
+            {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+            <li>
+              <a href={REPO_URL} class="nav-github">
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3" /></svg>
+                <span class="nav-github-label">GitHub</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="contenu">
+      <slot />
+    </main>
+    <slot name="footer" />
+    <p class="sr-only" role="status" aria-live="polite" id="live-status"></p>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+---
+// brand.ts modifiable : chaque valeur recalcule l'aperçu avec l'algorithme de @daroms/theme.
+import { DEFAULT_BRAND, PRESETS, previewVars, styleString } from '../../lib/brand-preview'
+import Phone from './Phone.astro'
+
+const initial = previewVars(DEFAULT_BRAND)
+const selects = [
+  { key: 'font', options: ['inter', 'system'], hint: 'Police embarquée ou police du système' },
+  { key: 'radius', options: ['none', 'sm', 'md', 'lg', 'xl', 'full'], hint: 'Rayon de base des composants' },
+  { key: 'tone', options: ['playful', 'pro', 'minimal'], hint: 'Ton : rayons, espacements, graisses, rebond, neutres' },
+] as const
+---
+
+<section class="playground" aria-labelledby="playground-title">
+  <div class="pg-intro">
+    <h2 id="playground-title">Cinq valeurs, toute l’app suit</h2>
+    <p>
+      Modifie <code>brand.ts</code> : palettes, clair et sombre, rayons, espacements et graisses sont recalculés par
+      <code>@daroms/theme</code>, le même code que dans tes apps.
+    </p>
+  </div>
+
+  <div class="pg-editor">
+    <div class="file">
+      <div class="file-tab">brand.ts</div>
+      <form class="code" id="brand-form" autocomplete="off" translate="no">
+        <p class="code-line code-muted">import {'{'} defineBrand {'}'} from '@daroms/theme/brand'</p>
+        <p class="code-line code-gap" aria-hidden="true"></p>
+        <p class="code-line"><span class="code-kw">export default</span>defineBrand({'{'}</p>
+        {
+          (['primary', 'accent'] as const).map((key) => (
+            <p class="code-line code-field code-comment" id={`brand-${key}-hint`}>
+              {key === 'primary' ? '// boutons, liens, éléments actifs' : '// mises en avant, badges'}
+            </p>
+            <p class="code-line code-field">
+              <label for={`brand-${key}`}>{key}</label>
+              <span class="code-punct">: '</span>
+              <span class="color-field">
+                <input
+                  type="color"
+                  class="swatch"
+                  data-swatch={key}
+                  value={DEFAULT_BRAND[key].toLowerCase()}
+                  aria-label={key === 'primary' ? 'Choisir la couleur principale' : "Choisir la couleur d'accent"}
+                />
+                <input
+                  id={`brand-${key}`}
+                  name={key}
+                  class="code-input hex"
+                  value={DEFAULT_BRAND[key]}
+                  maxlength="7"
+                  spellcheck="false"
+                  pattern="#[0-9a-fA-F]{6}"
+                  aria-describedby={`brand-${key}-hint brand-error`}
+                />
+              </span>
+              <span class="code-punct">',</span>
+            </p>
+          ))
+        }
+        {
+          selects.map((s) => (
+            <p class="code-line code-field code-comment" id={`brand-${s.key}-hint`}>
+              // {s.hint.toLowerCase()}
+            </p>
+            <p class="code-line code-field">
+              <label for={`brand-${s.key}`}>{s.key}</label>
+              <span class="code-punct">: '</span>
+              <select id={`brand-${s.key}`} name={s.key} class="code-input" aria-describedby={`brand-${s.key}-hint`}>
+                {s.options.map((o) => (
+                  <option value={o} selected={DEFAULT_BRAND[s.key] === o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
+              <span class="code-punct">',</span>
+            </p>
+          ))
+        }
+        <p class="code-line">{'})'}</p>
+      </form>
+    </div>
+    <p class="pg-error" id="brand-error" role="status" aria-live="polite"></p>
+    <div class="presets" role="group" aria-labelledby="presets-label">
+      <span id="presets-label">Marques d’exemple</span>
+      {
+        PRESETS.map((p) => (
+          <button type="button" class="chip" data-preset={JSON.stringify(p.brand)}>
+            {p.name}
+          </button>
+        ))
+      }
+      <button type="button" class="chip" data-preset={JSON.stringify(DEFAULT_BRAND)}>Valeurs par défaut</button>
+    </div>
+  </div>
+
+  <div class="pg-device">
+    <div class="scheme" role="group" aria-label="Thème de l’aperçu">
+      <button type="button" data-scheme="light" aria-pressed="true">Clair</button>
+      <button type="button" data-scheme="dark" aria-pressed="false">Sombre</button>
+    </div>
+    <Phone style={styleString(initial.vars)} />
+  </div>
+
+  <div class="pg-palette">
+    <ol class="palette" id="brand-palette" aria-label="Palette brand générée">
+      {
+        initial.palette.map((c) => (
+          <li style={`--c:${c.hex}`} data-anchor={c.shade === initial.anchorShade ? '' : undefined}>
+            <span class="palette-shade">{c.shade}</span>
+            <span class="sr-only">{c.hex}</span>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="palette-caption" id="palette-caption" aria-live="polite">
+      Nuances <code>brand-50</code> à <code>brand-950</code> calculées en OKLCH. Ta couleur est gardée telle quelle sur la plus proche :
+      <code data-anchor-label>brand-{initial.anchorShade}</code>.
+    </p>
+  </div>
+</section>
+
+<script>
+  import { previewVars, type PreviewBrand } from '../../lib/brand-preview'
+
+  const form = document.querySelector<HTMLFormElement>('#brand-form')!
+  const phone = document.querySelector<HTMLElement>('#preview-phone')!
+  const palette = document.querySelector<HTMLOListElement>('#brand-palette')!
+  const anchorLabel = document.querySelector<HTMLElement>('[data-anchor-label]')!
+  const error = document.querySelector<HTMLElement>('#brand-error')!
+  const isHex = (v: string) => /^#[0-9a-f]{6}$/i.test(v)
+
+  function current(): PreviewBrand {
+    const data = new FormData(form)
+    return {
+      primary: String(data.get('primary')),
+      accent: String(data.get('accent')),
+      font: data.get('font') as PreviewBrand['font'],
+      radius: data.get('radius') as PreviewBrand['radius'],
+      tone: data.get('tone') as PreviewBrand['tone'],
+    }
+  }
+
+  function render() {
+    const brand = current()
+    for (const key of ['primary', 'accent'] as const) {
+      const input = form.elements.namedItem(key) as HTMLInputElement
+      input.setAttribute('aria-invalid', String(!isHex(brand[key])))
+    }
+    const invalid = (['primary', 'accent'] as const).filter((key) => !isHex(brand[key]))
+    error.textContent = invalid.length ? `${invalid.join(' et ')} : couleur attendue au format #RRGGBB, par exemple #0F766E.` : ''
+    if (invalid.length) return
+    const { vars, palette: shades, anchorShade } = previewVars(brand)
+    for (const [k, v] of Object.entries(vars)) phone.style.setProperty(k, v)
+    palette.querySelectorAll('li').forEach((li, i) => {
+      li.style.setProperty('--c', shades[i]!.hex)
+      li.toggleAttribute('data-anchor', shades[i]!.shade === anchorShade)
+      li.querySelector('.sr-only')!.textContent = shades[i]!.hex
+    })
+    anchorLabel.textContent = `brand-${anchorShade}`
+  }
+
+  function set(brand: PreviewBrand) {
+    for (const [k, v] of Object.entries(brand)) (form.elements.namedItem(k) as HTMLInputElement | HTMLSelectElement).value = v
+    for (const key of ['primary', 'accent'] as const) {
+      form.querySelector<HTMLInputElement>(`[data-swatch="${key}"]`)!.value = brand[key].toLowerCase()
+    }
+    render()
+  }
+
+  form.addEventListener('submit', (e) => e.preventDefault())
+  form.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement
+    if (target.dataset.swatch) (form.elements.namedItem(target.dataset.swatch) as HTMLInputElement).value = target.value.toUpperCase()
+    else if (target.classList.contains('hex') && isHex(target.value)) {
+      form.querySelector<HTMLInputElement>(`[data-swatch="${target.name}"]`)!.value = target.value.toLowerCase()
+    }
+    render()
+  })
+
+  document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((button) =>
+    button.addEventListener('click', () => set(JSON.parse(button.dataset.preset!) as PreviewBrand)),
+  )
+
+  document.querySelectorAll<HTMLButtonElement>('[data-scheme]').forEach((button, _, all) =>
+    button.addEventListener('click', () => {
+      phone.dataset.scheme = button.dataset.scheme
+      all.forEach((b) => b.setAttribute('aria-pressed', String(b === button)))
+    }),
+  )
+</script>

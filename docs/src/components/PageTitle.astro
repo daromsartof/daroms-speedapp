@@ -1,0 +1,95 @@
+---
+// Titre de page + actions pour agents : copier la page en Markdown, l'ouvrir, la donner à Claude.
+import Default from '@astrojs/starlight/components/PageTitle.astro'
+
+import { markdownPath } from '../lib/agent-markdown'
+
+const { entry } = Astro.locals.starlightRoute
+const isDoc = entry.id !== '404'
+const md = markdownPath(entry.id)
+const mdUrl = new URL(md, Astro.site).href
+const prompt = `Lis ${mdUrl} (documentation de Daroms Speed App), puis aide-moi à appliquer cette page dans mon app.`
+---
+
+<Default />
+{
+  isDoc && (
+    <div class="page-actions" role="group" aria-label="Utiliser cette page avec un agent">
+      <button type="button" class="page-action" data-copy-markdown={md}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+        <span data-label>Copier en Markdown</span>
+      </button>
+      <a class="page-action" href={md}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /></svg>
+        Voir le Markdown
+      </a>
+      <a class="page-action" href={`https://claude.ai/new?q=${encodeURIComponent(prompt)}`} target="_blank" rel="noopener">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+        Ouvrir dans Claude<span class="sr-only"> (nouvel onglet)</span>
+      </a>
+      <span class="sr-only" role="status" data-status></span>
+    </div>
+  )
+}
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy-markdown]')) {
+    const label = button.querySelector('[data-label]')!
+    const status = button.parentElement!.querySelector('[data-status]')!
+    button.addEventListener('click', async () => {
+      try {
+        const text = await fetch(button.dataset.copyMarkdown!).then((r) => {
+          if (!r.ok) throw new Error(String(r.status))
+          return r.text()
+        })
+        await navigator.clipboard.writeText(text)
+        label.textContent = 'Markdown copié'
+        status.textContent = 'Page copiée en Markdown dans le presse-papiers.'
+      } catch {
+        label.textContent = 'Copie impossible'
+        status.textContent = 'Copie impossible : ouvrir « Voir le Markdown » et copier le texte.'
+      }
+      setTimeout(() => (label.textContent = 'Copier en Markdown'), 2500)
+    })
+  }
+</script>
+
+<style>
+  .page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .page-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--sl-color-gray-2);
+    font: inherit;
+    font-size: var(--sl-text-sm);
+    text-decoration: none;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .page-action:hover {
+    border-color: var(--sl-color-accent);
+    color: var(--sl-color-white);
+  }
+  .page-action:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 2px;
+  }
+  .page-action svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>
