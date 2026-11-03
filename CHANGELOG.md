@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.5.1 (2026-11-03)
+
+### Documentation
+- site en anglais (accueil, Démarrer) et image d'aperçu sociale
+- README et description npm en anglais
+
 ## v0.5.0 (2026-11-03)
 
 ### Documentation
