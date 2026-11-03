@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.4.0 (2026-11-03)
+
+### Documentation
+- installer et lancer la CLI avec npx
+- méthode ECC dans le README et la référence des skills
+- commande cost et bilan de coût de la journée
+
+### Nouveautés
+- méthode ECC embarquée (skills figés et daroms-ecc)
+- bilan de coût en fin de /daroms-day
+- daroms cost chiffre les tokens de l'app au tarif API
+
+### Corrections
+- la synchro fusionne les clés objet de settings.json
+
 ## v0.3.0 (2026-11-03)
 
 ### Corrections
