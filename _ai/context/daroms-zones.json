@@ -18,6 +18,26 @@
    "notes": "Changer brand.ts (5 valeurs) ; jamais de couleur en dur. /daroms-brand."
   },
   {
+   "name": "design et inspiration",
+   "keywords": [
+    "inspiration",
+    "moodboard",
+    "dribbble",
+    "pinterest",
+    "behance",
+    "mobbin",
+    "maquette",
+    "wireframe",
+    "design",
+    "style"
+   ],
+   "paths": [
+    "app.spec.md",
+    ".daroms/inspiration/"
+   ],
+   "notes": "/daroms-inspire (références web, direction dans app.spec.md > Inspiration) avant /daroms-design ; bun daroms inspire <url> pour regarder un aperçu ; ne rien copier."
+  },
+  {
    "name": "composants UI",
    "keywords": [
     "composant",

@@ -46,8 +46,8 @@ l'app n'écrit que son spécifique. Ne jamais modifier `core/` depuis une app.
 
 ## Commandes
 `bun daroms` : `dev`, `doctor`, `g screen|feature|table`, `module add|list`, `icons add`, `shot`, `test`, `e2e`,
-`assets`, `db new|push|types`, `build`, `submit`, `update`, `sync-ai`.
-Skills : `/daroms-day` (journée complète), `/daroms-idea`, `/daroms-new`, `/daroms-brand`, `/daroms-design`,
+`assets`, `inspire`, `db new|push|types`, `build`, `submit`, `update`, `sync-ai`.
+Skills : `/daroms-day` (journée complète), `/daroms-idea`, `/daroms-new`, `/daroms-inspire` (références web avant tout design), `/daroms-brand`, `/daroms-design`,
 `/daroms-data`, `/daroms-screen`, `/daroms-module`, `/daroms-fix`, `/daroms-check`, `/daroms-polish`,
 `/daroms-store`, `/daroms-build`, `/daroms-submit`, `/daroms-update`, `/daroms-commit`, `/daroms-learn`.
 

@@ -19,7 +19,17 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Read(./core/packages/ui/CATALOG.md)",
-      "Read(./app.spec.md)"
+      "Read(./app.spec.md)",
+      "Read(./.daroms/inspiration/**)",
+      "WebSearch",
+      "WebFetch(domain:dribbble.com)",
+      "WebFetch(domain:pinterest.com)",
+      "WebFetch(domain:www.pinterest.com)",
+      "WebFetch(domain:behance.net)",
+      "WebFetch(domain:www.behance.net)",
+      "WebFetch(domain:mobbin.com)",
+      "WebFetch(domain:screensdesign.com)",
+      "WebFetch(domain:pageflows.com)"
     ],
     "deny": [
       "Read(./.env)",
