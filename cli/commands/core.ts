@@ -53,7 +53,8 @@ export async function releaseCore(args: Args) {
   const next = bumpVersion(current, bump)
   const lastTag = await capture(['git', '-C', CORE_DIR, 'describe', '--tags', '--abbrev=0'])
   const range = lastTag.code === 0 ? `${lastTag.out.trim()}..HEAD` : 'HEAD'
-  const log_ = await capture(['git', '-C', CORE_DIR, 'log', range, '--pretty=format:%s'])
+  // sans les fusions de PR : leurs commits figurent déjà un par un
+  const log_ = await capture(['git', '-C', CORE_DIR, 'log', range, '--no-merges', '--pretty=format:%s'])
   const subjects = log_.out.split('\n').filter((s) => s && !s.startsWith('chore(release)'))
   const section = changelogSection(next, new Date().toISOString().slice(0, 10), subjects)
   if (bool(args, 'dry')) return console.log(`${current} -> ${next}\n\n${section}`)
