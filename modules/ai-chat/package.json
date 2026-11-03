@@ -1,6 +1,6 @@
 {
   "name": "@daroms/module-ai-chat",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "description": "Chat IA avec Claude : edge function en streaming (clé côté serveur), conversations stockées, écran de chat",

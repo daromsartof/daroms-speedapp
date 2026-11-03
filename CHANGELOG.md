@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.5.0 (2026-11-03)
+
+### Documentation
+- modèles et contexte par étape, alerte de contexte
+
+### Nouveautés
+- alerte quand le contexte dépasse 150 k tokens
+- étapes mécaniques en sous-agents Sonnet ou Haiku
+
+### Corrections
+- cost --out accepte un chemin absolu, daroms-ecc n'est pas une étape
+
 ## v0.4.0 (2026-11-03)
 
 ### Documentation
