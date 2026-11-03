@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.3.0 (2026-11-03)
+
+### Corrections
+- release-core ignore les commits de fusion dans le changelog
+- le job docs installe aussi les dépendances du cœur
+
+### Documentation
+- étape d'inspiration et commande inspire
+
+### Nouveautés
+- étape d'inspiration /daroms-inspire avant le design
+- daroms inspire télécharge des aperçus d'inspiration
+
 ## v0.2.1 (2026-10-29)
 
 ### Documentation
