@@ -10,6 +10,10 @@
 
 **An idea in the morning, the app on your phone by evening.**
 
+[![Demo: create an app with npx, change brand.ts, generate a table and a screen, a rule hook refusing a hard-coded color, the screen in light and dark](https://raw.githubusercontent.com/daromsartof/daroms-speedapp/main/docs/public/demo.gif)](https://daromsartof.github.io/daroms-speedapp/demo.mp4)
+
+*Real output from a demo app: the app was created in 42 s (measured). [Watch the full 50 s demo](https://daromsartof.github.io/daroms-speedapp/demo.mp4).*
+
 An **Expo + Tamagui + Supabase** mobile framework built for Claude Code. The core ships the theme, components, data layer, modules and store publishing; your app only writes what is specific to it, under rules checked on every file.
 
 - **Generate before writing**: screens, tables and modules come from deterministic templates, no AI involved. Claude only fills in what is specific.
