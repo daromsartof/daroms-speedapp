@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'bun:test'
 
 import { bumpVersion, changelogSection } from '../commands/core'
+import { imageKind, nextFileName, previewImage } from '../commands/inspire'
 import { parseArgs } from '../lib/args'
 import { renderDbTypes } from '../lib/dbtypes'
 import { localRowImports, parseFields, sqlColumn, zodInput, zodLocalRow } from '../lib/fields'
@@ -87,5 +88,27 @@ describe('release-core', () => {
     expect(section).toContain('### Nouveautés\n- ajoute Chip')
     expect(section).toContain('### Corrections\n- corrige Sheet')
     expect(section).toContain('### Divers\n- deps')
+  })
+})
+
+describe('inspire', () => {
+  const bytes = (...values: (number | string)[]) =>
+    new Uint8Array(values.flatMap((v) => (typeof v === 'string' ? [...v].map((c) => c.charCodeAt(0)) : [v])))
+  it('reconnaît le format par les premiers octets', () => {
+    expect(imageKind(bytes(0x89, 'PNG', 0x0d, 0x0a))).toBe('png')
+    expect(imageKind(bytes(0xff, 0xd8, 0xff, 0xe0))).toBe('jpg')
+    expect(imageKind(bytes('GIF89a'))).toBe('gif')
+    expect(imageKind(bytes('RIFF', 0, 0, 0, 0, 'WEBPVP8 '))).toBe('webp')
+    expect(imageKind(bytes('<!doctype html>'))).toBeUndefined()
+  })
+  it("trouve l'image d'aperçu d'une page", () => {
+    const html = `<head><meta name="twitter:image" content="https://cdn.x/tw.png"><meta content="/shots/1.png?w=800&amp;h=600" property="og:image"></head>`
+    expect(previewImage(html, 'https://dribbble.com/shots/1-app')).toBe('https://dribbble.com/shots/1.png?w=800&h=600')
+    expect(previewImage('<meta name="twitter:image" content="https://cdn.x/tw.png">', 'https://a.b/')).toBe('https://cdn.x/tw.png')
+    expect(previewImage('<title>rien</title>', 'https://a.b/')).toBeUndefined()
+  })
+  it('numérote les fichiers par hôte source', () => {
+    expect(nextFileName([], 'https://www.pinterest.com/pin/1/', 'webp')).toBe('01-pinterest-com.webp')
+    expect(nextFileName(['01-dribbble-com.png', '02-mobbin-com.jpg', 'index.json'], 'https://dribbble.com/shots/2', 'png')).toBe('03-dribbble-com.png')
   })
 })

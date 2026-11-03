@@ -21,6 +21,7 @@ const COMMANDS: Record<string, Command> = {
   test: { describe: 'tests unitaires (jest-expo) [motif]', run: lazy('./commands/quality', 'test') },
   e2e: { describe: 'flows Maestro (e2e/*.yaml) [fichier] [--go : dans Expo Go] [--driver : pré-lance le pilote Android]', run: lazy('./commands/quality', 'e2e') },
   assets: { describe: 'icône, adaptive icon, splash, favicon depuis assets/source/icon.svg', run: lazy('./commands/assets', 'assets') },
+  inspire: { describe: "inspire <url...> [--clear] : télécharge des aperçus d'inspiration (image ou page) dans .daroms/inspiration/", run: lazy('./commands/inspire', 'inspire') },
   db: { describe: 'db new <nom> | push | types | reset', run: lazy('./commands/db', 'db') },
   build: { describe: 'build [preview|production|development] [--platform ios|android|all]', run: lazy('./commands/ship', 'build') },
   submit: { describe: 'submit [--platform ios|android|all] : TestFlight / piste interne', run: lazy('./commands/ship', 'submit') },
