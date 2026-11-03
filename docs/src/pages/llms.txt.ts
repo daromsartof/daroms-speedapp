@@ -18,7 +18,7 @@ export const GET: APIRoute = async ({ site }) => {
       '',
       'À savoir avant de lire ou d’écrire du code daroms :',
       '',
-      '- Paquet npm : `@daromsart/daroms-speed-app` (CLI `daroms`, Bun requis). Créer une app : `bunx @daromsart/daroms-speed-app new mon-app`.',
+      '- Paquet npm : `@daromsart/daroms-speed-app` (CLI `daroms`, Bun requis). Créer une app : `npx @daromsart/daroms-speed-app new mon-app`.',
       '- Une app contient le cœur dans `core/` (sous-module git ou copie) ; on ne modifie jamais `core/` depuis une app.',
       '- Générer avant d’écrire : `bun daroms g screen|table`, `bun daroms module add`. Claude ne remplit que le spécifique.',
       '- Tamagui v3 n’est pas Tamagui v2 : valeurs plates sans `$` (`p="gutter"`, `bg="card press:background-press"`), plus de `hoverStyle`/`pressStyle`.',

@@ -129,6 +129,10 @@
     "expo-animation": "name-only",
     "react-native-best-practices": "name-only",
     "supabase-postgres-best-practices": "name-only",
-    "supabase": "name-only"
+    "supabase": "name-only",
+    "ecc-tdd-workflow": "name-only",
+    "ecc-security-review": "name-only",
+    "ecc-accessibility": "name-only",
+    "ecc-typescript-patterns": "name-only"
   }
 }

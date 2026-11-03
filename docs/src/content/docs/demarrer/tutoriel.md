@@ -16,7 +16,7 @@ Objectif : partir d'une idée le matin et installer l'app sur un téléphone le 
 
 - Node >= 22.18, Bun >= 1.3, Python 3, Git ; Android Studio (émulateur) ou Xcode (simulateur) facultatifs.
 - Comptes : Expo (EAS), Supabase ; Apple Developer et Google Play pour publier.
-- La CLI : rien à installer, `bunx @daromsart/daroms-speed-app` la télécharge depuis npm ; ou `bun add -g @daromsart/daroms-speed-app` pour avoir `daroms` partout.
+- La CLI : rien à installer, `npx @daromsart/daroms-speed-app` la télécharge depuis npm ; ou `npm install -g @daromsart/daroms-speed-app` pour avoir `daroms` partout.
 
 Détail : [Installation](/demarrer/installation/).
 
@@ -26,7 +26,7 @@ Détail : [Installation](/demarrer/installation/).
 2. **Cadrage** (`/daroms-idea`) : Claude écrit `app.spec.md` (cible, boucle principale, 3 à 6 écrans, tables, modules, monétisation, nom, ton, variante). Relire et valider : c'est la source unique des étapes suivantes.
 3. **Création** (`/daroms-new`) : une commande crée l'app complète :
    ```bash
-   bunx @daromsart/daroms-speed-app new lecture --name "Lecture" --variant tracker --primary "#0F766E" --accent "#F59E0B" --tone minimal
+   npx @daromsart/daroms-speed-app new lecture --name "Lecture" --variant tracker --primary "#0F766E" --accent "#F59E0B" --tone minimal
    ```
    Template, sous-module `core/`, `brand.ts`, `app.manifest.ts`, modules de la variante, icônes générées, dépendances, couche IA (`.claude/`), commit initial.
 4. `cd lecture && cp .env.example .env` (URL et clé publique Supabase), puis `bun daroms dev` : scanner le QR avec Expo Go.
@@ -48,7 +48,7 @@ Détail : [Installation](/demarrer/installation/).
 
 12. **Fiche store** (`/daroms-store`) : titres, mots-clés, descriptions FR/EN, captures, politique de confidentialité.
 13. **Build** (`/daroms-build preview`) : installation interne par QR ; puis `production` et `/daroms-submit` (TestFlight, piste interne). Voir [Publier](/guides/publier/).
-14. **Bilan** : `/daroms-learn` (zones de contexte), `/daroms-commit`, et `.claude/stats.jsonl` donne le coût en tokens de chaque étape, à faire baisser à l'app suivante.
+14. **Bilan** : `/daroms-learn` (zones de contexte), puis `bun daroms cost` écrit `app.cost.md` : tokens et prix de l'app par étape, par modèle et par session, au tarif de l'API Anthropic. C'est la référence à faire baisser à l'app suivante. Enfin `/daroms-commit`.
 
 ## Et ensuite
 

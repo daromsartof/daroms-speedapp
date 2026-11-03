@@ -23,13 +23,13 @@ Comptes : Expo (EAS) et Supabase pour développer ; Apple Developer et Google Pl
 Le framework est publié sur npm (`@daromsart/daroms-speed-app`, organisation `daromsart`). Depuis le dossier qui contiendra tes projets :
 
 ```bash
-bunx @daromsart/daroms-speed-app new mon-app --name "Mon app" --variant list-detail
+npx @daromsart/daroms-speed-app new mon-app --name "Mon app" --variant list-detail
 cd mon-app
 cp .env.example .env    # URL et clé publique Supabase
 bun daroms dev          # scanner le QR avec Expo Go
 ```
 
-Commande globale facultative : `bun add -g @daromsart/daroms-speed-app`, puis `daroms new mon-app` partout. La CLI s'exécute avec Bun : `npx` sans Bun installé ne fonctionne pas.
+Commande globale facultative : `npm install -g @daromsart/daroms-speed-app`, puis `daroms new mon-app` partout. La CLI s'exécute avec Bun : `npx` sans Bun installé ne fonctionne pas.
 
 `daroms new` copie le template, ajoute le cœur en sous-module `core/`, écrit `brand.ts` et `app.manifest.ts`, active les modules de la variante, génère tables et écrans, les icônes, installe les dépendances, synchronise la couche IA dans `.claude/` et fait le commit initial. Toutes les options : [CLI, `new`](/reference/cli/#new).
 

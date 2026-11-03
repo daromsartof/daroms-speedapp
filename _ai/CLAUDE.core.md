@@ -42,11 +42,12 @@ l'app n'écrit que son spécifique. Ne jamais modifier `core/` depuis une app.
 - Écrire -> les hooks vérifient règles + types du fichier touché (message court si refus : corriger, ne pas contourner).
 - Vérifier l'écran : `bun daroms shot /route` (erreurs, débordements, puis capture si utile) ; `--dark` pour le sombre.
 - Avant de rendre : `bun daroms doctor --quick` puis `bun daroms test`.
+- Méthode ECC (skills `ecc-*`, traduits par `daroms-ecc`) : logique nouvelle ou bug -> test d'abord (`ecc-tdd-workflow`) ; auth, paiements, saisies, RLS -> `ecc-security-review`.
 - Erreurs Metro/Expo : `/daroms-fix`. Fin de tâche : `/daroms-learn` puis `/daroms-commit`.
 
 ## Commandes
 `bun daroms` : `dev`, `doctor`, `g screen|feature|table`, `module add|list`, `icons add`, `shot`, `test`, `e2e`,
-`assets`, `inspire`, `db new|push|types`, `build`, `submit`, `update`, `sync-ai`.
+`assets`, `inspire`, `db new|push|types`, `build`, `submit`, `update`, `cost` (tokens et prix de l'app), `sync-ai`.
 Skills : `/daroms-day` (journée complète), `/daroms-idea`, `/daroms-new`, `/daroms-inspire` (références web avant tout design), `/daroms-brand`, `/daroms-design`,
 `/daroms-data`, `/daroms-screen`, `/daroms-module`, `/daroms-fix`, `/daroms-check`, `/daroms-polish`,
 `/daroms-store`, `/daroms-build`, `/daroms-submit`, `/daroms-update`, `/daroms-commit`, `/daroms-learn`.

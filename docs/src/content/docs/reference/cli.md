@@ -1,9 +1,9 @@
 ---
 title: CLI daroms
-description: Toutes les commandes de la CLI daroms (new, dev, doctor, g, icons, module, shot, test, e2e, assets, inspire, db, build, submit, update, sync-ai, catalog, release-core) avec leurs options.
+description: Toutes les commandes de la CLI daroms (new, dev, doctor, g, icons, module, shot, test, e2e, assets, inspire, db, build, submit, update, cost, sync-ai, catalog, release-core) avec leurs options.
 ---
 
-Dans une app : `bun daroms <commande>`. Hors app : `bunx @daromsart/daroms-speed-app <commande>` (paquet npm), `daroms <commande>` après `bun add -g @daromsart/daroms-speed-app`, ou `bun <clone du cœur>/cli/daroms.ts <commande>`. `bun daroms --help` liste les commandes.
+Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-app <commande>` (paquet npm), `daroms <commande>` après `npm install -g @daromsart/daroms-speed-app`, ou `bun <clone du cœur>/cli/daroms.ts <commande>`. `bun daroms --help` liste les commandes.
 
 ## Résumé
 
@@ -21,13 +21,14 @@ Dans une app : `bun daroms <commande>`. Hors app : `bunx @daromsart/daroms-speed
 | [`inspire`](#inspire) | aperçus d'inspiration à regarder avant le design |
 | [`db`](#db) | migrations et types Supabase |
 | [`build`, `submit`, `update`](#build-submit-update) | EAS |
+| [`cost`](#cost) | ce que l'app a coûté en tokens et en dollars |
 | [`sync-ai`, `catalog`](#sync-ai-et-catalog) | couche IA, catalogue |
 | [`release-core`](#release-core) | version du cœur |
 
 ## new
 
 ```bash
-bunx @daromsart/daroms-speed-app new <slug> [options]
+npx @daromsart/daroms-speed-app new <slug> [options]
 ```
 
 | Option | Défaut | Effet |
@@ -150,6 +151,20 @@ bun daroms update [canal] --message "..."
 ```
 
 Détail : [Publier](/guides/publier/).
+
+## cost
+
+```bash
+bun daroms cost [--print] [--out fichier]
+```
+
+Lit les transcripts de Claude Code (`~/.claude/projects`, ou `$CLAUDE_CONFIG_DIR/projects`) et chiffre chaque réponse de Claude au tarif de l'API Anthropic : entrée, sortie, cache lu, cache écrit (5 min et 1 h), mode rapide, recherches web. Écrit `app.cost.md` : total, coût par étape (`/daroms-idea`, `/daroms-brand`, `/daroms-screen`...), par modèle et par session, et ce qu'il faut retenir (étape la plus chère, effet du cache, part des sous-agents). `--print` affiche sans écrire.
+
+- Une session compte pour l'app où elle a passé la majorité de son temps : `/daroms-day` lancé depuis une autre app compte pour la nouvelle.
+- Les sous-agents (designer, store...) sont inclus et rattachés à l'étape en cours.
+- Avec un abonnement Claude Pro ou Max, ces montants ne sont pas facturés ainsi : ils mesurent l'usage, à comparer d'une app à l'autre.
+- Claude Code efface ses transcripts après 30 jours (`cleanupPeriodDays`) : `/daroms-day` écrit le rapport en fin de journée et le versionne.
+- Tarifs dans `cli/lib/pricing.ts` du cœur, avec leur date de relevé ; un modèle inconnu est signalé et compté 0 $.
 
 ## sync-ai et catalog
 

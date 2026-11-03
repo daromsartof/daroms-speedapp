@@ -29,7 +29,7 @@ But : que Claude produise du code conforme en consommant peu de tokens.
 
 ## Apprendre d'une app à l'autre
 
-`/daroms-learn` ajoute des zones dans `.claude/context/app-zones.json` (propres à l'app) ou propose des zones génériques pour `core/_ai/context/daroms-zones.json`. `stats.jsonl` donne la référence de tokens par étape de `/daroms-day`, à faire baisser à l'app suivante.
+`/daroms-learn` ajoute des zones dans `.claude/context/app-zones.json` (propres à l'app) ou propose des zones génériques pour `core/_ai/context/daroms-zones.json`. `bun daroms cost` lit les transcripts de Claude Code et chiffre chaque étape de `/daroms-day` dans `app.cost.md`, la référence à faire baisser à l'app suivante.
 
 ## Préfixes
 
