@@ -282,7 +282,7 @@ function rulesPage(rules: Rule[]) {
   )
 }
 
-type Skill = { name: string; description: string; argument: string; manual: boolean }
+type Skill = { name: string; description: string; argument: string; manual: boolean; run: string }
 
 function readSkills(): Skill[] {
   return dirs('_ai/skills')
@@ -294,6 +294,7 @@ function readSkills(): Skill[] {
         description: String(data.description ?? ''),
         argument: String(data['argument-hint'] ?? ''),
         manual: data['disable-model-invocation'] === 'true',
+        run: data.context === 'fork' ? `sous-agent ${String(data.model ?? '')}`.trim() : 'fil principal',
       }
     })
 }
@@ -314,12 +315,12 @@ function skillsPage(skills: Skill[]) {
     [
       'Un skill est une commande Claude (`/daroms-screen`) : étapes numérotées, décisions déjà prises, appels à la CLI, point d’arrêt clair. Seule la description est chargée en permanence ; le contenu arrive à l’invocation.',
       generatedNote(['_ai/skills/*/SKILL.md', '_ai/agents/*.md', '_ai/skills/vendor/README.md']),
-      `## Skills du cœur\n\n| Commande | Argument | Rôle | Invocation |\n|---|---|---|---|\n${skills
-        .map((s) => `| ${code('/' + s.name)} | ${s.argument ? code(s.argument) : '-'} | ${cell(s.description)} | ${s.manual ? 'par l’humain uniquement' : 'humain ou Claude'} |`)
+      `## Skills du cœur\n\n| Commande | Argument | Rôle | Exécution | Invocation |\n|---|---|---|---|---|\n${skills
+        .map((s) => `| ${code('/' + s.name)} | ${s.argument ? code(s.argument) : '-'} | ${cell(s.description)} | ${s.run} | ${s.manual ? 'par l’humain uniquement' : 'humain ou Claude'} |`)
         .join('\n')}`,
-      '« Par l’humain uniquement » : `disable-model-invocation: true`, Claude ne lance pas ce skill de lui-même (création d’app, soumission aux stores, journée complète).',
-      `## Sous-agents\n\nIls travaillent dans un contexte séparé et renvoient un résumé court.\n\n| Agent | Rôle | Outils |\n|---|---|---|\n${agents
-        .map((a) => `| ${code(String(a.name))} | ${cell(String(a.description))} | ${code(String(a.tools ?? ''))} |`)
+      '« Par l’humain uniquement » : `disable-model-invocation: true`, Claude ne lance pas ce skill de lui-même (création d’app, soumission aux stores, journée complète). « Sous-agent » : `context: fork`, contexte neuf et modèle moins cher, seul le résumé revient dans la conversation ([Modèles et contexte par étape](/explications/couche-ia/#modèles-et-contexte-par-étape)).',
+      `## Sous-agents\n\nIls travaillent dans un contexte séparé et renvoient un résumé court.\n\n| Agent | Rôle | Modèle | Outils |\n|---|---|---|---|\n${agents
+        .map((a) => `| ${code(String(a.name))} | ${cell(String(a.description))} | ${code(String(a.model ?? 'inherit'))} | ${code(String(a.tools ?? ''))} |`)
         .join('\n')}`,
       `## Skills tiers figés\n\nCopiés tels quels dans \`_ai/skills/vendor/\` et chargés en \`name-only\` (nom seul) pour ne pas payer leur description à chaque tour. \`daroms-design-system\` traduit leurs conseils vers \`@daroms/ui\` ; \`daroms-ecc\` traduit les skills \`ecc-*\`, venus d’[ECC](https://ecc.tools), vers les commandes daroms.\n\n${vendorTable}`,
     ].join('\n\n'),

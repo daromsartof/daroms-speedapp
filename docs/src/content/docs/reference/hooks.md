@@ -13,7 +13,7 @@ Les hooks vivent dans `core/_ai/hooks/` (Python 3, testés par `bun run test:hoo
 | `daroms-check-rules.py` | PreToolUse Edit, Write, MultiEdit | refuse une écriture qui viole une règle, avec la correction attendue |
 | `daroms-typecheck.py` | PostToolUse Edit, Write, MultiEdit | `tsc` incrémental et ESLint limités au fichier touché, 20 lignes au plus |
 | `daroms-deny-env.py` | PreToolUse Bash | bloque toute lecture de `.env` (en plus des permissions `deny` sur Read et Edit) |
-| `daroms-session-stats.py` | Stop | tokens et durée de la session dans `.claude/stats.jsonl` |
+| `daroms-session-stats.py` | Stop | tokens et durée de la session dans `.claude/stats.jsonl` ; alerte affichée à l'utilisateur (hors contexte de Claude) quand le contexte relu à chaque réponse dépasse 150 k tokens, puis tous les 60 k ; seuil `DAROMS_CONTEXT_WARN` en milliers, `0` coupe |
 
 ## Ce que refuse daroms-check-rules
 
