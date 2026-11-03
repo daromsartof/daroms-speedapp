@@ -15,16 +15,17 @@ Enchaîner les étapes ci-dessous. Après chacune : résumé de 3 lignes maximum
 |---|---|---|---|
 | 1 | Cadrage | `/daroms-idea` | `app.spec.md` validé |
 | 2 | Création | `/daroms-new` | app qui démarre, QR affiché |
-| 3 | Marque | `/daroms-brand` | `brand.ts`, icône, splash |
-| 4 | Design | `/daroms-design` | wireframes texte dans `app.spec.md` |
-| 5 | Données | `/daroms-data` | tables RLS, `api.ts` générés |
-| 6 | Écrans | `/daroms-screen <nom>` pour chaque écran du cahier | écrans 4 états |
-| 7 | Modules | `/daroms-module <slug>` si le cahier en liste | modules configurés |
-| 8 | Vérification | `/daroms-check` | tout vert |
-| 9 | Finition | `/daroms-polish` | revue UX appliquée |
-| 10 | Store | `/daroms-store` | fiche FR/EN, captures |
-| 11 | Build | `/daroms-build` | build preview installable |
-| 12 | Soumission | `/daroms-submit` (si comptes prêts) | TestFlight / piste interne |
+| 3 | Inspiration | `/daroms-inspire` | références web et direction dans `app.spec.md` |
+| 4 | Marque | `/daroms-brand` | `brand.ts`, icône, splash |
+| 5 | Design | `/daroms-design` | wireframes texte dans `app.spec.md` |
+| 6 | Données | `/daroms-data` | tables RLS, `api.ts` générés |
+| 7 | Écrans | `/daroms-screen <nom>` pour chaque écran du cahier | écrans 4 états |
+| 8 | Modules | `/daroms-module <slug>` si le cahier en liste | modules configurés |
+| 9 | Vérification | `/daroms-check` | tout vert |
+| 10 | Finition | `/daroms-polish` | revue UX appliquée |
+| 11 | Store | `/daroms-store` | fiche FR/EN, captures |
+| 12 | Build | `/daroms-build` | build preview installable |
+| 13 | Soumission | `/daroms-submit` (si comptes prêts) | TestFlight / piste interne |
 
 Règles de la journée :
 - Une étape = un objectif ; `/clear` conseillé entre deux étapes longues (le cahier et le code portent l'état).

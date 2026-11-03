@@ -1,6 +1,6 @@
 # __APP_NAME__ : cahier de l'app
 
-> Rempli par `/daroms-idea`, enrichi par `/daroms-design`. Source unique pour Claude.
+> Rempli par `/daroms-idea`, enrichi par `/daroms-inspire` (références, direction) et `/daroms-design`. Source unique pour Claude.
 
 ## Pitch
 À compléter.
