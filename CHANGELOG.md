@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.5.2 (2026-11-03)
+
+### Documentation
+- vidéo de démo et GIF en tête du README
+
 ## v0.5.1 (2026-11-03)
 
 ### Documentation
