@@ -9,7 +9,7 @@ export type Turn = { id: string; session: string; at: string; model: string; ste
 export type Session = { id: string; started: string; ended: string; turns: Turn[]; share: number }
 
 /** Skills qui ne sont pas des étapes (chargés pendant une autre étape). */
-const HELPERS = new Set(['daroms-design-system'])
+const HELPERS = new Set(['daroms-design-system', 'daroms-ecc'])
 const OUTSIDE = 'hors étape'
 
 export const projectsDir = () => join(process.env.CLAUDE_CONFIG_DIR ?? join(homedir(), '.claude'), 'projects')

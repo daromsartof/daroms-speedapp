@@ -1,6 +1,6 @@
 // Rapport de coût d'une app : tokens et prix (tarif API Anthropic) par étape, modèle et session.
 import { existsSync, readFileSync } from 'node:fs'
-import { basename, join, relative } from 'node:path'
+import { basename, join, relative, resolve } from 'node:path'
 
 import { bool, flag, type Args } from '../lib/args'
 import { duration, money, renderReport, summarize, tokens } from '../lib/cost-report'
@@ -41,7 +41,7 @@ export async function cost(args: Args) {
 
   const out = flag(args, 'out') ?? (app ? 'app.cost.md' : undefined)
   if (bool(args, 'print') || !out) return
-  const path = join(root, out)
+  const path = resolve(root, out)
   writeFile(path, renderReport(name, summary))
   log.ok(`${relative(process.cwd(), path) || out} écrit (prix équivalent API ; avec un abonnement Pro ou Max, usage non facturé ainsi)`)
 }
