@@ -114,6 +114,20 @@ class Sync(unittest.TestCase):
             self.assertEqual(merged["skillOverrides"], {"a": "on", "b": "name-only", "c": "off"})
 
 
+class Vendor(unittest.TestCase):
+    AI = HOOKS.parent
+
+    def test_vendor_skills_are_licensed_and_name_only(self):
+        overrides = json.loads((self.AI / "settings.json").read_text(encoding="utf-8"))["skillOverrides"]
+        skills = [p for p in (self.AI / "skills" / "vendor").iterdir() if p.is_dir()]
+        self.assertTrue(skills)
+        for skill in skills:
+            self.assertTrue(any(f.name.startswith("LICENSE") for f in skill.iterdir()), skill.name)
+            self.assertIn(f"\nname: {skill.name}\n", (skill / "SKILL.md").read_text(encoding="utf-8"), skill.name)
+            self.assertEqual(overrides.get(skill.name), "name-only", skill.name)
+            self.assertFalse((self.AI / "skills" / skill.name).exists(), f"{skill.name} masque un skill du cœur")
+
+
 class Common(unittest.TestCase):
     def test_catalog_block(self):
         source = "/**\n * @catalog Button\n * @props variant\n * @example <Button />\n */"

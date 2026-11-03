@@ -42,6 +42,7 @@ l'app n'écrit que son spécifique. Ne jamais modifier `core/` depuis une app.
 - Écrire -> les hooks vérifient règles + types du fichier touché (message court si refus : corriger, ne pas contourner).
 - Vérifier l'écran : `bun daroms shot /route` (erreurs, débordements, puis capture si utile) ; `--dark` pour le sombre.
 - Avant de rendre : `bun daroms doctor --quick` puis `bun daroms test`.
+- Méthode ECC (skills `ecc-*`, traduits par `daroms-ecc`) : logique nouvelle ou bug -> test d'abord (`ecc-tdd-workflow`) ; auth, paiements, saisies, RLS -> `ecc-security-review`.
 - Erreurs Metro/Expo : `/daroms-fix`. Fin de tâche : `/daroms-learn` puis `/daroms-commit`.
 
 ## Commandes

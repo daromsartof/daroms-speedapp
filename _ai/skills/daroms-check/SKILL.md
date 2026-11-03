@@ -9,5 +9,6 @@ description: Vérification complète avant de rendre - typecheck, lint, tests, r
 2. `bun daroms test`.
 3. Écrans touchés (`git diff --name-only` -> routes) : `bun daroms shot /<route>` puis `--dark`. Écrans derrière une gate : `--storage onboarding.done.v1=true`.
 4. Appareil ou simulateur disponible : `bun daroms e2e` (flow `e2e/main.yaml`).
-5. En cas d'échec : `/daroms-fix`.
-6. **Stop** : tableau court `Vérification | Résultat`.
+5. Auth, paiements, saisies utilisateur ou migrations touchés : liste de contrôle `ecc-security-review`, traduite par `daroms-ecc`.
+6. En cas d'échec : `/daroms-fix`.
+7. **Stop** : tableau court `Vérification | Résultat`.
