@@ -48,7 +48,7 @@ Détail : [Installation](/demarrer/installation/).
 
 12. **Fiche store** (`/daroms-store`) : titres, mots-clés, descriptions FR/EN, captures, politique de confidentialité.
 13. **Build** (`/daroms-build preview`) : installation interne par QR ; puis `production` et `/daroms-submit` (TestFlight, piste interne). Voir [Publier](/guides/publier/).
-14. **Bilan** : `/daroms-learn` (zones de contexte), `/daroms-commit`, et `.claude/stats.jsonl` donne le coût en tokens de chaque étape, à faire baisser à l'app suivante.
+14. **Bilan** : `/daroms-learn` (zones de contexte), puis `bun daroms cost` écrit `app.cost.md` : tokens et prix de l'app par étape, par modèle et par session, au tarif de l'API Anthropic. C'est la référence à faire baisser à l'app suivante. Enfin `/daroms-commit`.
 
 ## Et ensuite
 

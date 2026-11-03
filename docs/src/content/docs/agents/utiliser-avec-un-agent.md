@@ -64,4 +64,4 @@ Lis https://daromsartof.github.io/daroms-speedapp/llms.txt puis ajoute un écran
 - Une tâche par session, `/clear` entre deux sujets.
 - `daroms shot` rend un rapport texte avant toute capture.
 - Le routeur de contexte (`daroms-context.py`) indique où regarder ; `/daroms-learn` l'améliore en fin de tâche.
-- `.claude/stats.jsonl` mesure les tokens par session : la référence à battre à l'app suivante.
+- `bun daroms cost` écrit `app.cost.md` (tokens et prix par étape, modèle et session) : la référence à battre à l'app suivante. `.claude/stats.jsonl` garde la trace brute par session.

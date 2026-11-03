@@ -48,7 +48,7 @@ Ouvrir Claude Code dans l'app, puis :
 | Matin | `/daroms-idea`, `/daroms-new` | cahier `app.spec.md`, app créée, aperçu QR |
 | Midi | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | références Dribbble, Pinterest, Mobbin et direction choisie, marque et icône, wireframes, tables Supabase avec RLS |
 | Après-midi | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | écrans, modules, vérification, finition UX |
-| Soir | `/daroms-store`, `/daroms-build`, `/daroms-submit` | fiche store FR/EN, build EAS, TestFlight et piste interne |
+| Soir | `/daroms-store`, `/daroms-build`, `/daroms-submit` | fiche store FR/EN, build EAS, TestFlight et piste interne, puis `app.cost.md` : ce que l'app a coûté en tokens et en dollars |
 
 21 skills, 3 sous-agents (designer, reviewer, store) et 6 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, statistiques de tokens). Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
 
@@ -109,6 +109,7 @@ Les paquets `@daroms/*` sont des sources TypeScript liées par workspace Bun dep
 | `test`, `e2e` | jest-expo, Maestro |
 | `assets` | icône, adaptive icon, splash, favicon depuis un SVG |
 | `inspire <url...>` | aperçus d'inspiration (image ou page) dans `.daroms/inspiration/` pour que Claude les regarde |
+| `cost` | tokens et prix de l'app (tarif API Anthropic) par étape, modèle et session, écrits dans `app.cost.md` |
 | `db new \| push \| types \| reset` | migrations et types Supabase |
 | `build`, `submit`, `update` | EAS : builds, stores, mises à jour OTA |
 
