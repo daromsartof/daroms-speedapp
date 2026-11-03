@@ -127,6 +127,19 @@ class Vendor(unittest.TestCase):
             self.assertEqual(overrides.get(skill.name), "name-only", skill.name)
             self.assertFalse((self.AI / "skills" / skill.name).exists(), f"{skill.name} masque un skill du cœur")
 
+    def test_forked_skills_stand_alone(self):
+        forked = 0
+        for path in sorted((self.AI / "skills").glob("daroms-*/SKILL.md")):
+            text = path.read_text(encoding="utf-8")
+            head = text.split("\n---\n", 1)[0]
+            if "\ncontext: fork" not in head:
+                continue
+            forked += 1
+            self.assertIn("\nbackground: false", head, path.parent.name)
+            self.assertRegex(head, r"\nmodel: (sonnet|haiku)\b", path.parent.name)
+            self.assertNotIn("AskUserQuestion", text, f"{path.parent.name} : pas de question dans un sous-agent")
+        self.assertGreater(forked, 0)
+
 
 class Common(unittest.TestCase):
     def test_catalog_block(self):

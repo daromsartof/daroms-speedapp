@@ -1,6 +1,10 @@
 ---
 name: daroms-data
 description: Crée la couche données depuis app.spec.md - tables Supabase avec RLS (migrations), types, schémas zod et hooks api.ts générés, puis db push si un projet est lié.
+context: fork
+background: false
+model: sonnet
+effort: medium
 ---
 
 # /daroms-data : tables et API

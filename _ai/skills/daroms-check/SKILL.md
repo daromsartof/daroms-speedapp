@@ -1,6 +1,10 @@
 ---
 name: daroms-check
 description: Vérification complète avant de rendre - typecheck, lint, tests, règles, contrôle visuel des écrans touchés (clair et sombre) et flow Maestro principal.
+context: fork
+background: false
+model: sonnet
+effort: medium
 ---
 
 # /daroms-check : tout vérifier

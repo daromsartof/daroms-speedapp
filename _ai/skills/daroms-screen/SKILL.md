@@ -2,6 +2,10 @@
 name: daroms-screen
 description: Crée ou complète un écran - daroms g screen puis remplissage avec @daroms/ui selon le wireframe de app.spec.md, 4 états, clés i18n FR/EN, test, contrôle visuel.
 argument-hint: "<nom-ecran> [--tab --icon Nom]"
+context: fork
+background: false
+model: sonnet
+effort: medium
 ---
 
 # /daroms-screen : un écran

@@ -1,6 +1,10 @@
 ---
 name: daroms-polish
 description: Finition UX par l'agent daroms-designer - espacements, hiérarchie, états, accessibilité, haptique, micro-animations, mode sombre - puis application des corrections.
+context: fork
+background: false
+model: sonnet
+effort: medium
 ---
 
 # /daroms-polish : finition

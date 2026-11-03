@@ -1,6 +1,9 @@
 ---
 name: daroms-commit
 description: Commits en français découpés par fonctionnalité (conventionnels), après vérification rapide.
+context: fork
+background: false
+model: haiku
 ---
 
 # /daroms-commit : committer

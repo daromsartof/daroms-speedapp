@@ -2,6 +2,10 @@
 name: daroms-module
 description: Ajoute un module du cœur à l'app (auth, onboarding, settings, payments, push, analytics, ai-chat, camera, maps) - manifest, config plugin, écrans, migrations, variables d'environnement, étapes manuelles.
 argument-hint: "<slug>"
+context: fork
+background: false
+model: sonnet
+effort: medium
 ---
 
 # /daroms-module : ajouter un module
