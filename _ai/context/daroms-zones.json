@@ -136,6 +136,24 @@
    "notes": "/daroms-build, /daroms-submit, /daroms-store, /daroms-update."
   },
   {
+   "name": "coût et tokens",
+   "keywords": [
+    "cout",
+    "couts",
+    "cost",
+    "tokens",
+    "token",
+    "prix",
+    "depense",
+    "facture",
+    "budget"
+   ],
+   "paths": [
+    "app.cost.md"
+   ],
+   "notes": "bun daroms cost : tokens et prix (tarif API) par étape, modèle, session ; écrit app.cost.md. Tarifs : core/cli/lib/pricing.ts."
+  },
+  {
    "name": "tests",
    "keywords": [
     "test",

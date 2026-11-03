@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Stop : tokens et durée de la session dans .claude/stats.jsonl (une ligne par session, mise à jour).
 
-Sert de référence de coût par étape (/daroms-day) à faire baisser d'une app à l'autre.
+Trace brute par session ; le rapport en dollars par étape et par modèle est `bun daroms cost` (app.cost.md).
 """
 from __future__ import annotations
 

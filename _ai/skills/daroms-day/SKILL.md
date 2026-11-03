@@ -26,9 +26,10 @@ Enchaîner les étapes ci-dessous. Après chacune : résumé de 3 lignes maximum
 | 11 | Store | `/daroms-store` | fiche FR/EN, captures |
 | 12 | Build | `/daroms-build` | build preview installable |
 | 13 | Soumission | `/daroms-submit` (si comptes prêts) | TestFlight / piste interne |
+| 14 | Bilan | `/daroms-learn`, puis `bun daroms cost` | `app.cost.md` : tokens et prix par étape, modèle, session |
 
 Règles de la journée :
 - Une étape = un objectif ; `/clear` conseillé entre deux étapes longues (le cahier et le code portent l'état).
 - Ordre des écrans : boucle principale d'abord, réglages et secondaires ensuite.
 - Commits par étape avec `/daroms-commit`.
-- Fin : `/daroms-learn`, puis noter dans `app.spec.md` > Journal ce qui a ralenti (référence tokens : `.claude/stats.jsonl`).
+- Fin : `bun daroms cost` écrit `app.cost.md` ; afficher le total et les 3 étapes les plus chères, noter dans `app.spec.md` > Journal ce qui a ralenti, puis `/daroms-commit` (le rapport est versionné).
