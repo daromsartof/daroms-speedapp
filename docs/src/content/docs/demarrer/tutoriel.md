@@ -31,23 +31,24 @@ Détail : [Installation](/demarrer/installation/).
    Template, sous-module `core/`, `brand.ts`, `app.manifest.ts`, modules de la variante, icônes générées, dépendances, couche IA (`.claude/`), commit initial.
 4. `cd lecture && cp .env.example .env` (URL et clé publique Supabase), puis `bun daroms dev` : scanner le QR avec Expo Go.
 
-## Midi : marque, design, données (2 h)
+## Midi : inspiration, marque, design, données (2 h)
 
-5. **Marque** (`/daroms-brand`) : 5 valeurs dans `brand.ts`, icône SVG dans `assets/source/icon.svg`, puis `bun daroms assets`. Vérifier `/_dev/kitchen-sink` en clair et en sombre. Voir [Changer la marque](/guides/changer-la-marque/).
-6. **Design** (`/daroms-design`) : wireframes texte par écran dans `app.spec.md`, uniquement avec les composants du [catalogue](/reference/composants/).
-7. **Données** (`/daroms-data`) : `bun daroms g table books --fields "title:text, author:text?, pages:int=0"` crée la migration avec RLS, le schéma zod, les hooks `useBooks`, `useCreateBook`... puis `bun daroms db push`. Voir [Ajouter une table](/guides/ajouter-une-table/).
+5. **Inspiration** (`/daroms-inspire`) : Claude cherche des maquettes et des apps publiées sur Dribbble, Pinterest, Behance, Mobbin et Screens Design, regarde les aperçus (`bun daroms inspire <url>`), propose 2 ou 3 directions et écrit celle que tu choisis dans `app.spec.md > Inspiration`. Il s'en inspire sans rien copier.
+6. **Marque** (`/daroms-brand`) : 5 valeurs dans `brand.ts`, icône SVG dans `assets/source/icon.svg`, puis `bun daroms assets`. Vérifier `/_dev/kitchen-sink` en clair et en sombre. Voir [Changer la marque](/guides/changer-la-marque/).
+7. **Design** (`/daroms-design`) : wireframes texte par écran dans `app.spec.md`, uniquement avec les composants du [catalogue](/reference/composants/).
+8. **Données** (`/daroms-data`) : `bun daroms g table books --fields "title:text, author:text?, pages:int=0"` crée la migration avec RLS, le schéma zod, les hooks `useBooks`, `useCreateBook`... puis `bun daroms db push`. Voir [Ajouter une table](/guides/ajouter-une-table/).
 
 ## Après-midi : écrans et modules (3 h)
 
-8. **Écrans** (`/daroms-screen books --tab --icon BookOpen`) : route mince, feature, 4 états, textes FR/EN, test ; Claude remplit avec `@daroms/ui` et vérifie avec `bun daroms shot /books`. Voir [Ajouter un écran](/guides/ajouter-un-ecran/).
-9. **Modules** (`/daroms-module payments`) : paywall RevenueCat, statut Pro, restauration ; idem `push`, `ai-chat`, `analytics`, `camera` (photos vers Supabase Storage), `maps` (carte, position). Voir [Ajouter un module](/guides/ajouter-un-module/).
-10. **Vérification** (`/daroms-check`) puis **finition** (`/daroms-polish`) : revue visuelle par l'agent `daroms-designer`. Voir [Vérifier](/guides/verifier/).
+9. **Écrans** (`/daroms-screen books --tab --icon BookOpen`) : route mince, feature, 4 états, textes FR/EN, test ; Claude remplit avec `@daroms/ui` et vérifie avec `bun daroms shot /books`. Voir [Ajouter un écran](/guides/ajouter-un-ecran/).
+10. **Modules** (`/daroms-module payments`) : paywall RevenueCat, statut Pro, restauration ; idem `push`, `ai-chat`, `analytics`, `camera` (photos vers Supabase Storage), `maps` (carte, position). Voir [Ajouter un module](/guides/ajouter-un-module/).
+11. **Vérification** (`/daroms-check`) puis **finition** (`/daroms-polish`) : revue visuelle par l'agent `daroms-designer`. Voir [Vérifier](/guides/verifier/).
 
 ## Soir : publier (1 h)
 
-11. **Fiche store** (`/daroms-store`) : titres, mots-clés, descriptions FR/EN, captures, politique de confidentialité.
-12. **Build** (`/daroms-build preview`) : installation interne par QR ; puis `production` et `/daroms-submit` (TestFlight, piste interne). Voir [Publier](/guides/publier/).
-13. **Bilan** : `/daroms-learn` (zones de contexte), `/daroms-commit`, et `.claude/stats.jsonl` donne le coût en tokens de chaque étape, à faire baisser à l'app suivante.
+12. **Fiche store** (`/daroms-store`) : titres, mots-clés, descriptions FR/EN, captures, politique de confidentialité.
+13. **Build** (`/daroms-build preview`) : installation interne par QR ; puis `production` et `/daroms-submit` (TestFlight, piste interne). Voir [Publier](/guides/publier/).
+14. **Bilan** : `/daroms-learn` (zones de contexte), `/daroms-commit`, et `.claude/stats.jsonl` donne le coût en tokens de chaque étape, à faire baisser à l'app suivante.
 
 ## Et ensuite
 

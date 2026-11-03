@@ -1,6 +1,6 @@
 ---
 title: CLI daroms
-description: Toutes les commandes de la CLI daroms (new, dev, doctor, g, icons, module, shot, test, e2e, assets, db, build, submit, update, sync-ai, catalog, release-core) avec leurs options.
+description: Toutes les commandes de la CLI daroms (new, dev, doctor, g, icons, module, shot, test, e2e, assets, inspire, db, build, submit, update, sync-ai, catalog, release-core) avec leurs options.
 ---
 
 Dans une app : `bun daroms <commande>`. Hors app : `bunx @daromsart/daroms-speed-app <commande>` (paquet npm), `daroms <commande>` après `bun add -g @daromsart/daroms-speed-app`, ou `bun <clone du cœur>/cli/daroms.ts <commande>`. `bun daroms --help` liste les commandes.
@@ -18,6 +18,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `bunx @daromsart/daroms-speed
 | [`shot`](#shot) | contrôle visuel d'une route |
 | [`test`, `e2e`](#test-et-e2e) | tests unitaires, flows Maestro |
 | [`assets`](#assets) | icônes, splash, favicon depuis un SVG |
+| [`inspire`](#inspire) | aperçus d'inspiration à regarder avant le design |
 | [`db`](#db) | migrations et types Supabase |
 | [`build`, `submit`, `update`](#build-submit-update) | EAS |
 | [`sync-ai`, `catalog`](#sync-ai-et-catalog) | couche IA, catalogue |
@@ -119,6 +120,17 @@ bun daroms assets
 ```
 
 Depuis `assets/source/icon.svg` (et `foreground.svg` facultatif) : `icon.png` (1024), `adaptive-icon.png`, `splash-icon.png` (512), `favicon.png` (48).
+
+## inspire
+
+```bash
+bun daroms inspire <url...> [--clear]
+bun daroms inspire
+```
+
+Télécharge dans `.daroms/inspiration/` (non versionné) l'image de chaque URL : image directe, ou page dont il prend l'aperçu (`og:image`). Claude regarde ensuite ces fichiers pendant `/daroms-inspire`. 12 adresses au plus, 8 Mo au plus par image, formats png, jpg, webp et gif ; `index.json` garde la source de chaque fichier. Sans argument : liste les aperçus ; `--clear` vide le dossier d'abord.
+
+La commande s'annonce comme `daroms-inspire` et ne contourne rien : une page qui refuse la lecture automatique (Dribbble et Behance le font souvent) est signalée puis sautée ; garder alors le lien et l'extrait de la recherche.
 
 ## db
 

@@ -43,4 +43,4 @@ Une couleur principale très claire (jaune, vert d'eau) donne des boutons peu li
 
 ## Avec Claude
 
-`/daroms-brand` propose palette et ton depuis `app.spec.md`, dessine l'icône en SVG, lance `daroms assets` et vérifie le kitchen-sink.
+`/daroms-brand` propose palette et ton depuis `app.spec.md` (et la direction retenue par `/daroms-inspire` si elle existe), dessine l'icône en SVG, lance `daroms assets` et vérifie le kitchen-sink.
