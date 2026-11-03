@@ -1,58 +1,62 @@
 # Daroms Speed App
 
+**English** · [Français](https://github.com/daromsartof/daroms-speedapp/blob/main/README.fr.md)
+
 [![npm](https://img.shields.io/npm/v/@daromsart/daroms-speed-app?color=3347ff&label=npm)](https://www.npmjs.com/package/@daromsart/daroms-speed-app)
-[![licence MIT](https://img.shields.io/npm/l/@daromsart/daroms-speed-app?color=3347ff)](https://www.npmjs.com/package/@daromsart/daroms-speed-app?activeTab=code)
+[![MIT license](https://img.shields.io/npm/l/@daromsart/daroms-speed-app?color=3347ff)](https://www.npmjs.com/package/@daromsart/daroms-speed-app?activeTab=code)
 ![Expo SDK 58](https://img.shields.io/badge/Expo-SDK%2058-121a3a)
 ![Tamagui v3](https://img.shields.io/badge/Tamagui-v3-121a3a)
 ![Bun >= 1.3](https://img.shields.io/badge/Bun-%3E%3D%201.3-121a3a)
 
-**Une idée le matin, l'app sur ton téléphone le soir.**
+**An idea in the morning, the app on your phone by evening.**
 
-Framework mobile **Expo + Tamagui + Supabase** conçu pour Claude Code. Le cœur fournit le thème, les composants, les données, les modules et la publication ; l'app n'écrit que son spécifique, sous des règles vérifiées à chaque fichier.
+An **Expo + Tamagui + Supabase** mobile framework built for Claude Code. The core ships the theme, components, data layer, modules and store publishing; your app only writes what is specific to it, under rules checked on every file.
 
-- **Générer avant d'écrire** : écran, table, module sortent de gabarits déterministes, sans IA. Claude ne remplit que le spécifique.
-- **Une marque, un thème** : 5 valeurs dans `brand.ts` donnent palettes OKLCH, thèmes clair et sombre, rayons, espacements et ressorts.
-- **Des règles vérifiées** : couleur en dur, Supabase dans un composant, texte hors i18n : un hook refuse l'écriture et dit quoi faire.
-- **Des modules activables** : auth, paiements, push, chat IA, photos, cartes... en une commande.
-- **Peu de tokens** : un noyau court toujours chargé, des règles chargées selon les fichiers touchés, un catalogue de composants à la place des sources, et les étapes mécaniques dans des sous-agents Sonnet ou Haiku à contexte neuf.
+- **Generate before writing**: screens, tables and modules come from deterministic templates, no AI involved. Claude only fills in what is specific.
+- **One brand, one theme**: 5 values in `brand.ts` produce OKLCH palettes, light and dark themes, radii, spacing and springs.
+- **Enforced rules**: hard-coded color, Supabase inside a component, text outside i18n: a hook rejects the write and says what to do instead.
+- **Opt-in modules**: auth, payments, push, AI chat, photos, maps... one command each.
+- **Low token cost**: a short always-loaded core, rules loaded only for the files being touched, a component catalog instead of sources, and mechanical steps run in fresh-context Sonnet or Haiku subagents.
 
-Documentation complète : **https://daromsartof.github.io/daroms-speedapp/**
+Full documentation: **https://daromsartof.github.io/daroms-speedapp/en/**
 
-## Créer une app
+> The documentation site starts in English with the home, installation and tutorial pages; guides and reference are in French for now. The AI layer (skills, rules) and CLI messages are in French; Claude understands prompts in any language.
 
-Prérequis : [Bun](https://bun.sh) >= 1.3, Node >= 22.18, Git, Python 3, et [Expo Go](https://expo.dev/go) sur le téléphone.
+## Create an app
+
+Requirements: [Bun](https://bun.sh) >= 1.3, Node >= 22.18, Git, Python 3, and [Expo Go](https://expo.dev/go) on your phone.
 
 ```bash
-npx @daromsart/daroms-speed-app new mon-app --name "Mon app" --variant list-detail
-cd mon-app
-cp .env.example .env    # URL et clé publique Supabase
-bun daroms dev          # scanner le QR avec Expo Go
+npx @daromsart/daroms-speed-app new my-app --name "My app" --variant list-detail
+cd my-app
+cp .env.example .env    # Supabase URL and public key
+bun daroms dev          # scan the QR code with Expo Go
 ```
 
-Commande globale : `npm install -g @daromsart/daroms-speed-app`, puis `daroms new mon-app`. La CLI s'exécute avec Bun.
+Global command: `npm install -g @daromsart/daroms-speed-app`, then `daroms new my-app`. The CLI runs on Bun.
 
-`daroms new` copie le template, ajoute le cœur dans `core/`, écrit `brand.ts` et `app.manifest.ts`, active les modules de la variante, génère tables et écrans, icônes et splash, installe les dépendances, synchronise la couche IA dans `.claude/` et fait le commit initial. `core/` est un sous-module git fixé sur la version installée ; si le dépôt du cœur est inaccessible, c'est une copie du cœur contenu dans ce paquet.
+`daroms new` copies the template, adds the core in `core/`, writes `brand.ts` and `app.manifest.ts`, enables the variant's modules, generates tables and screens, icons and splash, installs dependencies, syncs the AI layer into `.claude/` and makes the first commit. `core/` is a git submodule pinned to the installed version; if the core repository is unreachable, it is a copy of the core shipped in this package.
 
-Sans Supabase pour commencer : `--local` garde les données sur l'appareil, avec les mêmes hooks.
+No Supabase to start with: `--local` keeps data on the device, behind the same hooks.
 
-## Avec Claude Code
+## With Claude Code
 
-Ouvrir Claude Code dans l'app, puis :
+Open Claude Code in the app, then:
 
 ```text
-/daroms-day Une app pour suivre ses habitudes de lecture
+/daroms-day An app to track my reading habits
 ```
 
-| Moment | Skills | Résultat |
+| Time | Skills | Result |
 |---|---|---|
-| Matin | `/daroms-idea`, `/daroms-new` | cahier `app.spec.md`, app créée, aperçu QR |
-| Midi | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | références Dribbble, Pinterest, Mobbin et direction choisie, marque et icône, wireframes, tables Supabase avec RLS |
-| Après-midi | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | écrans, modules, vérification, finition UX |
-| Soir | `/daroms-store`, `/daroms-build`, `/daroms-submit` | fiche store FR/EN, build EAS, TestFlight et piste interne, puis `app.cost.md` : ce que l'app a coûté en tokens et en dollars |
+| Morning | `/daroms-idea`, `/daroms-new` | `app.spec.md` brief, app created, QR preview |
+| Noon | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | Dribbble, Pinterest and Mobbin references and a chosen direction, brand and icon, wireframes, Supabase tables with RLS |
+| Afternoon | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | screens, modules, checks, UX polish |
+| Evening | `/daroms-store`, `/daroms-build`, `/daroms-submit` | FR/EN store listing, EAS build, TestFlight and internal track, then `app.cost.md`: what the app cost in tokens and dollars |
 
-22 skills, 3 sous-agents (designer, reviewer, store) et 6 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, statistiques de tokens). La méthode [ECC](https://ecc.tools) est embarquée : `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` et `ecc-typescript-patterns`, figés dans le cœur et traduits vers les commandes daroms par `daroms-ecc`. Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
+22 skills, 3 subagents (designer, reviewer, store) and 6 hooks (sync, context router, rule checks, typecheck, `.env` protection, token stats). The [ECC](https://ecc.tools) method is built in: `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` and `ecc-typescript-patterns`, vendored in the core and mapped to daroms commands by `daroms-ecc`. Details: [skills](https://daromsartof.github.io/daroms-speedapp/en/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/en/reference/hooks/).
 
-## Exemple : une table et son écran
+## Example: a table and its screen
 
 ```bash
 bun daroms g table books --fields "title:text, author:text?, pages:int=0"
@@ -60,7 +64,7 @@ bun daroms g screen books --tab --icon BookOpen --title "Livres" --title-en "Boo
 bun daroms db push
 ```
 
-La première commande écrit la migration (RLS propriétaire sur les 4 opérations), le schéma zod et les hooks `useBooks`, `useBook`, `useCreateBook`, `useUpdateBook`, `useDeleteBook`. La seconde écrit la route, l'écran avec ses 4 états, les textes FR/EN, le test et l'onglet. L'écran se remplit avec `@daroms/ui` :
+The first command writes the migration (owner RLS on all 4 operations), the zod schema and the `useBooks`, `useBook`, `useCreateBook`, `useUpdateBook`, `useDeleteBook` hooks. The second writes the route, the screen with its 4 states, FR/EN strings, the test and the tab. The screen is filled with `@daroms/ui`:
 
 ```tsx
 // src/features/books/BooksScreen.tsx
@@ -83,61 +87,62 @@ export default function BooksScreen() {
 }
 ```
 
-## Ce que contient le paquet
+## What's in the package
 
-| Dossier | Contenu |
+| Folder | Content |
 |---|---|
-| `packages/` | `@daroms/theme` (thème depuis `brand.ts`), `@daroms/ui` (32 composants, 102 icônes Lucide, `CATALOG.md`), `@daroms/data` (Supabase, requêtes, erreurs, tables locales), `@daroms/lib` (formats, dates, zod, stockage, haptique), `@daroms/i18n`, `@daroms/app` (providers, gates, modules, layouts), `@daroms/config` |
-| `modules/` | `auth`, `onboarding`, `settings`, `payments` (RevenueCat), `push`, `analytics`, `ai-chat` (Claude en streaming), `camera` (Supabase Storage), `maps` |
-| `template/` | app de départ et 5 variantes : `list-detail`, `tracker`, `ai-chat`, `social`, `shop` (plus `blank`) |
-| `generators/` | gabarits d'écran, de table et de module |
-| `cli/` | la commande `daroms` |
-| `_ai/` | couche IA : noyau, règles, skills, agents, hooks, zones de contexte |
+| `packages/` | `@daroms/theme` (theme from `brand.ts`), `@daroms/ui` (32 components, 102 Lucide icons, `CATALOG.md`), `@daroms/data` (Supabase, queries, errors, local tables), `@daroms/lib` (formatting, dates, zod, storage, haptics), `@daroms/i18n`, `@daroms/app` (providers, gates, modules, layouts), `@daroms/config` |
+| `modules/` | `auth`, `onboarding`, `settings`, `payments` (RevenueCat), `push`, `analytics`, `ai-chat` (streaming Claude), `camera` (Supabase Storage), `maps` |
+| `template/` | starter app and 5 variants: `list-detail`, `tracker`, `ai-chat`, `social`, `shop` (plus `blank`) |
+| `generators/` | screen, table and module templates |
+| `cli/` | the `daroms` command |
+| `_ai/` | AI layer: core instructions, rules, skills, agents, hooks, context zones |
 
-Les paquets `@daroms/*` sont des sources TypeScript liées par workspace Bun depuis `core/`, sans étape de build.
+The `@daroms/*` packages are TypeScript sources linked through a Bun workspace from `core/`, with no build step.
 
-## Commandes
+## Commands
 
-| Commande | Rôle |
+| Command | Purpose |
 |---|---|
-| `new <slug>` | créer une app (`--variant`, `--local`, `--primary`, `--accent`, `--tone`, `--modules`...) |
-| `dev` | serveur Expo et QR (Expo Go, ou `--dev-client`) |
-| `doctor` | Node, `.env`, manifest, i18n, règles, TypeScript, ESLint, expo-doctor |
-| `g screen \| feature \| table \| module` | générer |
+| `new <slug>` | create an app (`--variant`, `--local`, `--primary`, `--accent`, `--tone`, `--modules`...) |
+| `dev` | Expo server and QR code (Expo Go, or `--dev-client`) |
+| `doctor` | Node, `.env`, manifest, i18n, rules, TypeScript, ESLint, expo-doctor |
+| `g screen \| feature \| table \| module` | generate |
 | `module add \| remove \| list` | modules |
-| `shot <route>` | contrôle visuel : erreurs et débordements d'abord, capture si utile |
+| `shot <route>` | visual check: errors and overflows first, screenshot when useful |
 | `test`, `e2e` | jest-expo, Maestro |
-| `assets` | icône, adaptive icon, splash, favicon depuis un SVG |
-| `inspire <url...>` | aperçus d'inspiration (image ou page) dans `.daroms/inspiration/` pour que Claude les regarde |
-| `cost` | tokens et prix de l'app (tarif API Anthropic) par étape, modèle et session, écrits dans `app.cost.md` |
-| `db new \| push \| types \| reset` | migrations et types Supabase |
-| `build`, `submit`, `update` | EAS : builds, stores, mises à jour OTA |
+| `assets` | icon, adaptive icon, splash, favicon from one SVG |
+| `inspire <url...>` | inspiration previews (image or page) in `.daroms/inspiration/` for Claude to look at |
+| `cost` | the app's tokens and price (Anthropic API rates) by step, model and session, written to `app.cost.md` |
+| `db new \| push \| types \| reset` | Supabase migrations and types |
+| `build`, `submit`, `update` | EAS: builds, stores, OTA updates |
 
-Toutes les options : [référence de la CLI](https://daromsartof.github.io/daroms-speedapp/reference/cli/).
+All options: [CLI reference](https://daromsartof.github.io/daroms-speedapp/en/reference/cli/).
 
 ## Documentation
 
-- [Tutoriel : ton app en un jour](https://daromsartof.github.io/daroms-speedapp/demarrer/tutoriel/)
-- Guides : [écran](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-un-ecran/), [table](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-une-table/), [module](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-un-module/), [formulaires](https://daromsartof.github.io/daroms-speedapp/guides/formulaires/), [marque](https://daromsartof.github.io/daroms-speedapp/guides/changer-la-marque/), [publier](https://daromsartof.github.io/daroms-speedapp/guides/publier/)
-- Référence : [composants](https://daromsartof.github.io/daroms-speedapp/reference/composants/), [manifest](https://daromsartof.github.io/daroms-speedapp/reference/manifest/), [tokens](https://daromsartof.github.io/daroms-speedapp/reference/tokens/), [règles](https://daromsartof.github.io/daroms-speedapp/reference/regles/)
-- Pour les agents : [`llms.txt`](https://daromsartof.github.io/daroms-speedapp/llms.txt), [`llms-full.txt`](https://daromsartof.github.io/daroms-speedapp/llms-full.txt), et chaque page en Markdown (suffixe `.md`)
+- [Tutorial: your app in a day](https://daromsartof.github.io/daroms-speedapp/en/demarrer/tutoriel/)
+- [Installation](https://daromsartof.github.io/daroms-speedapp/en/demarrer/installation/)
+- Guides (French): [screen](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-un-ecran/), [table](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-une-table/), [module](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-un-module/), [forms](https://daromsartof.github.io/daroms-speedapp/guides/formulaires/), [brand](https://daromsartof.github.io/daroms-speedapp/guides/changer-la-marque/), [publishing](https://daromsartof.github.io/daroms-speedapp/guides/publier/)
+- Reference (French): [components](https://daromsartof.github.io/daroms-speedapp/reference/composants/), [manifest](https://daromsartof.github.io/daroms-speedapp/reference/manifest/), [tokens](https://daromsartof.github.io/daroms-speedapp/reference/tokens/), [rules](https://daromsartof.github.io/daroms-speedapp/reference/regles/)
+- For agents: [`llms.txt`](https://daromsartof.github.io/daroms-speedapp/llms.txt), [`llms-full.txt`](https://daromsartof.github.io/daroms-speedapp/llms-full.txt), and every page as Markdown (`.md` suffix)
 
 ## Versions
 
-Le cœur suit le versionnage sémantique ; les ruptures n'arrivent qu'en version majeure (`CHANGELOG.md` dans le paquet). Mettre à jour une app : [guide](https://daromsartof.github.io/daroms-speedapp/guides/mettre-a-jour-le-coeur/).
+The core follows semantic versioning; breaking changes only ship in major versions (`CHANGELOG.md` in the package). Updating an app: [guide](https://daromsartof.github.io/daroms-speedapp/guides/mettre-a-jour-le-coeur/) (French).
 
-## Développer le cœur
+## Developing the core
 
 ```bash
 git clone https://github.com/daromsartof/daroms-speedapp.git daroms-speed-app
 cd daroms-speed-app && bun install
-bun run check                     # tsc, eslint, jest, tests CLI, tests des hooks
-bun run docs:dev                  # site de documentation (docs/)
-bun daroms release-core minor     # version, changelog, tag ; git push --follow-tags publie sur npm
+bun run check                     # tsc, eslint, jest, CLI tests, hook tests
+bun run docs:dev                  # documentation site (docs/)
+bun daroms release-core minor     # version, changelog, tag; git push --follow-tags publishes to npm
 ```
 
-Détail : [Développer le cœur](https://daromsartof.github.io/daroms-speedapp/guides/developper-le-coeur/).
+Details: [Developing the core](https://daromsartof.github.io/daroms-speedapp/guides/developper-le-coeur/) (French).
 
-## Licence
+## License
 
-MIT, texte complet dans le fichier `LICENSE` du paquet.
+MIT, full text in the package's `LICENSE` file.
