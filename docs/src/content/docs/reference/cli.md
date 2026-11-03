@@ -3,7 +3,7 @@ title: CLI daroms
 description: Toutes les commandes de la CLI daroms (new, dev, doctor, g, icons, module, shot, test, e2e, assets, inspire, db, build, submit, update, cost, sync-ai, catalog, release-core) avec leurs options.
 ---
 
-Dans une app : `bun daroms <commande>`. Hors app : `bunx @daromsart/daroms-speed-app <commande>` (paquet npm), `daroms <commande>` après `bun add -g @daromsart/daroms-speed-app`, ou `bun <clone du cœur>/cli/daroms.ts <commande>`. `bun daroms --help` liste les commandes.
+Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-app <commande>` (paquet npm), `daroms <commande>` après `npm install -g @daromsart/daroms-speed-app`, ou `bun <clone du cœur>/cli/daroms.ts <commande>`. `bun daroms --help` liste les commandes.
 
 ## Résumé
 
@@ -28,7 +28,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `bunx @daromsart/daroms-speed
 ## new
 
 ```bash
-bunx @daromsart/daroms-speed-app new <slug> [options]
+npx @daromsart/daroms-speed-app new <slug> [options]
 ```
 
 | Option | Défaut | Effet |

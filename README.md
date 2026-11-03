@@ -23,13 +23,13 @@ Documentation complète : **https://daromsartof.github.io/daroms-speedapp/**
 Prérequis : [Bun](https://bun.sh) >= 1.3, Node >= 22.18, Git, Python 3, et [Expo Go](https://expo.dev/go) sur le téléphone.
 
 ```bash
-bunx @daromsart/daroms-speed-app new mon-app --name "Mon app" --variant list-detail
+npx @daromsart/daroms-speed-app new mon-app --name "Mon app" --variant list-detail
 cd mon-app
 cp .env.example .env    # URL et clé publique Supabase
 bun daroms dev          # scanner le QR avec Expo Go
 ```
 
-Commande globale : `bun add -g @daromsart/daroms-speed-app`, puis `daroms new mon-app`. La CLI s'exécute avec Bun.
+Commande globale : `npm install -g @daromsart/daroms-speed-app`, puis `daroms new mon-app`. La CLI s'exécute avec Bun.
 
 `daroms new` copie le template, ajoute le cœur dans `core/`, écrit `brand.ts` et `app.manifest.ts`, active les modules de la variante, génère tables et écrans, icônes et splash, installe les dépendances, synchronise la couche IA dans `.claude/` et fait le commit initial. `core/` est un sous-module git fixé sur la version installée ; si le dépôt du cœur est inaccessible, c'est une copie du cœur contenu dans ce paquet.
 
