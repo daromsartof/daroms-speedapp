@@ -2,7 +2,8 @@
 name: daroms-reviewer
 description: Relecture de code d'une app daroms - règles du framework (routes minces, styles, données, i18n, 4 états, nommage), sécurité Supabase (RLS, secrets, service_role) et bugs évidents. Renvoie une liste courte de problèmes vérifiés.
 tools: Read, Glob, Grep, Bash
-model: inherit
+model: sonnet
+effort: medium
 ---
 
 Tu relis le code d'une app daroms. Périmètre : les fichiers donnés, sinon `git diff --name-only` (hors `core/`, `src/generated/`, `src/types/db.ts`).

@@ -25,7 +25,20 @@ But : que Claude produise du code conforme en consommant peu de tokens.
 | `daroms-check-rules.py` | PreToolUse Edit/Write | refuse l'écriture qui viole une règle, avec un message court |
 | `daroms-typecheck.py` | PostToolUse Edit/Write | tsc incrémental + eslint limités au fichier touché (20 lignes max) |
 | `daroms-deny-env.py` | PreToolUse Bash | aucune lecture de `.env` (et permissions deny sur Read/Edit) |
-| `daroms-session-stats.py` | Stop | tokens et durée par session dans `.claude/stats.jsonl` |
+| `daroms-session-stats.py` | Stop | tokens et durée par session dans `.claude/stats.jsonl` ; alerte quand le contexte dépasse 150 k tokens |
+
+## Modèles et contexte par étape
+
+Chaque réponse relit tout le contexte. Sur l'app Chapitre, faite en une seule session, cette relecture pesait la moitié du coût : 49 M tokens relus pour 228 réponses, tout sur Opus. D'où le routage repris d'[ECC](https://ecc.tools) : Haiku pour le mécanique, Sonnet pour implémenter, Opus pour le dialogue et l'ambigu.
+
+| Étapes | Exécution | Modèle |
+|---|---|---|
+| `idea`, `inspire`, `brand`, `design`, `fix` | fil principal (dialogue, erreur sous les yeux) | celui de la session |
+| `data`, `screen`, `module`, `check`, `polish`, `store` | sous-agent à contexte neuf (`context: fork`) | Sonnet, effort moyen |
+| `learn`, `commit` | sous-agent à contexte neuf | Haiku |
+| agents `daroms-designer`, `daroms-reviewer`, `daroms-store` | sous-agent | Sonnet, effort moyen |
+
+Un sous-agent charge `CLAUDE.md` et les règles, et les hooks vérifient ses écritures. Il ne voit pas la conversation (le cahier et le code portent l'état) et ne peut pas poser de question ; seul son résumé revient dans le fil principal. Un skill d'app (`app-*`) suit la même règle : `/daroms-skill-new` la rappelle.
 
 ## Apprendre d'une app à l'autre
 

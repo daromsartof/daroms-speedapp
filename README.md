@@ -14,7 +14,7 @@ Framework mobile **Expo + Tamagui + Supabase** conçu pour Claude Code. Le cœur
 - **Une marque, un thème** : 5 valeurs dans `brand.ts` donnent palettes OKLCH, thèmes clair et sombre, rayons, espacements et ressorts.
 - **Des règles vérifiées** : couleur en dur, Supabase dans un composant, texte hors i18n : un hook refuse l'écriture et dit quoi faire.
 - **Des modules activables** : auth, paiements, push, chat IA, photos, cartes... en une commande.
-- **Peu de tokens** : un noyau court toujours chargé, des règles chargées selon les fichiers touchés, un catalogue de composants à la place des sources.
+- **Peu de tokens** : un noyau court toujours chargé, des règles chargées selon les fichiers touchés, un catalogue de composants à la place des sources, et les étapes mécaniques dans des sous-agents Sonnet ou Haiku à contexte neuf.
 
 Documentation complète : **https://daromsartof.github.io/daroms-speedapp/**
 

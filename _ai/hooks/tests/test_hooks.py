@@ -21,6 +21,7 @@ rules = load("daroms-check-rules")
 env = load("daroms-deny-env")
 context = load("daroms-context")
 sync = load("daroms-sync")
+stats = load("daroms-session-stats")
 import daroms_common as common  # noqa: E402
 
 
@@ -126,6 +127,42 @@ class Vendor(unittest.TestCase):
             self.assertIn(f"\nname: {skill.name}\n", (skill / "SKILL.md").read_text(encoding="utf-8"), skill.name)
             self.assertEqual(overrides.get(skill.name), "name-only", skill.name)
             self.assertFalse((self.AI / "skills" / skill.name).exists(), f"{skill.name} masque un skill du cœur")
+
+    def test_forked_skills_stand_alone(self):
+        forked = 0
+        for path in sorted((self.AI / "skills").glob("daroms-*/SKILL.md")):
+            text = path.read_text(encoding="utf-8")
+            head = text.split("\n---\n", 1)[0]
+            if "\ncontext: fork" not in head:
+                continue
+            forked += 1
+            self.assertIn("\nbackground: false", head, path.parent.name)
+            self.assertRegex(head, r"\nmodel: (sonnet|haiku)\b", path.parent.name)
+            self.assertNotIn("AskUserQuestion", text, f"{path.parent.name} : pas de question dans un sous-agent")
+        self.assertGreater(forked, 0)
+
+
+class Stats(unittest.TestCase):
+    def test_context_warning_steps(self):
+        first = 150_000
+        self.assertEqual(stats.context_warning(100_000, 0, first), (None, 0))
+        message, warned = stats.context_warning(162_000, 0, first)
+        self.assertIn("162 k", message)
+        self.assertEqual(warned, 150_000)
+        self.assertEqual(stats.context_warning(170_000, 150_000, first), (None, 150_000))
+        self.assertEqual(stats.context_warning(215_000, 150_000, first)[1], 210_000)
+        self.assertEqual(stats.context_warning(90_000, 210_000, first), (None, 0))
+        self.assertEqual(stats.context_warning(500_000, 0, 0), (None, 0))
+
+    def test_summarize_reads_last_main_context(self):
+        lines = [
+            {"type": "assistant", "message": {"id": "a", "usage": {"input_tokens": 10, "cache_read_input_tokens": 1000, "cache_creation_input_tokens": 90}}},
+            {"type": "assistant", "isSidechain": True, "message": {"id": "b", "usage": {"input_tokens": 5, "cache_read_input_tokens": 9000}}},
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            transcript = Path(tmp) / "t.jsonl"
+            transcript.write_text("\n".join(json.dumps(l) for l in lines))
+            self.assertEqual(stats.summarize(transcript)["context"], 1100)
 
 
 class Common(unittest.TestCase):
