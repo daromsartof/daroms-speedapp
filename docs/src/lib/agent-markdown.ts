@@ -26,24 +26,29 @@ export async function orderedEntries(): Promise<{ section: (typeof SECTIONS)[num
   }))
 }
 
-/** `[x](/guides/y/#z)` -> `[x](https://site/base/guides/y.md#z)` : un agent reste en Markdown en suivant les liens. */
-function absolutizeLinks(body: string, site: URL) {
+/**
+ * `[x](/guides/y/#z)` -> `[x](https://site/base/guides/y.md#z)` : un agent reste en Markdown en suivant les liens.
+ * `ids` connu : une page anglaise non traduite (`/en/x/`) renvoie au Markdown de la page française, comme le repli Starlight.
+ */
+function absolutizeLinks(body: string, site: URL, ids?: ReadonlySet<string>) {
   return body.replace(/\]\((\/[^)\s]*)\)/g, (match, href: string) => {
     if (href.startsWith('//')) return match
     const [path, hash] = href.split('#') as [string, string | undefined]
     const clean = path.replace(/\/$/, '')
-    const target = clean === '' ? `${BASE}/llms.txt` : /\.[a-z]+$/.test(clean) ? `${BASE}${clean}` : markdownPath(clean.slice(1))
+    let id = clean.slice(1)
+    if (ids && id.startsWith('en/') && !ids.has(id)) id = id.slice(3)
+    const target = clean === '' ? `${BASE}/llms.txt` : /\.[a-z]+$/.test(clean) ? `${BASE}${clean}` : markdownPath(id)
     return `](${new URL(target, site).href}${hash ? `#${hash}` : ''})`
   })
 }
 
-export function entryToMarkdown(entry: DocEntry, site: URL) {
+export function entryToMarkdown(entry: DocEntry, site: URL, ids?: ReadonlySet<string>) {
   const { title, description } = entry.data
   const html = new URL(pagePath(entry.id), site).href
   return [
     `# ${title}`,
     description ? `> ${description}` : '',
-    absolutizeLinks((entry.body ?? '').trim(), site),
+    absolutizeLinks((entry.body ?? '').trim(), site, ids),
     `---\n\nPage HTML : ${html}\nIndex de la documentation : ${new URL(`${BASE}/llms.txt`, site).href}`,
   ]
     .filter(Boolean)

@@ -40,11 +40,14 @@ function checkTarget(from: string, href: string) {
   }
 }
 
+/** Pages 404 (racine et anglaise) : sans adresse propre. */
+const is404 = (file: string) => /^(en\/404\/index|404)\.html$/.test(relative(DIST, file))
+
 // 1. Liens internes des pages HTML (hors ressources générées par Pagefind)
 for (const file of html) {
   const source = readFileSync(file, 'utf8')
-  // la 404 n'a pas d'adresse propre : sa balise canonical est ignorée
-  const checked = file.endsWith('/404.html') ? source.replace(/<link rel="canonical"[^>]*>/, '') : source
+  // la 404 n'a pas d'adresse propre : ses balises canonical et hreflang sont ignorées
+  const checked = is404(file) ? source.replace(/<link rel="canonical"[^>]*>/, '').replace(/<link rel="alternate" hreflang[^>]*>/g, '') : source
   for (const [, attr, href] of checked.matchAll(/\s(href|src)="([^"]+)"/g)) {
     if (!href || /^(https?:)?\/\//.test(href) && !href.startsWith(SITE)) continue
     if (/^(mailto:|tel:|data:|javascript:)/.test(href) || (attr === 'href' && href.startsWith('#'))) continue
@@ -53,13 +56,17 @@ for (const file of html) {
   }
 }
 
-// 2. Chaque page de doc a sa version Markdown et l'annonce
-const docPages = html.filter((f) => !f.endsWith('/404.html') && f !== join(DIST, 'index.html'))
+// 2. Chaque page de doc a sa version Markdown et l'annonce ; une page anglaise non traduite
+//    (repli Starlight, contenu français) annonce le Markdown de la page française
+const docPages = html.filter((f) => !is404(f) && f !== join(DIST, 'index.html'))
+let withMarkdown = 0
 for (const file of docPages) {
   const page = relative(DIST, file).replace(/\/index\.html$/, '')
-  const md = join(DIST, `${page}.md`)
-  if (!existsSync(md)) problems.push(`${page} : pas de ${page}.md`)
-  if (!readFileSync(file, 'utf8').includes(`rel="alternate" type="text/markdown" href="${BASE}/${page}.md"`)) {
+  const own = existsSync(join(DIST, `${page}.md`))
+  const mdPage = own || !page.startsWith('en/') ? page : page.slice(3)
+  if (own) withMarkdown++
+  if (!existsSync(join(DIST, `${mdPage}.md`))) problems.push(`${page} : pas de ${mdPage}.md`)
+  if (!readFileSync(file, 'utf8').includes(`rel="alternate" type="text/markdown" href="${BASE}/${mdPage}.md"`)) {
     problems.push(`${page} : <link rel="alternate" type="text/markdown"> absent`)
   }
 }
@@ -79,7 +86,7 @@ const llms = readFileSync(join(DIST, 'llms.txt'), 'utf8')
 if (!llms.startsWith('# ')) problems.push('llms.txt : doit commencer par un titre H1')
 if (!/^> .{20,}/m.test(llms)) problems.push('llms.txt : résumé en citation (> ...) absent')
 const listed = [...llms.matchAll(/^- \[[^\]]+\]\(([^)]+\.md)\)/gm)].filter((m) => m[1]!.startsWith(`${SITE}${BASE}/`)).length
-if (listed !== docPages.length) problems.push(`llms.txt : ${listed} pages listées pour ${docPages.length} pages de doc`)
+if (listed !== withMarkdown) problems.push(`llms.txt : ${listed} pages listées pour ${withMarkdown} pages avec leur Markdown`)
 
 // 5. Découverte
 for (const name of ['robots.txt', 'sitemap-index.xml', '404.html']) {

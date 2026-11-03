@@ -42,7 +42,8 @@ export default defineConfig({
       title: SITE_TITLE,
       description: SITE_DESCRIPTION,
       defaultLocale: 'root',
-      locales: { root: { label: 'Français', lang: 'fr' } },
+      // anglais : accueil et « Démarrer » traduits ; les autres pages s'affichent en français sous /en/ (repli Starlight)
+      locales: { root: { label: 'Français', lang: 'fr' }, en: { label: 'English', lang: 'en' } },
       logo: { src: './src/assets/logo.svg', alt: SITE_TITLE },
       favicon: '/favicon.svg',
       social: [{ icon: 'github', label: 'Dépôt GitHub', href: REPO_URL }],
@@ -63,6 +64,8 @@ export default defineConfig({
         { tag: 'meta', attrs: { name: 'theme-color', content: '#f5f7fb', media: '(prefers-color-scheme: light)' } },
         { tag: 'meta', attrs: { name: 'theme-color', content: '#0d1430', media: '(prefers-color-scheme: dark)' } },
         { tag: 'link', attrs: { rel: 'alternate', type: 'text/plain', title: 'llms.txt', href: `${base}/llms.txt` } },
+        { tag: 'meta', attrs: { property: 'og:image', content: `${site}${base}/social-preview.png` } },
+        { tag: 'meta', attrs: { property: 'og:image:alt', content: `${SITE_TITLE} : Expo + Tamagui + Supabase, built for Claude Code` } },
       ],
       sidebar: sidebar(),
     }),
