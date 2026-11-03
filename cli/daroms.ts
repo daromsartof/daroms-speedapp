@@ -26,6 +26,7 @@ const COMMANDS: Record<string, Command> = {
   build: { describe: 'build [preview|production|development] [--platform ios|android|all]', run: lazy('./commands/ship', 'build') },
   submit: { describe: 'submit [--platform ios|android|all] : TestFlight / piste interne', run: lazy('./commands/ship', 'submit') },
   update: { describe: 'update [canal] --message "..." : mise à jour OTA', run: lazy('./commands/ship', 'update') },
+  cost: { describe: "cost [--print --out fichier] : tokens et prix de l'app par étape, modèle et session, écrit app.cost.md", run: lazy('./commands/cost', 'cost') },
   'sync-ai': { describe: 'synchronise core/_ai vers .claude/', run: lazy('./commands/ai', 'syncAiCommand') },
   catalog: { describe: 'régénère CATALOG.md et digest.md', run: lazy('./commands/ai', 'catalog') },
   'release-core': { describe: 'release-core <patch|minor|major> : version, changelog, tag du cœur', run: lazy('./commands/core', 'releaseCore') },
