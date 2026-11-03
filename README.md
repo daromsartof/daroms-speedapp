@@ -50,7 +50,7 @@ Ouvrir Claude Code dans l'app, puis :
 | Après-midi | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | écrans, modules, vérification, finition UX |
 | Soir | `/daroms-store`, `/daroms-build`, `/daroms-submit` | fiche store FR/EN, build EAS, TestFlight et piste interne, puis `app.cost.md` : ce que l'app a coûté en tokens et en dollars |
 
-21 skills, 3 sous-agents (designer, reviewer, store) et 6 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, statistiques de tokens). Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
+22 skills, 3 sous-agents (designer, reviewer, store) et 6 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, statistiques de tokens). La méthode [ECC](https://ecc.tools) est embarquée : `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` et `ecc-typescript-patterns`, figés dans le cœur et traduits vers les commandes daroms par `daroms-ecc`. Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
 
 ## Exemple : une table et son écran
 

@@ -321,7 +321,7 @@ function skillsPage(skills: Skill[]) {
       `## Sous-agents\n\nIls travaillent dans un contexte séparé et renvoient un résumé court.\n\n| Agent | Rôle | Outils |\n|---|---|---|\n${agents
         .map((a) => `| ${code(String(a.name))} | ${cell(String(a.description))} | ${code(String(a.tools ?? ''))} |`)
         .join('\n')}`,
-      `## Skills tiers figés\n\nCopiés tels quels dans \`_ai/skills/vendor/\` et chargés en \`name-only\` (nom seul) pour ne pas payer leur description à chaque tour. \`daroms-design-system\` traduit leurs conseils vers \`@daroms/ui\`.\n\n${vendorTable}`,
+      `## Skills tiers figés\n\nCopiés tels quels dans \`_ai/skills/vendor/\` et chargés en \`name-only\` (nom seul) pour ne pas payer leur description à chaque tour. \`daroms-design-system\` traduit leurs conseils vers \`@daroms/ui\` ; \`daroms-ecc\` traduit les skills \`ecc-*\`, venus d’[ECC](https://ecc.tools), vers les commandes daroms.\n\n${vendorTable}`,
     ].join('\n\n'),
   )
 }
