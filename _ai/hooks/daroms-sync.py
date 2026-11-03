@@ -85,7 +85,12 @@ def merge_settings(core_settings: Path, app_settings: Path) -> bool:
             permissions.setdefault(key, values)
     merged["permissions"] = permissions
     for key, value in core.items():
-        if key not in ("hooks", "permissions"):
+        if key in ("hooks", "permissions"):
+            continue
+        if isinstance(value, dict) and isinstance(app.get(key), dict):
+            # clés objet (skillOverrides...) : les nouvelles entrées du cœur arrivent, celles de l'app gagnent
+            merged[key] = {**value, **app[key]}
+        else:
             merged.setdefault(key, value)
     content = json.dumps(merged, indent=2, ensure_ascii=False) + "\n"
     return common.write_if_changed(app_settings, content)

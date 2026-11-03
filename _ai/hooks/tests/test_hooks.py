@@ -104,6 +104,15 @@ class Sync(unittest.TestCase):
             self.assertEqual(merged["permissions"]["deny"], ["Read(./.env)", "Read(./secret)"])
             self.assertEqual(merged["model"], "x")
 
+    def test_merge_adds_new_object_entries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            core, app = Path(tmp) / "core.json", Path(tmp) / "app.json"
+            core.write_text(json.dumps({"skillOverrides": {"a": "name-only", "b": "name-only"}}))
+            app.write_text(json.dumps({"skillOverrides": {"a": "on", "c": "off"}}))
+            sync.merge_settings(core, app)
+            merged = json.loads(app.read_text())
+            self.assertEqual(merged["skillOverrides"], {"a": "on", "b": "name-only", "c": "off"})
+
 
 class Common(unittest.TestCase):
     def test_catalog_block(self):
