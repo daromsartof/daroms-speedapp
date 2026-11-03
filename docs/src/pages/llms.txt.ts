@@ -1,5 +1,6 @@
 // Index pour agents (format llmstxt.org) : chaque lien pointe vers la version Markdown de la page.
 import type { APIRoute } from 'astro'
+import { getCollection } from 'astro:content'
 
 import core from '../generated/core.json'
 import { markdownPath, orderedEntries } from '../lib/agent-markdown'
@@ -10,6 +11,9 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
 export const GET: APIRoute = async ({ site }) => {
   const url = (path: string) => new URL(path, site).href
   const sections = await orderedEntries()
+  const english = (await getCollection('docs'))
+    .filter((e) => e.id === 'en' || e.id.startsWith('en/'))
+    .sort((a, b) => (a.id === 'en' ? -1 : b.id === 'en' ? 1 : (a.data.sidebar.order ?? 0) - (b.data.sidebar.order ?? 0)))
   const lines = [
     `# ${SITE_TITLE}`,
     `> ${SITE_DESCRIPTION}`,
@@ -34,6 +38,13 @@ export const GET: APIRoute = async ({ site }) => {
         ...entries.map((e) => `- [${e.data.title}](${url(markdownPath(e.id))})${e.data.description ? `: ${e.data.description}` : ''}`),
       ].join('\n'),
     ),
+    [
+      '## English',
+      '',
+      'Pages traduites en anglais (accueil et Démarrer) ; les autres pages restent en français.',
+      '',
+      ...english.map((e) => `- [${e.data.title}](${url(markdownPath(e.id))})${e.data.description ? `: ${e.data.description}` : ''}`),
+    ].join('\n'),
     [
       '## Optional',
       '',

@@ -1,6 +1,8 @@
 // Plan du site : source unique de la barre latérale et de l'ordre de llms.txt / llms-full.txt.
 export type Section = {
   label: string
+  /** Libellé anglais de la section (barre latérale sous /en/). */
+  en: string
   /** Pages dans l'ordre (slug sans extension) ; `autogenerate` : dossier complet trié par `sidebar.order`. */
   items: (string | { label: string; autogenerate: string })[]
   /** Résumé de la section pour llms.txt. */
@@ -10,11 +12,13 @@ export type Section = {
 export const SECTIONS: Section[] = [
   {
     label: 'Démarrer',
+    en: 'Get started',
     summary: 'Ce qu’est le framework, installation, tutoriel complet et arborescence d’une app.',
     items: ['demarrer/introduction', 'demarrer/installation', 'demarrer/tutoriel', 'demarrer/structure-app'],
   },
   {
     label: 'Guides',
+    en: 'Guides',
     summary: 'Une tâche précise par page, commandes exactes et vérification.',
     items: [
       'guides/ajouter-un-ecran',
@@ -32,6 +36,7 @@ export const SECTIONS: Section[] = [
   },
   {
     label: 'Référence',
+    en: 'Reference',
     summary: 'CLI, manifest, marque, composants, tokens, paquets, modules, variantes, règles, skills et hooks.',
     items: [
       'reference/cli',
@@ -49,11 +54,13 @@ export const SECTIONS: Section[] = [
   },
   {
     label: 'Explications',
+    en: 'Explanations',
     summary: 'Pourquoi le framework est construit ainsi : architecture, couche IA, sécurité des données, Tamagui v3.',
     items: ['explications/architecture', 'explications/couche-ia', 'explications/donnees-et-securite', 'explications/tamagui-v3'],
   },
   {
     label: 'Agents IA',
+    en: 'AI agents',
     summary: 'Comment un agent consomme cette documentation et travaille dans une app daroms.',
     items: ['agents/utiliser-avec-un-agent'],
   },
@@ -63,6 +70,7 @@ export const SECTIONS: Section[] = [
 export function sidebar() {
   return SECTIONS.map((section) => ({
     label: section.label,
+    translations: { en: section.en },
     items: section.items.map((item) =>
       typeof item === 'string'
         ? { slug: item }
