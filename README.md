@@ -150,3 +150,5 @@ Details: [Developing the core](https://daromsartof.github.io/daroms-speedapp/gui
 ## License
 
 MIT, full text in the package's `LICENSE` file.
+
+Made by [Daroms'Art](https://daromsart.xyz/), web, mobile and AI development agency.

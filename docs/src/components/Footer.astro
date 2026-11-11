@@ -1,0 +1,27 @@
+---
+// Pied de page Starlight + mention de l'agence qui conçoit le framework.
+import Default from '@astrojs/starlight/components/Footer.astro'
+
+import { AGENCY_NAME, AGENCY_URL } from '../site'
+
+const en = Astro.locals.starlightRoute.lang.startsWith('en')
+---
+
+<Default />
+<p class="agency">
+  {en ? 'Made by ' : 'Conçu par '}<a href={AGENCY_URL}>{AGENCY_NAME}</a>{en ? ', web, mobile and AI development agency.' : ', agence de développement web, mobile et IA.'}
+</p>
+
+<style>
+  .agency {
+    margin: 1.5rem 0 0;
+    font-size: var(--sl-text-xs);
+    color: var(--sl-color-gray-3);
+  }
+  .agency a {
+    color: inherit;
+  }
+  .agency a:hover {
+    color: var(--sl-color-white);
+  }
+</style>

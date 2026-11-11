@@ -3,7 +3,7 @@
 import BrandPlayground from '../components/landing/BrandPlayground.astro'
 import core from '../generated/core.json'
 import Landing from '../layouts/Landing.astro'
-import { REPO_URL, SITE_DESCRIPTION, SITE_TITLE } from '../site'
+import { AGENCY_NAME, AGENCY_URL, REPO_URL, SITE_DESCRIPTION, SITE_TITLE } from '../site'
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 const link = (path: string) => `${base}${path}`
@@ -218,7 +218,9 @@ const provided = [
 
   <footer class="foot" slot="footer">
     <div class="wrap foot-row">
-      <p>{SITE_TITLE}, cœur v{core.version}. Expo SDK 58, Tamagui v3, Supabase.</p>
+      <p>
+        {SITE_TITLE}, cœur v{core.version}. Expo SDK 58, Tamagui v3, Supabase. Conçu par <a href={AGENCY_URL}>{AGENCY_NAME}</a>, agence de développement web, mobile et IA.
+      </p>
       <ul>
         <li><a href={link('/demarrer/introduction/')}>Documentation</a></li>
         <li><a href={link('/llms.txt')}>llms.txt</a></li>
