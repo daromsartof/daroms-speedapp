@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.6.0 (2026-11-21)
+
+### Nouveautés
+- grille de critique notée pour daroms-designer
+- vidéo promo depuis les vrais écrans de l'app
+- mesures de goût sur le rendu
+
+### Corrections
+- le serveur web suit les modifications d'écran
+
+### Documentation
+- lien vers Daroms'Art en pied de page, llms.txt et README
+
 ## v0.5.2 (2026-11-03)
 
 ### Documentation
