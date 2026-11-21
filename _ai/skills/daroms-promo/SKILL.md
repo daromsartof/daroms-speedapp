@@ -31,6 +31,6 @@ Format : $ARGUMENTS (vide : `vertical`, pour Google Play et les réseaux sociaux
    - un texte par langue du manifest ; `end` dit l'offre réelle (gratuit, essai de N jours d'après `monetization`) ;
    - écran derrière une gate : `"storage": { "onboarding.done.v1": "true" }` ; écran de données : données de démo crédibles d'abord, jamais un état vide ou un squelette.
 3. Images fixes : `bun daroms promo --stills` puis Read sur chaque image. À compter : accroche lisible à 1,1 s ; chaque écran sans erreur ni état vide ; légende sur 2 lignes au plus ; carte de fin. Corriger `promo.json` ou les données, relancer.
-4. Revue : agent `daroms-designer` (images fixes + `promo.json`), au plus 5 corrections dont au moins une qui augmente l'impact (accroche, ordre, écran phare), pas seulement du poli. Appliquer, relancer `--stills`.
+4. Critique : agent `daroms-designer` (images fixes + `promo.json`) : grille notée, points critiques, corrections dont au moins une qui augmente l'impact (accroche, ordre, écran phare). Appliquer, relancer `--stills` ; un second tour si une note reste < 7.
 5. Rendu : `bun daroms promo` (`--all` pour toutes les langues). Son : seulement un fichier sous licence commerciale (`--audio store/promo/son.wav`), sinon vidéo muette.
 6. **Stop** : chemins de `store/promo/promo-<langue>.mp4` et `poster-<langue>.png`, durée. Publication : Google Play prend un lien YouTube dans la fiche ; réseaux sociaux tels quels. App Store : pas cette vidéo (règle 2.3.4 : un aperçu App Store ne montre que des captures vidéo de l'app elle-même).

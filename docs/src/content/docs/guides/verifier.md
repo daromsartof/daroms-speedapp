@@ -58,6 +58,14 @@ Tout va bien : une ligne grise `mesures ok : ...`. Sinon une ligne `mesure` par 
 
 Les mesures n'échouent pas la commande : `/daroms-screen`, `/daroms-check` et `/daroms-polish` les corrigent, sauf exception écrite dans `app.spec.md > Inspiration`. Le catalogue `/_dev/kitchen-sink` dépasse par construction (il montre tout à la fois).
 
+Les mesures comptent ; la grille de critique juge le reste.
+
+### Grille de critique
+
+`/daroms-polish` confie les captures à l'agent `daroms-designer`, qui n'a pas fait les écrans et doit les juger sévèrement. Il note six dimensions sur 10 : direction (fidélité à `## Inspiration`), clarté, composition, finition, accessibilité et états, caractère. L'échelle est ancrée pour éviter les notes de complaisance : 5 = travail d'étudiant correct, 6 = niveau modèle, 7 = pro solide, 8 = studio haut de gamme ; une première version vaut le plus souvent 5 à 7, et un écran qui irait à n'importe quelle app plafonne à 6 en caractère.
+
+Il rend aussi les points critiques (aspect générique, mesure en défaut, état manquant) et au plus 10 corrections classées par impact, dont au moins une qui augmente le caractère plutôt que le poli. `/daroms-polish` applique, re-capture, et refait un tour si une note reste sous 7 (deux tours au plus) ; il finit sur les notes avant et après. `/daroms-promo` passe ses images fixes par la même grille. Grille adaptée de [mg-styles-15](https://github.com/Vincentwei1021/mg-styles-15) (`rubric.md`, licence MIT).
+
 ## Tests unitaires
 
 ```bash
