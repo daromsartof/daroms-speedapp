@@ -13,11 +13,12 @@ effort: medium
 Écran : $ARGUMENTS
 
 1. Lire le wireframe de l'écran dans `app.spec.md` et `core/packages/ui/CATALOG.md` (pas d'autres fichiers du cœur).
+   Choix de mise en page que le wireframe ne tranche pas : une référence ciblée (WebSearch sur `mobbin.com` ou `screensdesign.com`, une suffit), notée `Réf.` dans le wireframe ; sans exemple, le modèle retombe sur son motif le plus banal.
 2. Générer si absent : `bun daroms g screen <nom> [--tab --icon Nom] --title "Titre FR" --title-en "Title"` (route, feature, i18n, test, manifest). Si une table existe pour l'écran, la générer d'abord (`/daroms-data`) : l'écran se branche sur son `api.ts`.
 3. Remplir `src/features/<nom>/` :
    - `<Nom>Screen.tsx` : composition @daroms/ui ; 4 états via `QueryView` ou `List` ; textes `t('...')`.
    - `hooks.ts` : logique d'écran (`use<Nom>Screen`) ; `components/` pour les items (mémoïsés) ; formulaires `FormField` + zod.
    - Clés i18n FR et EN ajoutées ensemble.
-4. Vérifier : `bun daroms shot /<route>` puis `--dark` ; corriger erreurs et débordements ; `--capture` seulement pour juger le visuel.
+4. Vérifier : `bun daroms shot /<route>` puis `--dark` ; corriger erreurs, débordements et chaque ligne `mesure` (teintes, rayons, tailles, emoji, dégradés, actions) ; `--capture` seulement pour juger le visuel.
 5. `bun daroms test <nom>` ; adapter le test généré si l'écran a changé.
 6. **Stop** : 2 lignes de résumé + chemin de la capture si prise.

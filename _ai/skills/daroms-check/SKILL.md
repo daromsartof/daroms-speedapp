@@ -11,7 +11,7 @@ effort: medium
 
 1. `bun daroms doctor` (environnement, manifest, i18n, règles, TypeScript, ESLint, expo-doctor).
 2. `bun daroms test`.
-3. Écrans touchés (`git diff --name-only` -> routes) : `bun daroms shot /<route>` puis `--dark`. Écrans derrière une gate : `--storage onboarding.done.v1=true`.
+3. Écrans touchés (`git diff --name-only` -> routes) : `bun daroms shot /<route>` puis `--dark` ; une ligne `mesure` = à corriger. Écrans derrière une gate : `--storage onboarding.done.v1=true`.
 4. Appareil ou simulateur disponible : `bun daroms e2e` (flow `e2e/main.yaml`).
 5. Auth, paiements, saisies utilisateur ou migrations touchés : liste de contrôle `ecc-security-review`, traduite par `daroms-ecc`.
 6. En cas d'échec : `/daroms-fix`.

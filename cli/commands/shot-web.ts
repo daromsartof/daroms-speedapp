@@ -3,6 +3,7 @@ import { join } from 'node:path'
 
 import { fail } from '../lib/log'
 import { appRoot } from '../lib/paths'
+import { collectMeasures, scoreMeasures, type BrandRef, type Metric } from '../lib/taste'
 
 export type PageReport = {
   route: string
@@ -11,10 +12,11 @@ export type PageReport = {
   warnings: string[]
   overflows: string[]
   texts: string[]
+  taste: Metric[]
   shot?: string
 }
 
-type Options = { url: string; route: string; dark: boolean; width: number; shotPath: string; forceShot: boolean; locale: string; storage: Record<string, string> }
+type Options = { url: string; route: string; dark: boolean; width: number; shotPath: string; forceShot: boolean; locale: string; storage: Record<string, string>; brand?: BrandRef }
 
 const IGNORED = [/Download the React DevTools/, /\[HMR\]/, /Running application/, /favicon/]
 
@@ -26,11 +28,11 @@ async function loadPlaywright() {
   }
 }
 
-export async function inspectPage({ url, route, dark, width, shotPath, forceShot, locale, storage }: Options): Promise<PageReport> {
+export async function inspectPage({ url, route, dark, width, shotPath, forceShot, locale, storage, brand }: Options): Promise<PageReport> {
   const { chromium } = await loadPlaywright()
   const browser = await chromium.launch().catch(() => chromium.launch({ channel: 'chrome' }))
   const scheme = dark ? 'dark' : 'light'
-  const report: PageReport = { route, scheme, errors: [], warnings: [], overflows: [], texts: [] }
+  const report: PageReport = { route, scheme, errors: [], warnings: [], overflows: [], texts: [], taste: [] }
   try {
     const page = await browser.newPage({ viewport: { width, height: 844 }, colorScheme: scheme, deviceScaleFactor: 1, locale })
     page.on('console', (msg) => {
@@ -74,6 +76,7 @@ export async function inspectPage({ url, route, dark, width, shotPath, forceShot
     }, width)
     report.overflows = found.overflows
     report.texts = found.texts
+    report.taste = scoreMeasures(await page.evaluate(collectMeasures), brand)
     if (forceShot || report.overflows.length || report.errors.length) {
       await page.screenshot({ path: shotPath, fullPage: true })
       report.shot = shotPath

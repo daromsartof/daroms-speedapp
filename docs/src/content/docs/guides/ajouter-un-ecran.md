@@ -71,7 +71,7 @@ Ce que les hooks refusent ici : couleur hex, `p={14}`, `StyleSheet.create`, text
 ## 4. Vérifier
 
 ```bash
-bun daroms shot /books           # erreurs, débordements, capture si utile
+bun daroms shot /books           # erreurs, débordements, mesures de goût, capture si utile
 bun daroms shot /books --dark    # mode sombre
 bun daroms test books            # test de la feature
 ```
