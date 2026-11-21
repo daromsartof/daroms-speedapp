@@ -38,9 +38,13 @@ async function ensureWebServer(root: string, port: number) {
   mkdirSync(join(root, '.daroms'), { recursive: true })
   await Bun.write(hashFile, hash)
   const logFile = Bun.file(join(root, '.daroms', 'web-server.log'))
+  // sans CI : en mode CI, Metro ne surveille pas les fichiers et `shot` montrerait l'écran d'avant la modification.
+  // stdin fermé suffit à rendre Expo non interactif.
+  const env: Record<string, string | undefined> = { ...process.env, BROWSER: 'none' }
+  delete env.CI
   const server = Bun.spawn(['bunx', 'expo', 'start', '--web', '--port', String(port), '--clear'], {
     cwd: root,
-    env: { ...process.env, BROWSER: 'none', CI: '1' },
+    env,
     stdout: logFile,
     stderr: logFile,
     stdin: 'ignore',
