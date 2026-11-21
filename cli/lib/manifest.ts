@@ -1,6 +1,7 @@
 import { join } from 'node:path'
 
 import type { Manifest } from '../../packages/lib/src/manifest/schema.ts'
+import type { Brand } from '../../packages/theme/src/brand.ts'
 import { capture } from './exec'
 import { writeFile } from './fsx'
 import { fail } from './log'
@@ -13,6 +14,14 @@ export async function loadManifest(root: string): Promise<Manifest> {
   const { code, out } = await capture(['bun', '-e', `const m = await import(${JSON.stringify(file)}); console.log(JSON.stringify(m.default))`], { cwd: root })
   if (code !== 0) fail(`manifest invalide :\n${out.trim().split('\n').slice(-12).join('\n')}`)
   return JSON.parse(out.trim().split('\n').pop()!) as Manifest
+}
+
+/** Charge brand.ts (valeurs complétées par defineBrand) ; undefined si absent ou invalide. */
+export async function loadBrand(root: string): Promise<Brand | undefined> {
+  const file = join(root, 'brand.ts')
+  const { code, out } = await capture(['bun', '-e', `const b = await import(${JSON.stringify(file)}); console.log(JSON.stringify(b.default))`], { cwd: root })
+  if (code !== 0) return undefined
+  return JSON.parse(out.trim().split('\n').pop()!) as Brand
 }
 
 const IDENT = /^[A-Za-z_$][\w$]*$/

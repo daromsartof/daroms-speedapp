@@ -16,6 +16,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-
 | [`icons`](#icons) | ajoute des icônes Lucide à l'app |
 | [`module`](#module) | active, retire, liste les modules |
 | [`shot`](#shot) | contrôle visuel d'une route |
+| [`promo`](#promo) | vidéo promo depuis les vrais écrans |
 | [`test`, `e2e`](#test-et-e2e) | tests unitaires, flows Maestro |
 | [`assets`](#assets) | icônes, splash, favicon depuis un SVG |
 | [`inspire`](#inspire) | aperçus d'inspiration à regarder avant le design |
@@ -104,6 +105,14 @@ bun daroms shot --stop
 ```
 
 Rapport texte (erreurs, exceptions, débordements, mesures de goût : teintes, rayons, tailles de texte, polices, dégradés, emoji, actions) puis capture si utile ou si `--capture`. Le serveur web est réutilisé tant que manifest et marque ne changent pas. Détail : [Vérifier](/guides/verifier/).
+
+## promo
+
+```bash
+bun daroms promo [--locale en | --all] [--stills [auto|1,3.5]] [--audio son.wav] [--spec store/promo.json] [--port 8099]
+```
+
+Lit `store/promo.json` (format, accroche, 2 à 5 écrans légendés, fin), capture chaque route à 3x, compose aux couleurs de `brand.ts` et rend `store/promo/promo-<langue>.mp4` avec `poster-<langue>.png`. `--stills` écrit seulement des images fixes dans `.daroms/promo/`. Détail : [Publier](/guides/publier/#vidéo-promo).
 
 ## test et e2e
 

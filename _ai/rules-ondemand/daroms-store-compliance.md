@@ -9,3 +9,4 @@
 - Permissions : demander au moment de l'usage, texte d'explication clair (plugins Expo) ; aucune permission inutilisée.
 - Contenu : pas d'écran vide ni de « bientôt » ; données de démo pour la revue (compte de test dans les notes de revue).
 - Support : `manifest.store.supportEmail` ; captures d'écran à jour (`/daroms-store`).
+- Vidéo : l'aperçu App Store ne montre que des captures vidéo de l'app (règle 2.3.4), donc pas la vidéo de `/daroms-promo` ; Google Play prend un lien YouTube.

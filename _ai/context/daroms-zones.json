@@ -127,13 +127,19 @@
     "testflight",
     "ota",
     "update",
-    "aso"
+    "aso",
+    "promo",
+    "video",
+    "videos",
+    "trailer",
+    "youtube"
    ],
    "paths": [
     "eas.json",
-    "app.manifest.ts"
+    "app.manifest.ts",
+    "store/promo.json"
    ],
-   "notes": "/daroms-build, /daroms-submit, /daroms-store, /daroms-update."
+   "notes": "/daroms-build, /daroms-submit, /daroms-store, /daroms-promo (vidéo promo), /daroms-update."
   },
   {
    "name": "coût et tokens",

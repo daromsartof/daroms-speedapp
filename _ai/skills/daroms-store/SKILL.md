@@ -14,4 +14,5 @@ effort: medium
 3. Captures : pour les 4 à 6 écrans clés, `bun daroms shot /<route> --capture --width 430` (et `--locale en`) ; copier dans `store/screenshots/<langue>/`.
 4. Politique de confidentialité : générer `store/privacy.md` d'après les modules (auth : e-mail ; analytics : événements ; push : jeton ; payments : achats via RevenueCat) ; l'utilisateur la publie et renseigne `manifest.store.privacyUrl` et `supportEmail`.
 5. Relire `.claude/rules-ondemand/daroms-store-compliance.md` et cocher la liste.
+   Vidéo promo (facultatif, Google Play et réseaux sociaux) : `/daroms-promo`.
 6. **Stop** : chemins des fichiers et éléments restant à fournir.

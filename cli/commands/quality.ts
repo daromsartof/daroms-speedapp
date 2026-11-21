@@ -4,11 +4,10 @@ import { join } from 'node:path'
 import { bool, flag, type Args } from '../lib/args'
 import { capture, has, run, tail } from '../lib/exec'
 import { color, fail, log } from '../lib/log'
-import { loadManifest } from '../lib/manifest'
+import { loadBrand, loadManifest } from '../lib/manifest'
 import { appRoot } from '../lib/paths'
 import { failing, type BrandRef } from '../lib/taste'
 import { semanticRadius } from '../../packages/theme/src/tone'
-import type { Brand } from '../../packages/theme/src/brand'
 import { inspectPage, type PageReport } from './shot-web'
 
 async function serverUp(port: number) {
@@ -27,7 +26,7 @@ async function configHash(root: string): Promise<string> {
 }
 
 /** Démarre `expo start --web` en arrière-plan si nécessaire (réutilisé tant que la config ne change pas). */
-async function ensureWebServer(root: string, port: number) {
+export async function ensureWebServer(root: string, port: number) {
   const hashFile = Bun.file(join(root, '.daroms', 'web.config-hash'))
   const hash = await configHash(root)
   const stale = (await hashFile.exists()) && (await hashFile.text()) !== hash
@@ -85,10 +84,8 @@ async function stopWebServer(root: string, port = 8099) {
 
 /** Repères de marque pour les mesures : teintes primary/accent et rayons sémantiques hors pilules. */
 async function loadBrandRef(root: string): Promise<BrandRef | undefined> {
-  const file = join(root, 'brand.ts')
-  const { code, out } = await capture(['bun', '-e', `const b = await import(${JSON.stringify(file)}); console.log(JSON.stringify(b.default))`], { cwd: root })
-  if (code !== 0) return undefined
-  const brand = JSON.parse(out.trim().split('\n').pop()!) as Brand
+  const brand = await loadBrand(root)
+  if (!brand) return undefined
   const radii = [...new Set(Object.values(semanticRadius(brand)).filter((r) => r > 0 && r < 999))]
   return { primary: brand.primary, accent: brand.accent, radii }
 }

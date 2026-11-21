@@ -17,6 +17,7 @@ android/
 *.tsbuildinfo
 .DS_Store
 .daroms/
+store/promo/
 .claude/settings.local.json
 .claude/stats.jsonl
 .claude/context/*.cache.json
