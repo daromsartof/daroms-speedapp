@@ -19,6 +19,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-
 | [`promo`](#promo) | vidéo promo depuis les vrais écrans |
 | [`test`, `e2e`](#test-et-e2e) | tests unitaires, flows Maestro |
 | [`assets`](#assets) | icônes, splash, favicon depuis un SVG |
+| [`logo`](#logo) | directions d'icône sur une grille, vérifiées |
 | [`inspire`](#inspire) | aperçus d'inspiration à regarder avant le design |
 | [`db`](#db) | migrations et types Supabase |
 | [`build`, `submit`, `update`](#build-submit-update) | EAS |
@@ -129,7 +130,16 @@ bun daroms e2e [flow] [--go] [--driver]
 bun daroms assets
 ```
 
-Depuis `assets/source/icon.svg` (et `foreground.svg` facultatif) : `icon.png` (1024), `adaptive-icon.png`, `splash-icon.png` (512), `favicon.png` (48).
+Depuis `assets/source/icon.svg` (et `foreground.svg` facultatif) : `icon.png` (1024), `adaptive-icon.png`, `splash-icon.png` (512), `favicon.png` (48). Avec `background.svg` et `monochrome.svg` (écrits par `logo --use`) : `adaptive-background.png` et `monochrome-icon.png`, déclarés dans la config Expo.
+
+## logo
+
+```bash
+bun daroms logo [--spec assets/source/logo.json]
+bun daroms logo --use <nom> [--force]
+```
+
+Construit les 1 à 6 directions de `assets/source/logo.json` dans `.daroms/logo/<nom>/`, les vérifie (trait et contreformes à 48 px, présence, zone sûre Android, directions trop proches) et rend la planche `.daroms/logo/sheet.png`. `--use` installe la direction dans `assets/source/` puis lance `assets` ; `--force` passe outre un échec. Détail : [Changer la marque](/guides/changer-la-marque/#2-licône).
 
 ## inspire
 
