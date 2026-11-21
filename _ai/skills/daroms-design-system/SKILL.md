@@ -19,5 +19,6 @@ Quand un skill design propose une solution, la traduire ainsi :
 | États (hover, pressed, disabled) | `bg="card press:background-press"`, `opacity="1 disabled:0.5"` |
 | Thème sombre | automatique via les clés de thème ; vérifier `bun daroms shot --dark` |
 | Glassmorphism, ombres fortes, dégradés lourds | refuser sauf si le cahier l'exige ; `boxShadow="0 4px 12px shadow-3"` mesuré |
+| « Plus beau », « plus moderne » | jamais tel quel (cela invite d'autres réglages par défaut) : une mesure de `daroms shot` à corriger, ou un motif d'une référence de `## Inspiration` |
 
 Garder des skills design : la direction (hiérarchie, densité, rythme, un seul accent), pas l'implémentation.

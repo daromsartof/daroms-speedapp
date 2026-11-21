@@ -15,4 +15,4 @@ paths:
 - Retour utilisateur : `notify.success|error(t('...'))` ; confirmation destructive : `Dialog destructive`.
 - Feuilles : `Sheet open onOpenChange title` pour créer/éditer sans changer d'écran.
 - Découper dès ~150 lignes : `components/XItem.tsx` (mémoïsé), logique dans `hooks.ts`.
-- Vérifier : `bun daroms shot /route` (puis `--dark`).
+- Vérifier : `bun daroms shot /route` (puis `--dark`) ; chaque ligne `mesure` est à corriger.

@@ -17,7 +17,7 @@ const COMMANDS: Record<string, Command> = {
   g: { describe: 'g screen|feature|table|module <nom> [options] (table --local : données sur l appareil)', run: lazy('./commands/generate', 'generate') },
   icons: { describe: 'icons add <NomLucide...> : ajoute des icônes Lucide à l app', run: lazy('./commands/generate', 'icons') },
   module: { describe: 'module add|remove|list [slug]', run: lazy('./commands/module', 'moduleCommand') },
-  shot: { describe: 'shot <route> [--dark --capture --locale en --storage cle=val --storage-file f.json --android --stop] : logs, erreurs, débordements, capture si utile', run: lazy('./commands/quality', 'shot') },
+  shot: { describe: 'shot <route> [--dark --capture --locale en --storage cle=val --storage-file f.json --android --stop] : logs, erreurs, débordements, mesures de goût, capture si utile', run: lazy('./commands/quality', 'shot') },
   test: { describe: 'tests unitaires (jest-expo) [motif]', run: lazy('./commands/quality', 'test') },
   e2e: { describe: 'flows Maestro (e2e/*.yaml) [fichier] [--go : dans Expo Go] [--driver : pré-lance le pilote Android]', run: lazy('./commands/quality', 'e2e') },
   assets: { describe: 'icône, adaptive icon, splash, favicon depuis assets/source/icon.svg', run: lazy('./commands/assets', 'assets') },

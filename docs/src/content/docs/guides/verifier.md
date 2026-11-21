@@ -30,6 +30,34 @@ bun daroms shot --stop                    # arrête le serveur web
 
 Le rapport texte coûte quelques lignes ; une capture coûte beaucoup plus de tokens à un agent. D'où l'ordre : texte d'abord.
 
+### Mesures de goût
+
+Le rapport compte aussi, sur le rendu réel, ce qui trahit une interface générée. Un nombre ne se discute pas ; « rends-le plus beau » invite seulement d'autres réglages par défaut.
+
+| Mesure | Seuil | Ce qui est compté |
+|---|---|---|
+| teintes vives | 3 | familles de couleurs saturées : marque, accent, états (erreur, succès, alerte) et le reste |
+| teintes hors marque | 0 | teintes vives loin de `primary`, `accent` et des états |
+| rayons hors échelle | 0 | rayons absents de l'échelle tirée de `brand.ts` (pilules et éléments de moins de 24 px ignorés) |
+| tailles de texte | 6 | tailles de police distinctes à l'écran |
+| polices | 2 | familles de polices affichées |
+| dégradés | 0 | fonds en dégradé |
+| emoji | 0 | emoji dans les textes affichés (données et traductions comprises) |
+| libellés d'action en double | 0 | deux actions au même libellé |
+| actions sans nom | 0 | bouton ou lien sans texte ni `aria-label` |
+| cibles < 24 px | 0 | actions sous le minimum WCAG 2.5.8 ; la cible confortable de 44 pt reste jugée par `daroms-designer` |
+
+Tout va bien : une ligne grise `mesures ok : ...`. Sinon une ligne `mesure` par dépassement, avec les éléments en cause :
+
+```text
+/books [light] : ok
+  mesure rayons hors échelle : 1 (max 0) 7px : Commencer
+  mesure emoji : 1 (max 0) Bravo !
+  mesure actions sans nom : 1 (max 0) 18x18px
+```
+
+Les mesures n'échouent pas la commande : `/daroms-screen`, `/daroms-check` et `/daroms-polish` les corrigent, sauf exception écrite dans `app.spec.md > Inspiration`. Le catalogue `/_dev/kitchen-sink` dépasse par construction (il montre tout à la fois).
+
 ## Tests unitaires
 
 ```bash

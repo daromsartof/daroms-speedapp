@@ -103,7 +103,7 @@ bun daroms shot <route> [--dark] [--capture] [--width 390] [--locale en] [--stor
 bun daroms shot --stop
 ```
 
-Rapport texte (erreurs, exceptions, débordements) puis capture si utile ou si `--capture`. Le serveur web est réutilisé tant que manifest et marque ne changent pas. Détail : [Vérifier](/guides/verifier/).
+Rapport texte (erreurs, exceptions, débordements, mesures de goût : teintes, rayons, tailles de texte, polices, dégradés, emoji, actions) puis capture si utile ou si `--capture`. Le serveur web est réutilisé tant que manifest et marque ne changent pas. Détail : [Vérifier](/guides/verifier/).
 
 ## test et e2e
 

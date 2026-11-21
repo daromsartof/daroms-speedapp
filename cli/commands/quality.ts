@@ -6,6 +6,9 @@ import { capture, has, run, tail } from '../lib/exec'
 import { color, fail, log } from '../lib/log'
 import { loadManifest } from '../lib/manifest'
 import { appRoot } from '../lib/paths'
+import { failing, type BrandRef } from '../lib/taste'
+import { semanticRadius } from '../../packages/theme/src/tone'
+import type { Brand } from '../../packages/theme/src/brand'
 import { inspectPage, type PageReport } from './shot-web'
 
 async function serverUp(port: number) {
@@ -80,12 +83,31 @@ async function stopWebServer(root: string, port = 8099) {
   log.ok(pids.size ? `serveur web arrêté (${pids.size} processus)` : 'aucun serveur web actif')
 }
 
+/** Repères de marque pour les mesures : teintes primary/accent et rayons sémantiques hors pilules. */
+async function loadBrandRef(root: string): Promise<BrandRef | undefined> {
+  const file = join(root, 'brand.ts')
+  const { code, out } = await capture(['bun', '-e', `const b = await import(${JSON.stringify(file)}); console.log(JSON.stringify(b.default))`], { cwd: root })
+  if (code !== 0) return undefined
+  const brand = JSON.parse(out.trim().split('\n').pop()!) as Brand
+  const radii = [...new Set(Object.values(semanticRadius(brand)).filter((r) => r > 0 && r < 999))]
+  return { primary: brand.primary, accent: brand.accent, radii }
+}
+
+function printTaste(report: PageReport) {
+  if (!report.taste.length) return
+  const bad = failing(report.taste)
+  const summary = report.taste.map((m) => `${m.label} ${m.value}${m.max ? `/${m.max}` : ''}`).join(' · ')
+  if (!bad.length) return console.log(color.dim(`  mesures ok : ${summary}`))
+  for (const m of bad) console.log(`  ${color.yellow('mesure')} ${m.label} : ${m.value} (max ${m.max})${m.detail.length ? ` ${color.dim(m.detail.slice(0, 4).join(' | '))}` : ''}`)
+}
+
 function printReport(report: PageReport, shot?: string) {
   const status = report.errors.length || report.overflows.length ? color.red('à corriger') : color.green('ok')
   console.log(`${color.bold(report.route)} [${report.scheme}] : ${status}`)
   for (const error of report.errors.slice(0, 10)) console.log(`  ${color.red('erreur')} ${error}`)
   if (report.warnings.length) console.log(`  ${color.yellow(`${report.warnings.length} avertissement(s)`)} ${color.dim(report.warnings.slice(0, 3).join(' | '))}`)
   for (const o of report.overflows.slice(0, 10)) console.log(`  ${color.yellow('débordement')} ${o}`)
+  printTaste(report)
   if (report.texts.length) console.log(color.dim(`  textes : ${report.texts.slice(0, 12).join(' · ')}`))
   if (shot) console.log(`  capture : ${shot}`)
 }
@@ -126,7 +148,7 @@ export async function shot(args: Args) {
       storage[key] = typeof value === 'string' ? value : JSON.stringify(value)
     }
   }
-  const report = await inspectPage({ url: `http://localhost:${port}`, route, dark, width: Number(flag(args, 'width') ?? 390), shotPath: file, forceShot: bool(args, 'capture'), locale, storage })
+  const report = await inspectPage({ url: `http://localhost:${port}`, route, dark, width: Number(flag(args, 'width') ?? 390), shotPath: file, forceShot: bool(args, 'capture'), locale, storage, brand: await loadBrandRef(root) })
   printReport(report, report.shot)
   if (report.errors.length) process.exitCode = 1
 }
