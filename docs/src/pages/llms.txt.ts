@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content'
 
 import core from '../generated/core.json'
 import { markdownPath, orderedEntries } from '../lib/agent-markdown'
-import { REPO_URL, SITE_DESCRIPTION, SITE_TITLE } from '../site'
+import { AGENCY_NAME, AGENCY_URL, REPO_URL, SITE_DESCRIPTION, SITE_TITLE } from '../site'
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
 
@@ -51,6 +51,7 @@ export const GET: APIRoute = async ({ site }) => {
       `- [Documentation complète](${url(`${BASE}/llms-full.txt`)}): toutes les pages ci-dessus en un seul fichier Markdown`,
       `- [Dépôt du cœur](${REPO_URL}): sources (packages, modules, CLI, couche IA)`,
       `- [Changelog](${REPO_URL}/blob/main/CHANGELOG.md): nouveautés et ruptures par version`,
+      `- [${AGENCY_NAME}](${AGENCY_URL}): agence de développement web, mobile et IA qui conçoit le framework`,
     ].join('\n'),
   ]
   return new Response(lines.join('\n\n') + '\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } })

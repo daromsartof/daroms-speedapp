@@ -147,3 +147,5 @@ Détail : [Développer le cœur](https://daromsartof.github.io/daroms-speedapp/g
 ## Licence
 
 MIT, texte complet dans le fichier `LICENSE` du paquet.
+
+Conçu par [Daroms'Art](https://daromsart.xyz/), agence de développement web, mobile et IA.
