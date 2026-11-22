@@ -6,7 +6,7 @@ import { currentIndex, findStep, markReady, renderGate, renderStatus, resetFrom,
 const defs = defsJson as unknown as StepsDefs
 const at = '2026-11-22T10:00:00+00:00'
 
-describe('parcours daroms-day', () => {
+describe('parcours daroms-pilot', () => {
   it('commence à la première étape et la trouve par numéro ou par id', () => {
     const state = startState(at)
     expect(currentIndex(defs, state)).toBe(0)

@@ -1,4 +1,4 @@
-// Parcours /daroms-day : état des étapes (app.steps.json), lu et mis à jour par la CLI.
+// Parcours /daroms-pilot : état des étapes (app.steps.json), lu et mis à jour par la CLI.
 // Les validations viennent de l'utilisateur (hook daroms-steps sur /daroms-valider, ou `steps validate` au terminal).
 export type StepDef = { id: string; title: string; goal: string; skills: string[]; deliverables: string[]; checks: string[] }
 export type StepsDefs = { steps: StepDef[]; free: string[] }

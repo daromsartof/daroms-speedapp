@@ -1,11 +1,11 @@
 ---
-name: daroms-day
-description: Parcours guidé de l'idée à l'app publiée et suivie - les 9 étapes du cycle réel (cadrage, conception, données, développement, qualité, conformité, publication, lancement, suivi), chacune validée à la main par l'utilisateur avant la suivante.
+name: daroms-pilot
+description: Pilote automatique de l'idée à l'app publiée et suivie - l'agent mène les 9 étapes du cycle réel (cadrage, conception, données, développement, qualité, conformité, publication, lancement, suivi) et s'arrête après chacune jusqu'à la validation de l'utilisateur.
 argument-hint: "<idée de l'app>"
 disable-model-invocation: true
 ---
 
-# /daroms-day : parcours guidé, une validation manuelle par étape
+# /daroms-pilot : pilote automatique, une validation humaine par étape
 
 Idée : $ARGUMENTS
 

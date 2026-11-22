@@ -17,4 +17,4 @@ Idée : $ARGUMENTS
    - **Monétisation** (free, freemium, subscription) et ce qui est Pro.
    - **Nom** (3 propositions, choisir la 1re), **slug**, **ton** (playful, pro, minimal), couleur principale et accent (hex).
    - **Variante** de départ : blank, list-detail, tracker, ai-chat, social, shop. Dans une app déjà créée (`app.manifest.ts`), reprendre la variante du manifest : tables, modules et marque du cahier s'ajoutent ensuite (`/daroms-data`, `/daroms-module`, `/daroms-brand`).
-3. Afficher le tableau des écrans et la ligne marque. **Stop** : attendre la validation (dans le parcours `/daroms-day` : `bun daroms steps ready 1 "<résumé>"` puis `/daroms-valider` de l'utilisateur ; hors app : `/daroms-new` crée l'app d'après le cahier).
+3. Afficher le tableau des écrans et la ligne marque. **Stop** : attendre la validation (dans le parcours `/daroms-pilot` : `bun daroms steps ready 1 "<résumé>"` puis `/daroms-valider` de l'utilisateur ; hors app : `/daroms-new` crée l'app d'après le cahier).

@@ -1,5 +1,5 @@
 {
- "comment": "Parcours /daroms-day : les étapes du cycle réel d'une app. Chaque étape se termine par une validation manuelle (/daroms-valider). Les skills listés sont refusés à l'agent tant que les étapes précédentes ne sont pas validées.",
+ "comment": "Pilote /daroms-pilot : les étapes du cycle réel d'une app. Chaque étape se termine par une validation manuelle (/daroms-valider). Les skills listés sont refusés à l'agent tant que les étapes précédentes ne sont pas validées.",
  "free": [
   "daroms-commit",
   "daroms-fix",
@@ -7,7 +7,7 @@
   "daroms-design-system",
   "daroms-skill-new",
   "daroms-release-core",
-  "daroms-day"
+  "daroms-pilot"
  ],
  "steps": [
   {

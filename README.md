@@ -8,19 +8,25 @@
 ![Tamagui v3](https://img.shields.io/badge/Tamagui-v3-121a3a)
 ![Bun >= 1.3](https://img.shields.io/badge/Bun-%3E%3D%201.3-121a3a)
 
-**An idea in the morning, the app on your phone by evening.**
+**The mobile framework built for AI agents.** Claude builds, the framework keeps it on rails, you approve each step.
 
 [![Demo: create an app with npx, change brand.ts, generate a table and a screen, a rule hook refusing a hard-coded color, the screen in light and dark](https://raw.githubusercontent.com/daromsartof/daroms-speedapp/main/docs/public/demo.gif)](https://daromsartof.github.io/daroms-speedapp/demo.mp4)
 
-*Real output from a demo app: the app was created in 42 s (measured). [Watch the full 50 s demo](https://daromsartof.github.io/daroms-speedapp/demo.mp4).*
+*Real output from a demo app: one command creates the whole app, then generators and rule hooks do the rest. [Watch the full 50 s demo](https://daromsartof.github.io/daroms-speedapp/demo.mp4).*
 
-An **Expo + Tamagui + Supabase** mobile framework built for Claude Code. The core ships the theme, components, data layer, modules and store publishing; your app only writes what is specific to it, under rules checked on every file.
+An **Expo + Tamagui + Supabase** mobile framework designed to be driven by an AI agent (Claude Code). The core ships the theme, components, data layer, modules and store publishing; the agent only writes what is specific to your app, inside generators, rules and checks it cannot skip.
 
-- **Generate before writing**: screens, tables and modules come from deterministic templates, no AI involved. Claude only fills in what is specific.
-- **One brand, one theme**: 5 values in `brand.ts` produce OKLCH palettes, light and dark themes, radii, spacing and springs.
-- **Enforced rules**: hard-coded color, Supabase inside a component, text outside i18n: a hook rejects the write and says what to do instead.
-- **Opt-in modules**: auth, payments, push, AI chat, photos, maps, crash reporting... one command each.
-- **Low token cost**: a short always-loaded core, rules loaded only for the files being touched, a component catalog instead of sources, and mechanical steps run in fresh-context Sonnet or Haiku subagents.
+## Why it is different
+
+Starter kits give you code and leave the agent to guess your conventions. AI app builders generate an app on their own platform. daroms gives the agent a framework to work inside:
+
+- **Built for the agent, not adapted to it**: a short always-loaded kernel, rules loaded only for the files being touched, a component catalog instead of sources, a context router, and mechanical steps in fresh-context Sonnet or Haiku subagents.
+- **Generate, then fill**: screens, tables (with RLS) and modules come from deterministic templates, no AI involved; the agent only writes what is specific.
+- **Rules that hold**: a hard-coded color, Supabase inside a component, text outside i18n: a hook rejects the write before it lands and says what to do instead.
+- **Taste that is measured**: `daroms shot` counts generated-look tells on the real render (off-brand hues, off-scale radii, emoji, unnamed buttons...), and a scored critique out of 10 drives the polish.
+- **Human checkpoints the agent cannot forge**: `/daroms-pilot` follows the 9 steps of a real app lifecycle and stops after each one; only your `/daroms-valider` moves it on.
+- **A real app that is yours**: an Expo repository in your git and your accounts, one brand file (`brand.ts`) for the whole theme, opt-in modules (auth, payments, push, AI chat, photos, maps, crash reporting), EAS builds, store compliance and OTA updates.
+- **Cost you can read**: `daroms cost` prices every step in tokens and dollars.
 
 Full documentation: **https://daromsartof.github.io/daroms-speedapp/en/**
 
@@ -48,15 +54,17 @@ No Supabase to start with: `--local` keeps data on the device, behind the same h
 Open Claude Code in the app, then:
 
 ```text
-/daroms-day An app to track my reading habits
+/daroms-pilot An app to track my reading habits
 ```
 
-| Time | Skills | Result |
+The agent runs each step, then stops and shows what to check; you type `/daroms-valider`, or `/daroms-corriger <instruction>`.
+
+| Steps | Skills | Result |
 |---|---|---|
-| Morning | `daroms new` (terminal), `/daroms-idea` | app created, QR preview, `app.spec.md` brief |
-| Noon | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | Dribbble, Pinterest and Mobbin references and a chosen direction, brand and icon, wireframes, Supabase tables with RLS |
-| Afternoon | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | screens, modules, checks, UX polish |
-| Evening | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit` | FR/EN store listing, promo video from the real screens, EAS build, TestFlight and internal track, then `app.cost.md`: what the app cost in tokens and dollars |
+| 1. Scope | `daroms new` (terminal), `/daroms-idea` | app created, QR preview, `app.spec.md` brief |
+| 2-3. Design and model | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data`, `/daroms-module` | references and a chosen direction, brand and a checked icon, wireframes, Supabase tables with RLS, modules |
+| 4-5. Build and verify | `/daroms-screen`, `/daroms-check`, `/daroms-polish` | screens with their 4 states, all checks green, measured and scored polish |
+| 6-9. Comply, publish, monitor | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | privacy policy and compliance, FR/EN listing, promo video, EAS build, TestFlight and internal track, crash reporting, then `app.cost.md` |
 
 25 skills, 3 subagents (designer, reviewer, store) and 7 hooks (sync, context router, rule checks, typecheck, `.env` protection, manual step approval, token stats). The [ECC](https://ecc.tools) method is built in: `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` and `ecc-typescript-patterns`, vendored in the core and mapped to daroms commands by `daroms-ecc`. Details: [skills](https://daromsartof.github.io/daroms-speedapp/en/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/en/reference/hooks/).
 
@@ -125,7 +133,7 @@ All options: [CLI reference](https://daromsartof.github.io/daroms-speedapp/en/re
 
 ## Documentation
 
-- [Tutorial: your app in a day](https://daromsartof.github.io/daroms-speedapp/en/demarrer/tutoriel/)
+- [Tutorial: from idea to published app](https://daromsartof.github.io/daroms-speedapp/en/demarrer/tutoriel/)
 - [Installation](https://daromsartof.github.io/daroms-speedapp/en/demarrer/installation/)
 - Guides (French): [screen](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-un-ecran/), [table](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-une-table/), [module](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-un-module/), [forms](https://daromsartof.github.io/daroms-speedapp/guides/formulaires/), [brand](https://daromsartof.github.io/daroms-speedapp/guides/changer-la-marque/), [publishing](https://daromsartof.github.io/daroms-speedapp/guides/publier/)
 - Reference (French): [components](https://daromsartof.github.io/daroms-speedapp/reference/composants/), [manifest](https://daromsartof.github.io/daroms-speedapp/reference/manifest/), [tokens](https://daromsartof.github.io/daroms-speedapp/reference/tokens/), [rules](https://daromsartof.github.io/daroms-speedapp/reference/regles/)

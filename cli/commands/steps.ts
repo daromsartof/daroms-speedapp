@@ -1,4 +1,4 @@
-// daroms steps : état du parcours /daroms-day et fin d'étape. La validation reste humaine :
+// daroms steps : état du parcours /daroms-pilot et fin d'étape. La validation reste humaine :
 // /daroms-valider dans Claude Code (hook daroms-steps), ou `steps validate` dans un vrai terminal.
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
@@ -21,7 +21,7 @@ export async function steps(args: Args) {
     if (existsSync(file)) log.info(`${STATE_FILE} existe déjà : reprise du parcours`)
     else writeJson(file, startState(now()))
   }
-  if (!existsSync(file)) fail(`aucun parcours : bun daroms steps start (ou /daroms-day)`)
+  if (!existsSync(file)) fail(`aucun parcours : bun daroms steps start (ou /daroms-pilot)`)
   const state = readJson<StepsState>(file)
   const save = () => writeJson(file, state)
   const guard = (fn: () => void) => {
@@ -40,7 +40,7 @@ export async function steps(args: Args) {
       if (i === undefined) return log.ok('parcours terminé')
       const s = defs.steps[i]!
       console.log(`${color.bold(`Étape ${i + 1} « ${s.title} »`)} : ${s.goal}`)
-      console.log(`Skills : ${s.skills.map((k) => `/${k}`).join(', ') || 'aucun (voir /daroms-day)'}`)
+      console.log(`Skills : ${s.skills.map((k) => `/${k}`).join(', ') || 'aucun (voir /daroms-pilot)'}`)
       for (const line of renderGate(defs, i).slice(1, -1)) console.log(line)
       return
     }

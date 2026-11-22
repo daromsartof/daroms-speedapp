@@ -1,7 +1,7 @@
 {
   "name": "@daromsart/daroms-speed-app",
   "version": "0.5.2",
-  "description": "Expo + Tamagui v3 + Supabase mobile framework built for Claude Code: theme, components, data, modules, daroms CLI and a low-token AI layer to ship an app a day.",
+  "description": "Expo + Tamagui v3 + Supabase mobile framework built for AI agents (Claude Code): generators, rules enforced by hooks, measured taste and a human approval at every step, from idea to published, monitored app.",
   "license": "MIT",
   "author": "Daroms",
   "homepage": "https://daromsartof.github.io/daroms-speedapp/",

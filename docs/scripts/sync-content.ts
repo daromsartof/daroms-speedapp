@@ -318,7 +318,7 @@ function skillsPage(skills: Skill[]) {
       `## Skills du cœur\n\n| Commande | Argument | Rôle | Exécution | Invocation |\n|---|---|---|---|---|\n${skills
         .map((s) => `| ${code('/' + s.name)} | ${s.argument ? code(s.argument) : '-'} | ${cell(s.description)} | ${s.run} | ${s.manual ? 'par l’humain uniquement' : 'humain ou Claude'} |`)
         .join('\n')}`,
-      '« Par l’humain uniquement » : `disable-model-invocation: true`, Claude ne lance pas ce skill de lui-même (création d’app, soumission aux stores, journée complète). « Sous-agent » : `context: fork`, contexte neuf et modèle moins cher, seul le résumé revient dans la conversation ([Modèles et contexte par étape](/explications/couche-ia/#modèles-et-contexte-par-étape)).',
+      '« Par l’humain uniquement » : `disable-model-invocation: true`, Claude ne lance pas ce skill de lui-même (création d’app, soumission aux stores, pilote automatique). « Sous-agent » : `context: fork`, contexte neuf et modèle moins cher, seul le résumé revient dans la conversation ([Modèles et contexte par étape](/explications/couche-ia/#modèles-et-contexte-par-étape)).',
       `## Sous-agents\n\nIls travaillent dans un contexte séparé et renvoient un résumé court.\n\n| Agent | Rôle | Modèle | Outils |\n|---|---|---|---|\n${agents
         .map((a) => `| ${code(String(a.name))} | ${cell(String(a.description))} | ${code(String(a.model ?? 'inherit'))} | ${code(String(a.tools ?? ''))} |`)
         .join('\n')}`,

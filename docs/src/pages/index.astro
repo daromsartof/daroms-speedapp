@@ -11,34 +11,30 @@ const abs = (path: string) => new URL(link(path), Astro.site).href
 const createCommand = 'npx @daromsart/daroms-speed-app new mon-app --variant tracker'
 const agentPrompt = `Lis ${abs('/llms.txt')}, puis ajoute un écran « Livres » à mon app daroms en suivant le guide « Ajouter un écran ».`
 
-const day = [
+const phases = [
   {
-    moment: 'Matin',
-    length: '1 h',
-    title: 'Cadrer et créer',
-    skills: ['/daroms-idea', '/daroms-new'],
-    text: 'Claude écrit le cahier app.spec.md avec toi, puis une commande crée l’app complète et affiche le QR d’aperçu.',
+    steps: 'Étape 1',
+    title: 'Cadrer',
+    skills: ['daroms new', '/daroms-idea'],
+    text: 'Une commande crée l’app complète et affiche le QR d’aperçu ; dans l’app, l’agent écrit le cahier app.spec.md avec toi.',
   },
   {
-    moment: 'Midi',
-    length: '2 h',
-    title: 'Inspiration, marque, design, données',
-    skills: ['/daroms-inspire', '/daroms-brand', '/daroms-design', '/daroms-data'],
-    text: 'Des références trouvées sur Dribbble, Pinterest ou Mobbin et une direction choisie, cinq valeurs dans brand.ts et l’icône, des wireframes texte par écran, puis les tables Supabase avec RLS.',
+    steps: 'Étapes 2 et 3',
+    title: 'Concevoir et modéliser',
+    skills: ['/daroms-inspire', '/daroms-brand', '/daroms-design', '/daroms-data', '/daroms-module'],
+    text: 'Des références et une direction choisie, cinq valeurs dans brand.ts, six icônes vérifiées, des wireframes par écran, puis les tables Supabase avec RLS et les modules.',
   },
   {
-    moment: 'Après-midi',
-    length: '3 h',
-    title: 'Écrans et modules',
-    skills: ['/daroms-screen', '/daroms-module', '/daroms-check'],
-    text: 'Chaque écran est généré puis rempli avec @daroms/ui ; paiements, notifications ou chat IA s’ajoutent en module.',
+    steps: 'Étapes 4 et 5',
+    title: 'Construire et vérifier',
+    skills: ['/daroms-screen', '/daroms-check', '/daroms-polish'],
+    text: 'Chaque écran est généré puis rempli avec @daroms/ui ; les hooks refusent les écarts aux règles, le rendu est mesuré et la finition notée sur 10.',
   },
   {
-    moment: 'Soir',
-    length: '1 h',
-    title: 'Publier',
-    skills: ['/daroms-store', '/daroms-build', '/daroms-submit'],
-    text: 'Fiche store FR et EN, build EAS, envoi vers TestFlight et la piste interne de Google Play, puis le bilan : ce que l’app a coûté en tokens et en dollars.',
+    steps: 'Étapes 6 à 9',
+    title: 'Publier et suivre',
+    skills: ['/daroms-store', '/daroms-promo', '/daroms-build', '/daroms-submit', '/daroms-update'],
+    text: 'Conformité, fiche store FR et EN, vidéo promo, build EAS et soumission, suivi des plantages, puis le bilan : ce que l’app a coûté en tokens et en dollars.',
   },
 ]
 
@@ -82,13 +78,14 @@ const provided = [
 ]
 ---
 
-<Landing title={`${SITE_TITLE} : une app mobile par jour avec Claude`} description={SITE_DESCRIPTION}>
+<Landing title={`${SITE_TITLE} : le framework mobile conçu pour les agents IA`} description={SITE_DESCRIPTION}>
   <section class="hero wrap" aria-labelledby="hero-title">
-    <h1 id="hero-title">Une idée le matin, l’app sur ton téléphone le soir.</h1>
+    <h1 id="hero-title">Le framework mobile conçu pour les agents IA.</h1>
     <div class="hero-body">
       <p class="lede">
-        Daroms Speed App est un framework mobile Expo, Tamagui et Supabase conçu pour Claude Code. Le cœur fournit le thème, les composants, les
-        données, les modules et la publication. Claude n’écrit que ce qui rend ton app unique, sous des règles vérifiées à chaque fichier.
+        Claude construit, le framework le garde sur les rails, tu valides chaque étape. Le cœur Expo, Tamagui et Supabase fournit le thème, les
+        composants, les données, les modules et la publication ; l’agent n’écrit que ce qui rend ton app unique, dans des générateurs, des règles
+        imposées par des hooks et des contrôles du rendu qu’il ne peut pas contourner.
       </p>
       <div class="hero-actions">
         <a class="button button-primary" href={link('/demarrer/tutoriel/')}>Suivre le tutoriel</a>
@@ -108,23 +105,23 @@ const provided = [
 
   <section class="day wrap" aria-labelledby="day-title">
     <div class="section-head">
-      <h2 id="day-title">Une journée en quatre étapes</h2>
+      <h2 id="day-title">Neuf étapes, une validation à chacune</h2>
       <p>
-        <code>/daroms-day</code> enchaîne les étapes et attend ta validation entre chacune. Les durées sont celles de l’app pilote.
+        <code>/daroms-pilot</code> mène le cycle réel d’une app et s’arrête après chaque étape : rien n’avance sans ton <code>/daroms-valider</code>,
+        et l’agent ne peut pas valider à ta place.
       </p>
     </div>
     <ol class="timeline">
       {
-        day.map((step) => (
+        phases.map((phase) => (
           <li class="step">
             <p class="step-when">
-              <span class="step-moment">{step.moment}</span>
-              <span class="step-length">{step.length}</span>
+              <span class="step-moment">{phase.steps}</span>
             </p>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
+            <h3>{phase.title}</h3>
+            <p>{phase.text}</p>
             <p class="step-skills">
-              {step.skills.map((s) => (
+              {phase.skills.map((s) => (
                 <code>{s}</code>
               ))}
             </p>

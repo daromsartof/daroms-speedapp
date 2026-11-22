@@ -23,7 +23,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-
 | [`inspire`](#inspire) | aperçus d'inspiration à regarder avant le design |
 | [`db`](#db) | migrations et types Supabase |
 | [`build`, `submit`, `update`](#build-submit-update) | EAS |
-| [`steps`](#steps) | parcours `/daroms-day`, une validation manuelle par étape |
+| [`steps`](#steps) | parcours `/daroms-pilot`, une validation manuelle par étape |
 | [`cost`](#cost) | ce que l'app a coûté en tokens et en dollars |
 | [`sync-ai`, `catalog`](#sync-ai-et-catalog) | couche IA, catalogue |
 | [`release-core`](#release-core) | version du cœur |
@@ -193,10 +193,10 @@ bun daroms cost [--print] [--out fichier]
 
 Lit les transcripts de Claude Code (`~/.claude/projects`, ou `$CLAUDE_CONFIG_DIR/projects`) et chiffre chaque réponse de Claude au tarif de l'API Anthropic : entrée, sortie, cache lu, cache écrit (5 min et 1 h), mode rapide, recherches web. Écrit `app.cost.md` : total, coût par étape (`/daroms-idea`, `/daroms-brand`, `/daroms-screen`...), par modèle et par session, et ce qu'il faut retenir (étape la plus chère, effet du cache, part des sous-agents). `--print` affiche sans écrire.
 
-- Une session compte pour l'app où elle a passé la majorité de son temps : `/daroms-day` lancé depuis une autre app compte pour la nouvelle.
+- Une session compte pour l'app où elle a passé la majorité de son temps : `/daroms-pilot` lancé depuis une autre app compte pour la nouvelle.
 - Les sous-agents (designer, store...) sont inclus et rattachés à l'étape en cours.
 - Avec un abonnement Claude Pro ou Max, ces montants ne sont pas facturés ainsi : ils mesurent l'usage, à comparer d'une app à l'autre.
-- Claude Code efface ses transcripts après 30 jours (`cleanupPeriodDays`) : `/daroms-day` écrit le rapport en fin de journée et le versionne.
+- Claude Code efface ses transcripts après 30 jours (`cleanupPeriodDays`) : `/daroms-pilot` écrit le rapport en fin de parcours et le versionne.
 - Tarifs dans `cli/lib/pricing.ts` du cœur, avec leur date de relevé ; un modèle inconnu est signalé et compté 0 $.
 
 ## sync-ai et catalog

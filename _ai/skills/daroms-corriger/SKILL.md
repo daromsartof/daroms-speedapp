@@ -1,6 +1,6 @@
 ---
 name: daroms-corriger
-description: Demande de correction de l'étape en cours du parcours /daroms-day, tapée par l'utilisateur (le hook daroms-steps l'enregistre) - l'agent applique la consigne puis représente la fin d'étape.
+description: Demande de correction de l'étape en cours du parcours /daroms-pilot, tapée par l'utilisateur (le hook daroms-steps l'enregistre) - l'agent applique la consigne puis représente la fin d'étape.
 argument-hint: "<consigne>"
 disable-model-invocation: true
 ---

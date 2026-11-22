@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Parcours /daroms-day : validation manuelle de chaque étape (app.steps.json).
+"""Parcours /daroms-pilot : validation manuelle de chaque étape (app.steps.json).
 
 prompt (UserPromptSubmit) : enregistre /daroms-valider et /daroms-corriger tapés par l'utilisateur.
   Seul un message humain passe par ce hook : l'agent ne peut pas valider à sa place.
@@ -65,7 +65,7 @@ def describe(defs: dict, index: int | None) -> str:
     if index is None:
         return "parcours terminé"
     step = defs["steps"][index]
-    skills = ", ".join(f"/{s}" for s in step["skills"]) or "pas de skill dédié (voir /daroms-day)"
+    skills = ", ".join(f"/{s}" for s in step["skills"]) or "pas de skill dédié (voir /daroms-pilot)"
     return f"étape {index + 1} « {step['title']} » ({skills})"
 
 
@@ -84,7 +84,7 @@ def on_prompt(prompt: str, defs: dict, state: dict | None) -> tuple[dict | None,
         return None, ""
     command, rest = match.group(1), match.group(2).strip()
     if state is None:
-        return None, "daroms-steps : aucun parcours en cours (`bun daroms steps start`, ou /daroms-day)."
+        return None, "daroms-steps : aucun parcours en cours (`bun daroms steps start`, ou /daroms-pilot)."
     index = current_index(defs, state)
     if index is None:
         return None, "daroms-steps : le parcours est terminé, rien à valider."

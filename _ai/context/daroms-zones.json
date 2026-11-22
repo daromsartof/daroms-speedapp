@@ -343,13 +343,15 @@
     "valider",
     "validation",
     "corriger",
-    "journee"
+    "pilote",
+    "pilot",
+    "automatique"
    ],
    "paths": [
     "app.steps.json",
     "core/_ai/context/daroms-steps.json"
    ],
-   "notes": "/daroms-day ; bun daroms steps (état), steps ready <n> en fin d'étape ; seul l'utilisateur valide (/daroms-valider)."
+   "notes": "/daroms-pilot ; bun daroms steps (état), steps ready <n> en fin d'étape ; seul l'utilisateur valide (/daroms-valider)."
   }
  ]
 }

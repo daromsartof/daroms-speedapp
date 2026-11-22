@@ -13,7 +13,7 @@ Les hooks vivent dans `core/_ai/hooks/` (Python 3, testés par `bun run test:hoo
 | `daroms-check-rules.py` | PreToolUse Edit, Write, MultiEdit | refuse une écriture qui viole une règle, avec la correction attendue |
 | `daroms-typecheck.py` | PostToolUse Edit, Write, MultiEdit | `tsc` incrémental et ESLint limités au fichier touché, 20 lignes au plus |
 | `daroms-deny-env.py` | PreToolUse Bash | bloque toute lecture de `.env` (en plus des permissions `deny` sur Read et Edit) |
-| `daroms-steps.py prompt` | UserPromptSubmit | parcours `/daroms-day` : enregistre `/daroms-valider` et `/daroms-corriger` tapés par l'utilisateur dans `app.steps.json` ; seul un message humain passe par ce hook |
+| `daroms-steps.py prompt` | UserPromptSubmit | parcours `/daroms-pilot` : enregistre `/daroms-valider` et `/daroms-corriger` tapés par l'utilisateur dans `app.steps.json` ; seul un message humain passe par ce hook |
 | `daroms-steps.py gate` | PreToolUse Skill, Edit, Write, MultiEdit, Bash | refuse à l'agent les skills d'une étape tant que les précédentes ne sont pas validées, et toute écriture de `app.steps.json` ; sans parcours en cours, ne fait rien |
 | `daroms-session-stats.py` | Stop | tokens et durée de la session dans `.claude/stats.jsonl` ; alerte affichée à l'utilisateur (hors contexte de Claude) quand le contexte relu à chaque réponse dépasse 150 k tokens, puis tous les 60 k ; seuil `DAROMS_CONTEXT_WARN` en milliers, `0` coupe |
 
@@ -43,7 +43,7 @@ Un refus se corrige, il ne se contourne pas. `daroms doctor` lance le même cont
 
 ## Parcours avec validation manuelle
 
-`/daroms-day` suit les 9 étapes du cycle réel d'une app (cadrage, conception, données, développement, qualité, conformité, publication, lancement, suivi), définies dans `core/_ai/context/daroms-steps.json`. À la fin de chaque étape, l'agent lance `bun daroms steps ready <n> "<résumé>"`, montre les livrables et la liste « À vérifier par vous », puis s'arrête.
+`/daroms-pilot` suit les 9 étapes du cycle réel d'une app (cadrage, conception, données, développement, qualité, conformité, publication, lancement, suivi), définies dans `core/_ai/context/daroms-steps.json`. À la fin de chaque étape, l'agent lance `bun daroms steps ready <n> "<résumé>"`, montre les livrables et la liste « À vérifier par vous », puis s'arrête.
 
 | Vous tapez | Effet (écrit par le hook, pas par l'agent) |
 |---|---|
