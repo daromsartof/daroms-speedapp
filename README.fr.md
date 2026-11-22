@@ -51,7 +51,7 @@ Ouvrir Claude Code dans l'app, puis :
 
 | Moment | Skills | Résultat |
 |---|---|---|
-| Matin | `/daroms-idea`, `/daroms-new` | cahier `app.spec.md`, app créée, aperçu QR |
+| Matin | `daroms new` (terminal), `/daroms-idea` | app créée, aperçu QR, cahier `app.spec.md` |
 | Midi | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | références Dribbble, Pinterest, Mobbin et direction choisie, marque et icône, wireframes, tables Supabase avec RLS |
 | Après-midi | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | écrans, modules, vérification, finition UX |
 | Soir | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit` | fiche store FR/EN, vidéo promo depuis les vrais écrans, build EAS, TestFlight et piste interne, puis `app.cost.md` : ce que l'app a coûté en tokens et en dollars |

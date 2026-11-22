@@ -22,19 +22,19 @@ Details: [Installation](/en/demarrer/installation/).
 
 ## Morning: scope and create (1 h)
 
-1. Open Claude Code in your projects folder and run `/daroms-day An app to track my reading habits`.
-2. **Scoping** (`/daroms-idea`): Claude writes `app.spec.md` (audience, core loop, 3 to 6 screens, tables, modules, monetization, name, tone, variant). Read and approve it: it is the single source for every following step.
-3. **Creation** (`/daroms-new`): one command creates the whole app:
+1. **Creation**, in a terminal: one command creates the whole app.
    ```bash
    npx @daromsart/daroms-speed-app new lecture --name "Lecture" --variant tracker --primary "#0F766E" --accent "#F59E0B" --tone minimal
    ```
-   Template, `core/` submodule, `brand.ts`, `app.manifest.ts`, the variant's modules, generated icons, dependencies, AI layer (`.claude/`), first commit.
-4. `cd lecture && cp .env.example .env` (Supabase URL and public key), then `bun daroms dev`: scan the QR code with Expo Go.
+   Template, `core/` submodule, `brand.ts`, `app.manifest.ts`, the variant's modules, a starter icon, dependencies, AI layer (`.claude/`), first commit.
+2. `cd lecture && cp .env.example .env` (Supabase URL and public key; `--local` at creation to skip it), then `bun daroms dev`: scan the QR code with Expo Go.
+3. Open Claude Code **in the app folder** (`claude`): the startup hook installs skills and hooks in `.claude/`. Run `/daroms-day An app to track my reading habits`.
+4. **Scoping** (`/daroms-idea`): Claude writes `app.spec.md` (audience, core loop, 3 to 6 screens, tables, modules, monetization, name, tone). Read it, then `/daroms-valider` (or `/daroms-corriger <instruction>`): it is the single source for every following step.
 
 ## Noon: inspiration, brand, design, data (2 h)
 
 5. **Inspiration** (`/daroms-inspire`): Claude looks for mockups and published apps on Dribbble, Pinterest, Behance, Mobbin and Screens Design, looks at the previews (`bun daroms inspire <url>`), proposes 2 or 3 directions and writes the one you pick into `app.spec.md > Inspiration`. It takes inspiration without copying anything.
-6. **Brand** (`/daroms-brand`): 5 values in `brand.ts`, an SVG icon in `assets/source/icon.svg`, then `bun daroms assets`. Check `/_dev/kitchen-sink` in light and dark. See [Changing the brand](/en/guides/changer-la-marque/) (French).
+6. **Brand** (`/daroms-brand`): 5 values in `brand.ts`, six checked icon directions with `daroms logo`, the chosen one installed (`daroms logo --use`). Check `/_dev/kitchen-sink` in light and dark. See [Changing the brand](/en/guides/changer-la-marque/) (French).
 7. **Design** (`/daroms-design`): text wireframes per screen in `app.spec.md`, using only components from the [catalog](/en/reference/composants/) (French).
 8. **Data** (`/daroms-data`): `bun daroms g table books --fields "title:text, author:text?, pages:int=0"` creates the migration with RLS, the zod schema, the `useBooks`, `useCreateBook`... hooks, then `bun daroms db push`. See [Adding a table](/en/guides/ajouter-une-table/) (French).
 

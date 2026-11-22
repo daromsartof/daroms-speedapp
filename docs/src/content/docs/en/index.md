@@ -29,7 +29,7 @@ Requirements: Bun >= 1.3, Node >= 22.18, Git, Python 3, and Expo Go on your phon
 
 | When | Steps | What happens |
 |---|---|---|
-| Morning, 1 h | `/daroms-idea`, `/daroms-new` | Claude writes the `app.spec.md` brief with you, then one command creates the whole app and shows the preview QR code. |
+| Morning, 1 h | `daroms new`, `/daroms-idea` | One command creates the whole app and shows the preview QR code; in the app, Claude writes the `app.spec.md` brief with you. |
 | Noon, 2 h | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | References from Dribbble, Pinterest or Mobbin and a chosen direction, five values in `brand.ts` and the icon, text wireframes per screen, then Supabase tables with RLS. |
 | Afternoon, 3 h | `/daroms-screen`, `/daroms-module`, `/daroms-check` | Each screen is generated, then filled with `@daroms/ui`; payments, notifications or AI chat come in as modules. |
 | Evening, 1 h | `/daroms-store`, `/daroms-build`, `/daroms-submit` | FR and EN store listing, EAS build, upload to TestFlight and the Google Play internal track, then the bill: what the app cost in tokens and dollars. |

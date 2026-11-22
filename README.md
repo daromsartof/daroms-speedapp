@@ -53,7 +53,7 @@ Open Claude Code in the app, then:
 
 | Time | Skills | Result |
 |---|---|---|
-| Morning | `/daroms-idea`, `/daroms-new` | `app.spec.md` brief, app created, QR preview |
+| Morning | `daroms new` (terminal), `/daroms-idea` | app created, QR preview, `app.spec.md` brief |
 | Noon | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | Dribbble, Pinterest and Mobbin references and a chosen direction, brand and icon, wireframes, Supabase tables with RLS |
 | Afternoon | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | screens, modules, checks, UX polish |
 | Evening | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit` | FR/EN store listing, promo video from the real screens, EAS build, TestFlight and internal track, then `app.cost.md`: what the app cost in tokens and dollars |

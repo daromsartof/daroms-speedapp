@@ -9,6 +9,7 @@ disable-model-invocation: true
 
 Idée : $ARGUMENTS
 
+0. Le parcours se déroule dans l'app : elle est créée avant, au terminal (`npx @daromsart/daroms-speed-app new <slug> --name "<Nom>" --variant <variante>`), puis Claude Code est ouvert dans son dossier. Sans `app.manifest.ts` ici, donner ces deux commandes et s'arrêter.
 1. `bun daroms steps start` puis `bun daroms steps` : le parcours est enregistré dans `app.steps.json` et reprend à l'étape en cours, d'une session à l'autre.
 2. Étape en cours : `bun daroms steps show` (objectif, skills, livrables, points à vérifier), puis faire le travail avec ses skills.
 3. Fin d'étape : `bun daroms steps ready <n> "<résumé en une ligne>"` affiche livrables, « À vérifier par vous » et les commandes. Montrer à l'utilisateur ce bloc, un résumé de 3 lignes et les chemins des livrables, **puis s'arrêter** : rien d'autre, aucune validation à sa place. Un hook refuse les skills des étapes suivantes tant qu'il n'a pas validé, et toute écriture de `app.steps.json`.
@@ -19,7 +20,7 @@ Idée : $ARGUMENTS
 
 | # | Étape | Skills | Travail sans skill dédié |
 |---|---|---|---|
-| 1 | Cadrage et validation | `/daroms-idea`, `/daroms-new` | demander combien de personnes de la cible ont confirmé le besoin ; le noter dans `app.spec.md` |
+| 1 | Cadrage et validation | `/daroms-idea` | l'app existe déjà (`daroms new`) ; demander combien de personnes de la cible ont confirmé le besoin ; le noter dans `app.spec.md` |
 | 2 | Conception UX/UI | `/daroms-inspire`, `/daroms-brand`, `/daroms-design` | |
 | 3 | Architecture et données | `/daroms-data`, `/daroms-module` (si le cahier en liste ; proposer `crash`) | lister les comptes externes à créer |
 | 4 | Développement | `/daroms-screen <nom>` pour chaque écran, boucle principale d'abord | `/daroms-commit` après chaque écran |

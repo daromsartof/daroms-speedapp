@@ -22,19 +22,19 @@ Détail : [Installation](/demarrer/installation/).
 
 ## Matin : cadrer et créer (1 h)
 
-1. Ouvrir Claude Code dans le dossier des projets et lancer `/daroms-day Une app pour suivre ses habitudes de lecture`.
-2. **Cadrage** (`/daroms-idea`) : Claude écrit `app.spec.md` (cible, boucle principale, 3 à 6 écrans, tables, modules, monétisation, nom, ton, variante). Relire et valider : c'est la source unique des étapes suivantes.
-3. **Création** (`/daroms-new`) : une commande crée l'app complète :
+1. **Création**, au terminal : une commande crée l'app complète.
    ```bash
    npx @daromsart/daroms-speed-app new lecture --name "Lecture" --variant tracker --primary "#0F766E" --accent "#F59E0B" --tone minimal
    ```
-   Template, sous-module `core/`, `brand.ts`, `app.manifest.ts`, modules de la variante, icônes générées, dépendances, couche IA (`.claude/`), commit initial.
-4. `cd lecture && cp .env.example .env` (URL et clé publique Supabase), puis `bun daroms dev` : scanner le QR avec Expo Go.
+   Template, sous-module `core/`, `brand.ts`, `app.manifest.ts`, modules de la variante, icône de départ, dépendances, couche IA (`.claude/`), commit initial.
+2. `cd lecture && cp .env.example .env` (URL et clé publique Supabase ; `--local` à la création pour s'en passer), puis `bun daroms dev` : scanner le QR avec Expo Go.
+3. Ouvrir Claude Code **dans le dossier de l'app** (`claude`) : le hook de démarrage installe skills et hooks dans `.claude/`. Lancer `/daroms-day Une app pour suivre ses habitudes de lecture`.
+4. **Cadrage** (`/daroms-idea`) : Claude écrit `app.spec.md` (cible, boucle principale, 3 à 6 écrans, tables, modules, monétisation, nom, ton). Relire, puis `/daroms-valider` (ou `/daroms-corriger <consigne>`) : c'est la source unique des étapes suivantes.
 
 ## Midi : inspiration, marque, design, données (2 h)
 
 5. **Inspiration** (`/daroms-inspire`) : Claude cherche des maquettes et des apps publiées sur Dribbble, Pinterest, Behance, Mobbin et Screens Design, regarde les aperçus (`bun daroms inspire <url>`), propose 2 ou 3 directions et écrit celle que tu choisis dans `app.spec.md > Inspiration`. Il s'en inspire sans rien copier.
-6. **Marque** (`/daroms-brand`) : 5 valeurs dans `brand.ts`, icône SVG dans `assets/source/icon.svg`, puis `bun daroms assets`. Vérifier `/_dev/kitchen-sink` en clair et en sombre. Voir [Changer la marque](/guides/changer-la-marque/).
+6. **Marque** (`/daroms-brand`) : 5 valeurs dans `brand.ts`, six directions d'icône vérifiées avec `daroms logo`, la choisie installée (`daroms logo --use`). Vérifier `/_dev/kitchen-sink` en clair et en sombre. Voir [Changer la marque](/guides/changer-la-marque/).
 7. **Design** (`/daroms-design`) : wireframes texte par écran dans `app.spec.md`, uniquement avec les composants du [catalogue](/reference/composants/).
 8. **Données** (`/daroms-data`) : `bun daroms g table books --fields "title:text, author:text?, pages:int=0"` crée la migration avec RLS, le schéma zod, les hooks `useBooks`, `useCreateBook`... puis `bun daroms db push`. Voir [Ajouter une table](/guides/ajouter-une-table/).
 
