@@ -4,8 +4,9 @@ import { YStack } from 'tamagui'
 import { CircleAlert, RefreshCw } from '../icons'
 import { Button } from './Button'
 import { Body, Heading } from './Text'
+import type { StyleProps } from './style-props'
 
-export type ErrorStateProps = {
+export type ErrorStateProps = StyleProps & {
   /** Erreur (AppError de @daroms/data : son messageKey est traduit). */
   error?: unknown
   title?: string
@@ -23,15 +24,15 @@ function messageKeyOf(error: unknown): string | undefined {
 
 /**
  * @catalog ErrorState
- * @props error (AppError traduite automatiquement) · title · description · onRetry (bouton Réessayer)
+ * @props error (AppError traduite automatiquement) · title · description · onRetry (bouton Réessayer) · + props de style
  * @example <ErrorState error={query.error} onRetry={() => query.refetch()} />
  */
-export function ErrorState({ error, title, description, onRetry }: ErrorStateProps) {
+export function ErrorState({ error, title, description, onRetry, ...style }: ErrorStateProps) {
   const t = useDaromsT()
   const translate = useTranslateKey()
   const key = messageKeyOf(error)
   return (
-    <YStack flex={1} items="center" justify="center" gap="stack" p="section" role="alert">
+    <YStack flex={1} items="center" justify="center" gap="stack" p="section" {...style} role="alert">
       <YStack w="16" h="16" rounded="pill" theme="danger" bg="background" items="center" justify="center">
         <CircleAlert size="8" color="color" />
       </YStack>

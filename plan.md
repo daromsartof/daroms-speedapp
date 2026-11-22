@@ -5,7 +5,7 @@
 
 ## Contexte
 
-Objectif : un framework mobile solide pour sortir **une app par jour** en consommant peu de tokens. Principes :
+Objectif : un framework mobile conçu pour les agents IA, qui mène une idée jusqu'à l'app publiée et suivie, en consommant peu de tokens. Principes :
 - un **cœur partagé** en sous-module git, chaque app n'écrit que son spécifique ;
 - des **règles de code précises**, vérifiées automatiquement ;
 - un **thème unique** réutilisable, piloté par 5 valeurs de marque ;
@@ -131,7 +131,7 @@ Chaque skill : étapes numérotées, décisions déjà prises, scripts détermin
 
 | Étape | Commande | Ce qu'elle fait |
 |---|---|---|
-| 0 | `/daroms-day <idée>` | Orchestrateur de la journée : enchaîne les étapes avec un point de validation entre chaque |
+| 0 | `/daroms-pilot <idée>` | Pilote automatique : enchaîne les étapes avec une validation humaine entre chaque |
 | 1 | `/daroms-idea` | Brainstorm court → `app.spec.md` : cible, boucle principale, 3 à 6 écrans, données, modules, monétisation, nom, ton |
 | 2 | `/daroms-new` | `daroms new <slug>` : template, sous-module core, `brand.ts`, `app.manifest.ts`, modules, bundle id, projet Supabase lié |
 | 3 | `/daroms-brand` | Palette et ton → `brand.ts` ; icône, splash, adaptive icon (génération image + `daroms assets`) |
@@ -188,8 +188,8 @@ Un skill d'interface `daroms-design-system` traduit leurs conseils vers `@daroms
 7. **Modules** : `auth` (email + Apple + Google), `onboarding`, `settings`, `payments` (RevenueCat), `push`, `analytics`, `ai-chat` ; registre généré.
 8. **Couche IA** : `CLAUDE.core.md`, règles, digest, hooks, `settings.json`, routeur de contexte, `daroms-sync.py`.
 9. **Skills et agents** §6, puis skills design §7.
-10. **Docs** : tutoriel « ton app en un jour », fiches pratiques, référence CLI et règles, explication de la couche IA.
-11. **App pilote** complète via `/daroms-day`, corrections du cœur, `CHANGELOG` v0.1.0.
+10. **Docs** : tutoriel « de l'idée à l'app publiée », fiches pratiques, référence CLI et règles, explication de la couche IA.
+11. **App de référence** complète via `/daroms-pilot`, corrections du cœur, `CHANGELOG` v0.1.0.
 
 ## 10. Vérification
 
@@ -199,4 +199,4 @@ Un skill d'interface `daroms-design-system` traduit leurs conseils vers `@daroms
 - `python3 .claude/hooks/daroms-context.py test "écran profil"` renvoie la bonne zone.
 - Flow Maestro principal vert sur simulateur iOS et émulateur Android.
 - `eas build --profile preview` réussit, l'app s'installe par QR.
-- App pilote de bout en bout en une journée ; `stats.jsonl` donne la référence de tokens par étape, à faire baisser à l'app suivante.
+- App de référence de bout en bout ; `stats.jsonl` donne la référence de tokens par étape, à faire baisser à l'app suivante.

@@ -5,6 +5,7 @@ import { Check, type IconComponent } from '../icons'
 import { Card } from './Card'
 import { ListItem } from './ListItem'
 import { Caption } from './Text'
+import type { StyleProps } from './style-props'
 
 export type SettingsItem = {
   key: string
@@ -26,12 +27,12 @@ export type SettingsSection = { key: string; title?: string; items: SettingsItem
 
 /**
  * @catalog SettingsList
- * @props sections[{ key, title, items[{ key, label, icon, type: link|toggle|action, value, checked, selected, onToggle, onPress, destructive }] }]
+ * @props sections[{ key, title, items[{ key, label, icon, type: link|toggle|action, value, checked, selected, onToggle, onPress, destructive }] }] · + props de style
  * @example <SettingsList sections={sections} /> (utilisé par le module settings)
  */
-export function SettingsList({ sections }: { sections: SettingsSection[] }) {
+export function SettingsList({ sections, ...style }: StyleProps & { sections: SettingsSection[] }) {
   return (
-    <YStack gap="section">
+    <YStack gap="section" {...style}>
       {sections.map((section) => (
         <YStack key={section.key} gap="tight">
           {section.title ? <Caption px="tight" weight="medium">{section.title.toUpperCase()}</Caption> : null}

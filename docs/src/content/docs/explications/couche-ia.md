@@ -42,7 +42,7 @@ Un sous-agent charge `CLAUDE.md` et les règles, et les hooks vérifient ses éc
 
 ## Apprendre d'une app à l'autre
 
-`/daroms-learn` ajoute des zones dans `.claude/context/app-zones.json` (propres à l'app) ou propose des zones génériques pour `core/_ai/context/daroms-zones.json`. `bun daroms cost` lit les transcripts de Claude Code et chiffre chaque étape de `/daroms-day` dans `app.cost.md`, la référence à faire baisser à l'app suivante.
+`/daroms-learn` ajoute des zones dans `.claude/context/app-zones.json` (propres à l'app) ou propose des zones génériques pour `core/_ai/context/daroms-zones.json`. `bun daroms cost` lit les transcripts de Claude Code et chiffre chaque étape de `/daroms-pilot` dans `app.cost.md`, la référence à faire baisser à l'app suivante.
 
 ## Préfixes
 

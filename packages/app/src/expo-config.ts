@@ -25,6 +25,13 @@ function applyModulePlugins(config: ExpoConfig, manifest: Manifest, projectRoot:
 export function withDaroms(ctx: ConfigContext, { manifest, brand }: { manifest: Manifest; brand: Brand }): ExpoConfig {
   const projectRoot = ctx.projectRoot ?? process.cwd()
   const asset = (name: string) => `./assets/${name}`
+  const has = (name: string) => existsSync(join(projectRoot, 'assets', name))
+  // fond image et couche monochrome si `daroms logo --use` les a produits, sinon fond uni de la marque
+  const adaptiveIcon = {
+    foregroundImage: asset('adaptive-icon.png'),
+    ...(has('adaptive-background.png') ? { backgroundImage: asset('adaptive-background.png') } : { backgroundColor: brand.primary }),
+    ...(has('monochrome-icon.png') ? { monochromeImage: asset('monochrome-icon.png') } : {}),
+  }
   const base: ExpoConfig = {
     ...ctx.config,
     name: manifest.name,
@@ -43,7 +50,7 @@ export function withDaroms(ctx: ConfigContext, { manifest, brand }: { manifest: 
     android: {
       ...ctx.config.android,
       package: manifest.bundleId.replace(/-/g, '_'),
-      adaptiveIcon: { foregroundImage: asset('adaptive-icon.png'), backgroundColor: brand.primary },
+      adaptiveIcon,
     },
     web: { favicon: asset('favicon.png'), output: 'single' },
     plugins: [

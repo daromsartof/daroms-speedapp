@@ -1,6 +1,7 @@
 import { XStack, YStack } from 'tamagui'
 
 import { Caption } from './Text'
+import type { StyleProps } from './style-props'
 
 export type BarDatum = { key: string; label: string; value: number }
 
@@ -12,7 +13,7 @@ const FILL = {
 
 /**
  * @catalog BarChart
- * @props data[{ key, label, value }] · label (a11y, requis) · max (défaut : plus grande valeur) · tone: brand|accent|success · height (token, défaut 40) · highlight (key mise en avant)
+ * @props data[{ key, label, value }] · label (a11y, requis) · max (défaut : plus grande valeur) · tone: brand|accent|success · height (token, défaut 40) · highlight (key mise en avant) · + props de style
  * @example <BarChart data={lastDays(entries, (e) => e.date).map((d) => ({ key: d.day, label: formatWeekday(d.day, 'narrow'), value: d.value }))} label={t('stats.week')} />
  */
 export function BarChart({
@@ -22,7 +23,8 @@ export function BarChart({
   tone = 'brand',
   height = '40',
   highlight,
-}: {
+  ...style
+}: Omit<StyleProps, 'height'> & {
   data: BarDatum[]
   label: string
   max?: number
@@ -33,7 +35,7 @@ export function BarChart({
   const top = Math.max(1, max ?? 0, ...data.map((d) => d.value))
   const fill = FILL[tone]
   return (
-    <XStack h={height} items="flex-end" gap="tight" role="img" aria-label={`${label} : ${data.map((d) => `${d.label} ${d.value}`).join(', ')}`}>
+    <XStack h={height} items="flex-end" gap="tight" {...style} role="img" aria-label={`${label} : ${data.map((d) => `${d.label} ${d.value}`).join(', ')}`}>
       {data.map((d) => {
         const active = d.value > 0
         return (

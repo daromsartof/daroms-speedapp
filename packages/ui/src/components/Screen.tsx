@@ -2,8 +2,9 @@ import type { ReactNode } from 'react'
 import { KeyboardAvoidingView, Platform, RefreshControl } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ScrollView, YStack } from 'tamagui'
+import type { StyleProps } from './style-props'
 
-export type ScreenProps = {
+export type ScreenProps = StyleProps & {
   children: ReactNode
   /** Contenu défilant (défaut true). */
   scroll?: boolean
@@ -22,14 +23,19 @@ export type ScreenProps = {
 
 /**
  * @catalog Screen
- * @props scroll · padded · header · footer · keyboard · onRefresh + refreshing · safeTop
+ * @props scroll · padded · header · footer · keyboard · onRefresh + refreshing · safeTop · + props de style (contenu)
  * @example <Screen header={<Header title={t('home.title')} large />} onRefresh={q.refetch} refreshing={q.isRefetching}>...</Screen>
  */
-export function Screen({ children, scroll = true, padded = true, header, footer, keyboard = false, onRefresh, refreshing = false, safeTop = true }: ScreenProps) {
+export function Screen({ children, scroll = true, padded = true, header, footer, keyboard = false, onRefresh, refreshing = false, safeTop = true, ...style }: ScreenProps) {
   const insets = useSafeAreaInsets()
   const bottom = footer ? 0 : insets.bottom
+  // props de style : conteneur du contenu (marges, espacement) ; sans `padded`, un conteneur nu les porte
   const content = padded ? (
-    <YStack px="gutter" pt="tight" pb="section" gap="stack" flex={scroll ? undefined : 1}>
+    <YStack px="gutter" pt="tight" pb="section" gap="stack" flex={scroll ? undefined : 1} {...style}>
+      {children}
+    </YStack>
+  ) : Object.keys(style).length ? (
+    <YStack flex={scroll ? undefined : 1} {...style}>
       {children}
     </YStack>
   ) : (

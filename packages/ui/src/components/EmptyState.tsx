@@ -4,8 +4,9 @@ import { YStack } from 'tamagui'
 import { Inbox, type IconComponent } from '../icons'
 import { Button } from './Button'
 import { Body, Heading } from './Text'
+import type { StyleProps } from './style-props'
 
-export type EmptyStateProps = {
+export type EmptyStateProps = StyleProps & {
   icon?: IconComponent
   title?: string
   description?: string
@@ -15,13 +16,13 @@ export type EmptyStateProps = {
 
 /**
  * @catalog EmptyState
- * @props icon · title · description · actionLabel + onAction (textes par défaut fournis)
+ * @props icon · title · description · actionLabel + onAction (textes par défaut fournis) · + props de style
  * @example <EmptyState icon={ListChecks} title={t('todos.emptyTitle')} actionLabel={t('todos.add')} onAction={openSheet} />
  */
-export function EmptyState({ icon: Icon = Inbox, title, description, actionLabel, onAction }: EmptyStateProps) {
+export function EmptyState({ icon: Icon = Inbox, title, description, actionLabel, onAction, ...style }: EmptyStateProps) {
   const t = useDaromsT()
   return (
-    <YStack flex={1} items="center" justify="center" gap="stack" p="section" role="summary">
+    <YStack flex={1} items="center" justify="center" gap="stack" p="section" {...style} role="summary">
       <YStack w="16" h="16" rounded="pill" theme="soft" bg="background" items="center" justify="center">
         <Icon size="8" color="color" />
       </YStack>

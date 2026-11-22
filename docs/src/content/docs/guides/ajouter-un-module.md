@@ -1,6 +1,6 @@
 ---
 title: Ajouter un module
-description: Activer un module du cœur (auth, onboarding, settings, payments, push, analytics, ai-chat, camera, maps), le configurer et faire les étapes hors code.
+description: Activer un module du cœur (auth, onboarding, settings, payments, push, analytics, crash, ai-chat, camera, maps), le configurer et faire les étapes hors code.
 ---
 
 Un module est une fonctionnalité optionnelle complète : provider, écrans, migrations, edge functions, textes, configuration validée par zod. Rien n'est importé tant qu'il n'est pas activé.
@@ -36,6 +36,7 @@ Chaque page module liste ses clés, schémas et valeurs par défaut :
 | [payments](/reference/modules/payments/) | paywall RevenueCat, statut Pro | clés publiques RevenueCat dans `.env`, entitlement et offering |
 | [push](/reference/modules/push/) | notifications Expo, jeton par utilisateur | build de dev, projet EAS, `functions deploy send-push` |
 | [analytics](/reference/modules/analytics/) | événements par lots dans Supabase | - |
+| [crash](/reference/modules/crash/) | plantages et erreurs vers Sentry | `EXPO_PUBLIC_SENTRY_DSN` dans `.env` ; pour des traces lisibles : `organization`, `project` et le jeton EAS `SENTRY_AUTH_TOKEN` (sensible) |
 | [ai-chat](/reference/modules/ai-chat/) | chat Claude en streaming | `bunx supabase secrets set ANTHROPIC_API_KEY=...`, `functions deploy ai-chat` |
 | [camera](/reference/modules/camera/) | photos vers Supabase Storage, `PhotoPicker` | - |
 | [maps](/reference/modules/maps/) | carte, marqueurs, position, distances | `GOOGLE_MAPS_ANDROID_API_KEY` pour les builds Android |

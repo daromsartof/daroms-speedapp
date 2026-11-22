@@ -10,7 +10,7 @@ type Resvg = typeof import('@resvg/resvg-js')
 
 const INTER = 'node_modules/@tamagui/font-inter/otf'
 
-async function loadResvg(root: string): Promise<Resvg> {
+export async function loadResvg(root: string): Promise<Resvg> {
   try {
     return (await import(join(root, 'node_modules', '@resvg', 'resvg-js'))) as Resvg
   } catch {
@@ -18,13 +18,18 @@ async function loadResvg(root: string): Promise<Resvg> {
   }
 }
 
-function png(resvg: Resvg, root: string, svg: string, size: number): Buffer {
-  const fonts = ['Inter-ExtraBold.otf', 'Inter-Bold.otf', 'Inter-Regular.otf'].map((f) => join(root, INTER, f)).filter(existsSync)
+/** Rendu resvg avec Inter (icônes, planche du logo) : PNG et pixels RGBA. */
+export function render(resvg: Resvg, root: string, svg: string, size: number) {
+  const fonts = ['Inter-ExtraBold.otf', 'Inter-Bold.otf', 'Inter-SemiBold.otf', 'Inter-Medium.otf', 'Inter-Regular.otf'].map((f) => join(root, INTER, f)).filter(existsSync)
   const renderer = new resvg.Resvg(svg, {
     fitTo: { mode: 'width', value: size },
     font: { fontFiles: fonts, loadSystemFonts: true, defaultFontFamily: 'Inter' },
   })
-  return renderer.render().asPng()
+  return renderer.render()
+}
+
+function png(resvg: Resvg, root: string, svg: string, size: number): Buffer {
+  return render(resvg, root, svg, size).asPng()
 }
 
 /** Place une image PNG centrée, mise à l'échelle, avec coins arrondis éventuels. */
@@ -49,9 +54,21 @@ export async function generateAssets(root: string) {
     ? png(resvg, root, readFileSync(foregroundSource, 'utf8'), 1024)
     : png(resvg, root, frame(icon, 1024, 0.62, 0.22), 1024)
   writeFile(join(root, 'assets', 'adaptive-icon.png'), foreground)
+  // Android : fond de l'icône adaptative et couche monochrome (icônes thématiques, Android 13+)
+  const optional = [
+    ['background.svg', 'adaptive-background.png'],
+    ['monochrome.svg', 'monochrome-icon.png'],
+  ] as const
+  const extra: string[] = []
+  for (const [source, target] of optional) {
+    const file = join(root, 'assets', 'source', source)
+    if (!existsSync(file)) continue
+    writeFile(join(root, 'assets', target), png(resvg, root, readFileSync(file, 'utf8'), 1024))
+    extra.push(target.replace('.png', ''))
+  }
   writeFile(join(root, 'assets', 'splash-icon.png'), png(resvg, root, frame(icon, 512, 1, 0.22), 512))
   writeFile(join(root, 'assets', 'favicon.png'), png(resvg, root, frame(icon, 48, 1, 0.22), 48))
-  log.ok('icônes générées : icon, adaptive-icon, splash-icon, favicon')
+  log.ok(`icônes générées : icon, adaptive-icon, splash-icon, favicon${extra.length ? `, ${extra.join(', ')}` : ''}`)
 }
 
 export async function assets(_args: Args) {

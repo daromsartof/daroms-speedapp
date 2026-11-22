@@ -36,7 +36,7 @@ const skill = (name: string) => [{ type: 'tool_use', name: 'Skill', input: { ski
 
 describe('transcripts', () => {
   const main = [
-    line({ type: 'user', timestamp: '2026-10-29T10:00:00Z', cwd: '/apps/autre', message: { content: '<command-name>/daroms-day</command-name>' } }),
+    line({ type: 'user', timestamp: '2026-10-29T10:00:00Z', cwd: '/apps/autre', message: { content: '<command-name>/daroms-pilot</command-name>' } }),
     reply('m1', '2026-10-29T10:00:01Z', skill('daroms-idea'), '/apps/autre'),
     reply('m1', '2026-10-29T10:00:01Z', skill('daroms-idea'), '/apps/autre'),
     reply('m2', '2026-10-29T10:01:00Z', [{ type: 'tool_use', name: 'Bash', input: { command: 'bunx @daromsart/daroms-speed-app new lecture' } }]),
@@ -50,7 +50,7 @@ describe('transcripts', () => {
 
   it("attribue chaque réponse à l'étape en cours, sans compter un skill d'appui", () => {
     const steps = session.turns.map((t) => `${t.id}:${t.step}`)
-    expect(steps).toEqual(['m1:daroms-day', 'm2:daroms-idea', 'm3:daroms-new', 'm4:daroms-new', 'm5:daroms-polish', 'a1:daroms-new', 'a2:daroms-polish'])
+    expect(steps).toEqual(['m1:daroms-pilot', 'm2:daroms-idea', 'm3:daroms-new', 'm4:daroms-new', 'm5:daroms-polish', 'a1:daroms-new', 'a2:daroms-polish'])
     expect(session.share).toBeCloseTo(4 / 7)
   })
   it('additionne chaque réponse une seule fois', () => {
@@ -58,7 +58,7 @@ describe('transcripts', () => {
     expect(summary.total.turns).toBe(7)
     expect(summary.total.agentTurns).toBe(2)
     expect(summary.total.cost).toBeCloseTo(7 * 20)
-    expect(summary.steps.map(([s]) => s)).toEqual(['daroms-day', 'daroms-idea', 'daroms-new', 'daroms-polish'])
+    expect(summary.steps.map(([s]) => s)).toEqual(['daroms-pilot', 'daroms-idea', 'daroms-new', 'daroms-polish'])
   })
   it('rédige le rapport', () => {
     const report = renderReport('Lecture', summarize([session]), new Date('2026-10-29T18:00:00Z'))

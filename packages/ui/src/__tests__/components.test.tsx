@@ -1,7 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react-native'
 
 import { Plus } from '../icons'
-import { Badge, BarChart, Body, Button, EmptyState, ErrorState, ListItem, ProgressBar, QueryView, SegmentedControl, Stat, Title } from '../index'
+import { Badge, BarChart, Body, Button, EmptyState, ErrorState, Header, ListItem, ProgressBar, QueryView, SegmentedControl, Stat, Title } from '../index'
 import { renderUI } from '../testing/render'
 
 describe('@daroms/ui', () => {
@@ -49,6 +49,21 @@ describe('@daroms/ui', () => {
     )
     expect(screen.getByText('Titre')).toBeTruthy()
     expect(screen.getByLabelText('Progression 40 pour cent')).toBeTruthy()
+  })
+
+  it('les props de style passent au conteneur sans écraser l accessibilité', async () => {
+    const onPress = jest.fn()
+    await renderUI(
+      <>
+        <ListItem title="Élément" opacity={0.5} onPress={onPress} />
+        <Header title="Titre" opacity={0.4} />
+      </>,
+    )
+    const item = screen.getByLabelText('Élément')
+    expect(item.props.role).toBe('button')
+    expect(JSON.stringify(item.props.style)).toContain('"opacity":0.5')
+    await fireEvent.press(item)
+    expect(onPress).toHaveBeenCalled()
   })
 
   it('BarChart et Stat exposent leurs valeurs aux lecteurs d écran', async () => {

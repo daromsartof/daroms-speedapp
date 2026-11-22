@@ -1,10 +1,10 @@
 ---
 title: Daroms Speed App
-description: An Expo + Tamagui + Supabase mobile framework built for Claude Code. The core ships the repetitive parts; your app only writes what is specific to it, so you can ship an app a day.
+description: An Expo + Tamagui + Supabase mobile framework built for AI agents. Generators, rules enforced by hooks, measured taste and a human approval at every step, from idea to published, monitored app.
 template: splash
 hero:
-  title: An idea in the morning, the app on your phone by evening.
-  tagline: Daroms Speed App is an Expo, Tamagui and Supabase mobile framework built for Claude Code. The core ships the theme, components, data layer, modules and store publishing. Claude only writes what makes your app unique, under rules checked on every file.
+  title: The mobile framework built for AI agents.
+  tagline: Claude builds, the framework keeps it on rails, you approve each step. The Expo, Tamagui and Supabase core ships the theme, components, data layer, modules and store publishing; the agent only writes what makes your app unique, inside generators, hook-enforced rules and render checks it cannot skip.
   actions:
     - text: Follow the tutorial
       link: demarrer/tutoriel/
@@ -23,18 +23,18 @@ npx @daromsart/daroms-speed-app new my-app --variant tracker
 
 Requirements: Bun >= 1.3, Node >= 22.18, Git, Python 3, and Expo Go on your phone. Details: [Installation](/en/demarrer/installation/).
 
-## A day in four steps
+## Nine steps, one approval each
 
-`/daroms-day <idea>` chains the steps and waits for your approval between each one. Durations come from the pilot app.
+`/daroms-pilot <idea>` runs the real lifecycle of an app and stops after each step: nothing moves on without your `/daroms-valider`, and the agent cannot approve in your place.
 
-| When | Steps | What happens |
+| Steps | Skills | What happens |
 |---|---|---|
-| Morning, 1 h | `/daroms-idea`, `/daroms-new` | Claude writes the `app.spec.md` brief with you, then one command creates the whole app and shows the preview QR code. |
-| Noon, 2 h | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | References from Dribbble, Pinterest or Mobbin and a chosen direction, five values in `brand.ts` and the icon, text wireframes per screen, then Supabase tables with RLS. |
-| Afternoon, 3 h | `/daroms-screen`, `/daroms-module`, `/daroms-check` | Each screen is generated, then filled with `@daroms/ui`; payments, notifications or AI chat come in as modules. |
-| Evening, 1 h | `/daroms-store`, `/daroms-build`, `/daroms-submit` | FR and EN store listing, EAS build, upload to TestFlight and the Google Play internal track, then the bill: what the app cost in tokens and dollars. |
+| 1. Scope | `daroms new`, `/daroms-idea` | One command creates the whole app and shows the preview QR code; in the app, the agent writes the `app.spec.md` brief with you. |
+| 2-3. Design and model | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data`, `/daroms-module` | References and a chosen direction, five values in `brand.ts`, six checked icon directions, wireframes per screen, then Supabase tables with RLS and modules. |
+| 4-5. Build and verify | `/daroms-screen`, `/daroms-check`, `/daroms-polish` | Each screen is generated, then filled with `@daroms/ui`; hooks reject rule breaks, the render is measured and the polish scored out of 10. |
+| 6-9. Comply, publish, monitor | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | Compliance, FR and EN store listing, promo video, EAS build and submission, crash reporting, then the bill: what the app cost in tokens and dollars. |
 
-The full walkthrough, command by command: [Your app in a day](/en/demarrer/tutoriel/).
+The full walkthrough, command by command: [From idea to published app](/en/demarrer/tutoriel/).
 
 ## What you no longer write
 
@@ -43,7 +43,7 @@ The full walkthrough, command by command: [Your app in a day](/en/demarrer/tutor
 | Light and dark themes | `brand.ts` and its 5 values: 11-shade OKLCH palettes, 8 sub-themes, radii, spacing and springs derived from the tone. |
 | Components | 32 `@daroms/ui` components with loading, empty, error, accessibility and haptics built in, and 102 Lucide icons. |
 | A data layer | `g table` writes the migration with RLS, the zod schema and TanStack Query hooks. With `--local`, the same hooks keep data on the device. |
-| Common features | 9 modules, one command each: auth, onboarding, settings, payments, push, analytics, ai-chat, camera, maps. |
+| Common features | 10 modules, one command each: auth, onboarding, settings, payments, push, analytics, crash, ai-chat, camera, maps. |
 | A starting point | Variants `list-detail`, `tracker`, `ai-chat`, `social`, `shop` and `blank`, each with its modules, tables and screens. |
 | Tooling | The `daroms` CLI, from `new` to `submit`, and 22 Claude skills that chain it. |
 

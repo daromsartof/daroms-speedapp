@@ -19,9 +19,11 @@ Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-
 | [`promo`](#promo) | vidéo promo depuis les vrais écrans |
 | [`test`, `e2e`](#test-et-e2e) | tests unitaires, flows Maestro |
 | [`assets`](#assets) | icônes, splash, favicon depuis un SVG |
+| [`logo`](#logo) | directions d'icône sur une grille, vérifiées |
 | [`inspire`](#inspire) | aperçus d'inspiration à regarder avant le design |
 | [`db`](#db) | migrations et types Supabase |
 | [`build`, `submit`, `update`](#build-submit-update) | EAS |
+| [`steps`](#steps) | parcours `/daroms-pilot`, une validation manuelle par étape |
 | [`cost`](#cost) | ce que l'app a coûté en tokens et en dollars |
 | [`sync-ai`, `catalog`](#sync-ai-et-catalog) | couche IA, catalogue |
 | [`release-core`](#release-core) | version du cœur |
@@ -129,7 +131,16 @@ bun daroms e2e [flow] [--go] [--driver]
 bun daroms assets
 ```
 
-Depuis `assets/source/icon.svg` (et `foreground.svg` facultatif) : `icon.png` (1024), `adaptive-icon.png`, `splash-icon.png` (512), `favicon.png` (48).
+Depuis `assets/source/icon.svg` (et `foreground.svg` facultatif) : `icon.png` (1024), `adaptive-icon.png`, `splash-icon.png` (512), `favicon.png` (48). Avec `background.svg` et `monochrome.svg` (écrits par `logo --use`) : `adaptive-background.png` et `monochrome-icon.png`, déclarés dans la config Expo.
+
+## logo
+
+```bash
+bun daroms logo [--spec assets/source/logo.json]
+bun daroms logo --use <nom> [--force]
+```
+
+Construit les 1 à 6 directions de `assets/source/logo.json` dans `.daroms/logo/<nom>/`, les vérifie (trait et contreformes à 48 px, présence, zone sûre Android, directions trop proches) et rend la planche `.daroms/logo/sheet.png`. `--use` installe la direction dans `assets/source/` puis lance `assets` ; `--force` passe outre un échec. Détail : [Changer la marque](/guides/changer-la-marque/#2-licône).
 
 ## inspire
 
@@ -161,6 +172,19 @@ bun daroms update [canal] --message "..."
 
 Détail : [Publier](/guides/publier/).
 
+## steps
+
+```bash
+bun daroms steps                       # état des 9 étapes, l'étape en cours marquée
+bun daroms steps start                 # commence le parcours (app.steps.json)
+bun daroms steps show [n]              # objectif, skills, livrables, points à vérifier
+bun daroms steps ready <n> "<résumé>"  # fin d'étape : attend la validation de l'utilisateur
+bun daroms steps reset <n>             # repart de l'étape n
+bun daroms steps validate [n]          # validation au clavier (terminal interactif requis)
+```
+
+La validation se fait dans Claude Code en tapant `/daroms-valider` ; l'agent ne peut pas valider. Détail : [Hooks](/reference/hooks/#parcours-avec-validation-manuelle).
+
 ## cost
 
 ```bash
@@ -169,10 +193,10 @@ bun daroms cost [--print] [--out fichier]
 
 Lit les transcripts de Claude Code (`~/.claude/projects`, ou `$CLAUDE_CONFIG_DIR/projects`) et chiffre chaque réponse de Claude au tarif de l'API Anthropic : entrée, sortie, cache lu, cache écrit (5 min et 1 h), mode rapide, recherches web. Écrit `app.cost.md` : total, coût par étape (`/daroms-idea`, `/daroms-brand`, `/daroms-screen`...), par modèle et par session, et ce qu'il faut retenir (étape la plus chère, effet du cache, part des sous-agents). `--print` affiche sans écrire.
 
-- Une session compte pour l'app où elle a passé la majorité de son temps : `/daroms-day` lancé depuis une autre app compte pour la nouvelle.
+- Une session compte pour l'app où elle a passé la majorité de son temps : `/daroms-pilot` lancé depuis une autre app compte pour la nouvelle.
 - Les sous-agents (designer, store...) sont inclus et rattachés à l'étape en cours.
 - Avec un abonnement Claude Pro ou Max, ces montants ne sont pas facturés ainsi : ils mesurent l'usage, à comparer d'une app à l'autre.
-- Claude Code efface ses transcripts après 30 jours (`cleanupPeriodDays`) : `/daroms-day` écrit le rapport en fin de journée et le versionne.
+- Claude Code efface ses transcripts après 30 jours (`cleanupPeriodDays`) : `/daroms-pilot` écrit le rapport en fin de parcours et le versionne.
 - Tarifs dans `cli/lib/pricing.ts` du cœur, avec leur date de relevé ; un modèle inconnu est signalé et compté 0 $.
 
 ## sync-ai et catalog

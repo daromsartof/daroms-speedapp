@@ -1,0 +1,180 @@
+{
+ "comment": "Pilote /daroms-pilot : les étapes du cycle réel d'une app. Chaque étape se termine par une validation manuelle (/daroms-valider). Les skills listés sont refusés à l'agent tant que les étapes précédentes ne sont pas validées.",
+ "free": [
+  "daroms-commit",
+  "daroms-fix",
+  "daroms-ecc",
+  "daroms-design-system",
+  "daroms-skill-new",
+  "daroms-release-core",
+  "daroms-pilot"
+ ],
+ "steps": [
+  {
+   "id": "cadrage",
+   "title": "Cadrage et validation",
+   "goal": "Le problème, la cible, le MVP et le modèle économique écrits dans l'app créée par daroms new.",
+   "skills": [
+    "daroms-idea"
+   ],
+   "deliverables": [
+    "app créée par `daroms new` avant d'ouvrir Claude Code, qui démarre (QR Expo Go)",
+    "app.spec.md : problème, cible, MVP, hors périmètre, modèle économique"
+   ],
+   "checks": [
+    "Le problème et la cible sont bien ceux que vous visez",
+    "Le MVP tient en une phrase et la liste « hors périmètre » vous convient",
+    "Au moins 5 personnes de la cible ont confirmé le besoin (entretiens, page d'attente) ; sinon, le noter dans app.spec.md",
+    "L'app démarre sur votre téléphone"
+   ]
+  },
+  {
+   "id": "conception",
+   "title": "Conception UX/UI",
+   "goal": "Une direction visuelle choisie, la marque et l'icône, les wireframes des écrans.",
+   "skills": [
+    "daroms-inspire",
+    "daroms-brand",
+    "daroms-design"
+   ],
+   "deliverables": [
+    "app.spec.md > Inspiration (références et direction)",
+    "brand.ts, icône (daroms logo), splash",
+    "wireframes de chaque écran dans app.spec.md"
+   ],
+   "checks": [
+    "La direction visuelle et ses références vous plaisent",
+    "L'icône choisie se reconnaît sur votre écran d'accueil",
+    "L'action principale s'atteint en 3 appuis au plus",
+    "Les wireframes ont été montrés à 3 personnes de la cible"
+   ]
+  },
+  {
+   "id": "donnees",
+   "title": "Architecture et données",
+   "goal": "Les tables et leurs règles d'accès, les modules et les comptes de services.",
+   "skills": [
+    "daroms-data",
+    "daroms-module"
+   ],
+   "deliverables": [
+    "migrations Supabase avec RLS, api.ts générés",
+    "modules activés et configurés dans app.manifest.ts"
+   ],
+   "checks": [
+    "Chaque donnée du cahier a sa table",
+    "Qui peut lire et écrire quoi vous convient (règles RLS)",
+    "Les modules choisis sont les bons (auth, paiements, crash...) et leurs comptes externes existent (Supabase, Sentry, RevenueCat)"
+   ]
+  },
+  {
+   "id": "developpement",
+   "title": "Développement",
+   "goal": "Chaque écran du cahier construit, avec ses 4 états et ses textes FR et EN.",
+   "skills": [
+    "daroms-screen"
+   ],
+   "deliverables": [
+    "écrans du cahier (boucle principale d'abord)",
+    "tests des écrans",
+    "un commit par écran"
+   ],
+   "checks": [
+    "Chaque écran du cahier existe et fait ce qui est écrit",
+    "Testé sur votre téléphone, y compris les états vide et erreur",
+    "Textes FR et EN relus"
+   ]
+  },
+  {
+   "id": "qualite",
+   "title": "Qualité",
+   "goal": "Tout vert, finition notée, essais sur de vrais appareils et par de vrais testeurs.",
+   "skills": [
+    "daroms-check",
+    "daroms-polish"
+   ],
+   "deliverables": [
+    "daroms-check vert",
+    "notes de la grille avant et après /daroms-polish"
+   ],
+   "checks": [
+    "Essayée sur un vieil Android et un petit écran, en mode sombre, réseau coupé",
+    "Les notes de la grille de critique vous conviennent",
+    "Bêta externe lancée (TestFlight ; Google Play : 12 testeurs pendant 14 jours pour un compte personnel récent)"
+   ]
+  },
+  {
+   "id": "conformite",
+   "title": "Juridique et conformité",
+   "goal": "Politique de confidentialité, CGU, liste de conformité des stores cochée.",
+   "skills": [],
+   "deliverables": [
+    "store/privacy.md d'après les modules",
+    "brouillon de CGU",
+    "liste de .claude/rules-ondemand/daroms-store-compliance.md cochée"
+   ],
+   "checks": [
+    "La politique de confidentialité est publiée en ligne et son URL est dans manifest.store.privacyUrl",
+    "La suppression du compte est possible dans l'app (si inscription)",
+    "La recherche d'antériorité du nom et du logo est faite",
+    "Un juriste a relu si l'app traite des données sensibles (santé, enfants, paiements)"
+   ]
+  },
+  {
+   "id": "publication",
+   "title": "Publication",
+   "goal": "Fiche store, vidéo promo, build signé, soumission.",
+   "skills": [
+    "daroms-store",
+    "daroms-promo",
+    "daroms-build",
+    "daroms-submit"
+   ],
+   "deliverables": [
+    "store/listing.fr.md et .en.md, captures",
+    "vidéo promo (facultatif)",
+    "build production, soumission TestFlight et piste interne"
+   ],
+   "checks": [
+    "Titre, description et captures relus",
+    "Comptes développeur actifs (Apple 99 $ par an, Google 25 $)",
+    "Le build installé sur votre téléphone fonctionne",
+    "Soumission envoyée (la revue Apple prend souvent 1 à 3 jours)"
+   ]
+  },
+  {
+   "id": "lancement",
+   "title": "Lancement",
+   "goal": "Un plan de lancement : canaux, calendrier, message.",
+   "skills": [],
+   "deliverables": [
+    "app.spec.md > Lancement : canaux de la cible, calendrier, message, page web"
+   ],
+   "checks": [
+    "Les canaux choisis sont ceux où se trouve la cible",
+    "La page web de l'app est en ligne",
+    "Le message tient en une phrase et dit le bénéfice"
+   ]
+  },
+  {
+   "id": "suivi",
+   "title": "Suivi après lancement",
+   "goal": "Mesurer, écouter, itérer : plantages, rétention, avis, prochaine version.",
+   "skills": [
+    "daroms-update",
+    "daroms-learn"
+   ],
+   "deliverables": [
+    "module crash actif en production",
+    "analytique : rétention J1, J7, J30",
+    "app.cost.md, prochaine version planifiée dans app.spec.md"
+   ],
+   "checks": [
+    "Les plantages remontent dans Sentry (testé sur un build)",
+    "Un premier relevé de rétention existe",
+    "Les avis des stores sont lus et ont une réponse",
+    "La prochaine version est planifiée"
+   ]
+  }
+ ]
+}

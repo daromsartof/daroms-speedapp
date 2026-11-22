@@ -8,6 +8,7 @@ import { Badge } from './Badge'
 import { Button } from './Button'
 import { IconButton } from './IconButton'
 import { Screen } from './Screen'
+import type { StyleProps } from './style-props'
 import { Body, Caption, Heading, Title } from './Text'
 
 export type PaywallPlan = {
@@ -20,7 +21,7 @@ export type PaywallPlan = {
   trialDays?: number
 }
 
-export type PaywallProps = {
+export type PaywallProps = StyleProps & {
   title: string
   subtitle?: string
   features: string[]
@@ -38,21 +39,36 @@ export type PaywallProps = {
 
 /**
  * @catalog Paywall
- * @props title · subtitle · features[] · plans[{id,title,price,period,badge,trialDays}] · selectedId · onSelect · ctaLabel · onPurchase · onRestore · onClose · purchasing · termsUrl · privacyUrl
+ * @props title · subtitle · features[] · plans[{id,title,price,period,badge,trialDays}] · selectedId · onSelect · ctaLabel · onPurchase · onRestore · onClose · purchasing · termsUrl · privacyUrl · + props de style (contenu)
  * @example <Paywall {...paywall} /> (branché par le module payments)
  */
-export function Paywall(props: PaywallProps) {
+export function Paywall({
+  title,
+  subtitle,
+  features,
+  plans,
+  selectedId,
+  onSelect,
+  ctaLabel,
+  onPurchase,
+  onRestore,
+  onClose,
+  purchasing,
+  termsUrl,
+  privacyUrl,
+  ...style
+}: PaywallProps) {
   const t = useDaromsT()
-  const { plans, selectedId, onSelect } = props
   return (
     <Screen
-      header={props.onClose ? <XStack justify="flex-end" px="tight"><IconButton icon={X} label={t('a11y.close')} onPress={props.onClose} /></XStack> : undefined}
+      {...style}
+      header={onClose ? <XStack justify="flex-end" px="tight"><IconButton icon={X} label={t('a11y.close')} onPress={onClose} /></XStack> : undefined}
       footer={
         <>
-          <Button fullWidth loading={props.purchasing} haptic="medium" onPress={props.onPurchase}>
-            {props.ctaLabel}
+          <Button fullWidth loading={purchasing} haptic="medium" onPress={onPurchase}>
+            {ctaLabel}
           </Button>
-          {props.onRestore ? <Button variant="ghost" size="sm" onPress={props.onRestore}>{t('actions.restore')}</Button> : null}
+          {onRestore ? <Button variant="ghost" size="sm" onPress={onRestore}>{t('actions.restore')}</Button> : null}
         </>
       }
     >
@@ -60,11 +76,11 @@ export function Paywall(props: PaywallProps) {
         <YStack theme="brand" bg="background" w="16" h="16" rounded="pill" items="center" justify="center">
           <Crown size="8" color="color" />
         </YStack>
-        <Title align="center">{props.title}</Title>
-        {props.subtitle ? <Body tone="muted" align="center">{props.subtitle}</Body> : null}
+        <Title align="center">{title}</Title>
+        {subtitle ? <Body tone="muted" align="center">{subtitle}</Body> : null}
       </YStack>
       <YStack gap="inline" py="stack">
-        {props.features.map((feature) => (
+        {features.map((feature) => (
           <XStack key={feature} gap="inline" items="center">
             <Check size="5" color="emerald-500" />
             <Body flex={1}>{feature}</Body>
@@ -100,8 +116,8 @@ export function Paywall(props: PaywallProps) {
       </YStack>
       <Caption align="center">{t('paywall.legal')}</Caption>
       <XStack justify="center" gap="section">
-        {props.termsUrl ? <Caption tone="brand" onPress={() => void Linking.openURL(props.termsUrl!)}>{t('paywall.terms')}</Caption> : null}
-        {props.privacyUrl ? <Caption tone="brand" onPress={() => void Linking.openURL(props.privacyUrl!)}>{t('paywall.privacy')}</Caption> : null}
+        {termsUrl ? <Caption tone="brand" onPress={() => void Linking.openURL(termsUrl!)}>{t('paywall.terms')}</Caption> : null}
+        {privacyUrl ? <Caption tone="brand" onPress={() => void Linking.openURL(privacyUrl!)}>{t('paywall.privacy')}</Caption> : null}
       </XStack>
     </Screen>
   )
