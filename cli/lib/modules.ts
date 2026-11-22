@@ -126,5 +126,9 @@ export async function installModules(root: string) {
   const deps = [...new Set(Object.keys(manifest.modules).flatMap((slug) => readModule(slug).dependencies))]
   if (deps.length === 0) return
   const code = await run(['bunx', 'expo', 'install', ...deps], { cwd: root, allowFailure: true })
-  if (code !== 0) log.warn(`dépendances natives non installées : bunx expo install ${deps.join(' ')}`)
+  if (code === 0) return
+  // expo install échoue aussi quand il ne peut pas inscrire un config plugin dans app.config.ts (config dynamique) ;
+  // les plugins des modules passent par leur plugin.ts : seule compte la présence des paquets
+  const missing = deps.filter((dep) => !existsSync(join(root, 'node_modules', dep, 'package.json')))
+  if (missing.length) log.warn(`dépendances natives non installées : bunx expo install ${missing.join(' ')}`)
 }
