@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.7.0 (2026-11-22)
+
+### Nouveautés
+- positionnement « framework conçu pour les agents IA », sans notion de temps
+- parcours en 9 étapes, chacune validée à la main par l'utilisateur
+- module de suivi des plantages avec Sentry
+- props de style sur le conteneur de 20 composants
+- directions d'icône sur une grille, vérifiées, couche monochrome Android
+
+### Documentation
+- l'app se crée au terminal, le parcours se déroule dedans
+
+### Corrections
+- l'installation des dépendances natives juge les paquets présents
+
 ## v0.6.0 (2026-11-21)
 
 ### Nouveautés

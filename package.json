@@ -1,6 +1,6 @@
 {
   "name": "@daromsart/daroms-speed-app",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Expo + Tamagui v3 + Supabase mobile framework built for AI agents (Claude Code): generators, rules enforced by hooks, measured taste and a human approval at every step, from idea to published, monitored app.",
   "license": "MIT",
   "author": "Daroms",
