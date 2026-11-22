@@ -1,7 +1,7 @@
 {
   "name": "@daromsart/daroms-speed-app",
   "version": "0.6.0",
-  "description": "Expo + Tamagui v3 + Supabase mobile framework built for Claude Code: theme, components, data, modules, daroms CLI and a low-token AI layer to ship an app a day.",
+  "description": "Expo + Tamagui v3 + Supabase mobile framework built for AI agents (Claude Code): generators, rules enforced by hooks, measured taste and a human approval at every step, from idea to published, monitored app.",
   "license": "MIT",
   "author": "Daroms",
   "homepage": "https://daromsartof.github.io/daroms-speedapp/",
@@ -76,6 +76,7 @@
     "@hookform/resolvers": "^6.0.0",
     "@react-native/jest-preset": "^0.88.0",
     "@resvg/resvg-js": "^2.6.2",
+    "@sentry/react-native": "~8.28.0",
     "@shopify/flash-list": "2.3.2",
     "@supabase/supabase-js": "^2.118.0",
     "@tamagui/animation-helpers": "3.1.2",

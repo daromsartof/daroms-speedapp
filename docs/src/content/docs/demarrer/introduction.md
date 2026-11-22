@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-Daroms Speed App est un framework mobile **Expo SDK 58 + Tamagui v3 + Supabase** conçu pour être piloté par Claude Code. Son objectif : partir d'une idée le matin et installer l'app sur un téléphone le soir, avec un code propre et vérifié.
+Daroms Speed App est un framework mobile **Expo SDK 58 + Tamagui v3 + Supabase** conçu pour être piloté par Claude Code. L'agent construit, le framework le garde sur les rails (générateurs, règles imposées par des hooks, rendu mesuré) et tu valides chaque étape, de l'idée à l'app publiée et suivie.
 
 ## Le principe : un cœur, des apps
 
@@ -43,5 +43,5 @@ Mettre à jour le cœur dans une app = changer de version du sous-module. Voir [
 ## Par où commencer
 
 - Installer le cœur et créer une première app : [Installation](/demarrer/installation/).
-- Faire une app complète, étape par étape : [Tutoriel : ton app en un jour](/demarrer/tutoriel/).
+- Faire une app complète, étape par étape : [Tutoriel : de l'idée à l'app publiée](/demarrer/tutoriel/).
 - Comprendre ce que contient une app : [Structure d'une app](/demarrer/structure-app/).

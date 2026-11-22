@@ -22,6 +22,8 @@ Méthode :
 5. Corrections classées par impact sur l'impression d'ensemble ; chacune dit ce qu'on voit, pourquoi ça compte et comment corriger (composants, props, tokens exacts). Au moins une correction augmente le caractère ou l'impact, pas seulement le poli ; mieux vaut quelques grosses améliorations que beaucoup de détails.
    Uniquement les composants et tokens du catalogue (jamais de hex, de nombre magique, de librairie). Jamais « plus beau », « plus moderne » : nommer l'élément, la valeur actuelle et la valeur visée.
 
+Icône (planche de `daroms logo`) : mêmes notes, avec clarté = lisible à 48 px sur l'écran d'accueil clair et sombre, et caractère = une icône qui irait à n'importe quelle app plafonne à 6 ; corrections sur `assets/source/logo.json` (formes, `op`, couleurs), une direction faible se réécrit.
+
 Vidéo promo (images fixes de `daroms promo --stills`) : mêmes notes, avec clarté = bénéfice compris à 1,1 s et une idée par écran ; corrections sur `store/promo.json` (accroche, ordre, légendes, écran phare) ou sur les données de démo.
 
 Réponse (courte, en français) :

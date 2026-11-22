@@ -28,6 +28,7 @@ export { Stat } from './components/Stat'
 export { Tabs, type TabItem } from './components/Tabs'
 export { Body, Caption, Heading, Title } from './components/Text'
 export { notify, Toaster } from './components/Toast'
+export type { StyleProps } from './components/style-props'
 
 // primitives Tamagui autorisées (layout et thème)
 export { ScrollView, Separator, Spacer, Spinner, Switch, Theme, View, XStack, YStack, styled, useMedia, useTheme } from 'tamagui'

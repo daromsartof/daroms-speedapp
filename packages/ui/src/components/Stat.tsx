@@ -1,10 +1,11 @@
 import type { IconComponent } from '../icons'
 import { Card } from './Card'
 import { Caption, Title } from './Text'
+import type { StyleProps } from './style-props'
 
 /**
  * @catalog Stat
- * @props value (nombre ou texte formaté) · label · tone: default|brand|accent|success · icon. Carte qui s'étire (flex 1) : en XStack pour une rangée de chiffres clés
+ * @props value (nombre ou texte formaté) · label · tone: default|brand|accent|success · icon · + props de style. Carte qui s'étire (flex 1) : en XStack pour une rangée de chiffres clés
  * @example <XStack gap="stack"><Stat value={week} label={t('stats.week')} tone="brand" /><Stat value={streak} label={t('stats.streak')} icon={Flame} /></XStack>
  */
 export function Stat({
@@ -12,14 +13,15 @@ export function Stat({
   label,
   tone = 'brand',
   icon: Icon,
-}: {
+  ...style
+}: StyleProps & {
   value: number | string
   label: string
   tone?: 'default' | 'brand' | 'accent' | 'success'
   icon?: IconComponent
 }) {
   return (
-    <Card flex={1} items="center" gap="0-5" py="section" aria-label={`${value} ${label}`}>
+    <Card flex={1} items="center" gap="0-5" py="section" {...style} aria-label={`${value} ${label}`}>
       {Icon ? <Icon size="5" color="color-9" /> : null}
       <Title size="8" tone={tone}>
         {value}

@@ -1,9 +1,10 @@
 import { haptic } from '@daroms/lib/haptics'
 import { SizableText, XStack, YStack } from 'tamagui'
+import type { StyleProps } from './style-props'
 
 export type SegmentOption<V extends string> = { value: V; label: string }
 
-export type SegmentedControlProps<V extends string> = {
+export type SegmentedControlProps<V extends string> = StyleProps & {
   options: readonly SegmentOption<V>[]
   value: V
   onChange: (value: V) => void
@@ -11,12 +12,12 @@ export type SegmentedControlProps<V extends string> = {
 
 /**
  * @catalog SegmentedControl
- * @props options [{ value, label }] · value · onChange (2 à 4 choix exclusifs)
+ * @props options [{ value, label }] · value · onChange (2 à 4 choix exclusifs) · + props de style
  * @example <SegmentedControl options={periods} value={period} onChange={setPeriod} />
  */
-export function SegmentedControl<V extends string>({ options, value, onChange }: SegmentedControlProps<V>) {
+export function SegmentedControl<V extends string>({ options, value, onChange, ...style }: SegmentedControlProps<V>) {
   return (
-    <XStack bg="color-2" rounded="button" p="1" gap="1" role="tablist">
+    <XStack bg="color-2" rounded="button" p="1" gap="1" {...style} role="tablist">
       {options.map((option) => {
         const selected = option.value === value
         return (

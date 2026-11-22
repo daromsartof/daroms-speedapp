@@ -3,8 +3,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Sheet as TSheet, YStack } from 'tamagui'
 
 import { Heading } from './Text'
+import type { StyleProps } from './style-props'
 
-export type SheetProps = {
+export type SheetProps = StyleProps & {
   open: boolean
   onOpenChange: (open: boolean) => void
   title?: string
@@ -17,13 +18,13 @@ export type SheetProps = {
 
 /**
  * @catalog Sheet
- * @props open · onOpenChange · title · snapPoints (défaut [60]) · scroll
+ * @props open · onOpenChange · title · snapPoints (défaut [60]) · scroll · + props de style (contenu)
  * @example <Sheet open={open} onOpenChange={setOpen} title={t('todos.new')}><TodoForm onDone={() => setOpen(false)} /></Sheet>
  */
-export function Sheet({ open, onOpenChange, title, children, snapPoints = [60], scroll = false }: SheetProps) {
+export function Sheet({ open, onOpenChange, title, children, snapPoints = [60], scroll = false, ...style }: SheetProps) {
   const insets = useSafeAreaInsets()
   const body = (
-    <YStack px="gutter" pt="tight" pb={insets.bottom + 16} gap="stack">
+    <YStack px="gutter" pt="tight" pb={insets.bottom + 16} gap="stack" {...style}>
       {title ? <Heading level={3}>{title}</Heading> : null}
       {children}
     </YStack>

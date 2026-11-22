@@ -109,13 +109,17 @@
     "icon",
     "splash",
     "assets",
-    "logo"
+    "logo",
+    "icone",
+    "monochrome",
+    "adaptive"
    ],
    "paths": [
     "assets/source/icon.svg",
-    "assets/"
+    "assets/",
+    "assets/source/logo.json"
    ],
-   "notes": "bun daroms assets (icône, splash) ; bun daroms icons add (Lucide)."
+   "notes": "bun daroms assets (icône, splash) ; bun daroms icons add (Lucide) ; icône de l'app : /daroms-brand (daroms logo)."
   },
   {
    "name": "publication",
@@ -263,6 +267,22 @@
    "notes": "track('nom', props) depuis @daroms/module-analytics."
   },
   {
+   "name": "plantages",
+   "module": "crash",
+   "keywords": [
+    "crash",
+    "crashs",
+    "plantage",
+    "plantages",
+    "sentry",
+    "diagnostic"
+   ],
+   "paths": [
+    "core/modules/crash/README.md"
+   ],
+   "notes": "reportError(error, contexte) depuis @daroms/module-crash ; EXPO_PUBLIC_SENTRY_DSN."
+  },
+  {
    "name": "chat IA",
    "module": "ai-chat",
    "keywords": [
@@ -313,6 +333,25 @@
     "core/modules/maps/README.md"
    ],
    "notes": "Map, useCurrentLocation, sortByDistance, openInMaps depuis @daroms/module-maps."
+  },
+  {
+   "name": "parcours",
+   "keywords": [
+    "parcours",
+    "etape",
+    "etapes",
+    "valider",
+    "validation",
+    "corriger",
+    "pilote",
+    "pilot",
+    "automatique"
+   ],
+   "paths": [
+    "app.steps.json",
+    "core/_ai/context/daroms-steps.json"
+   ],
+   "notes": "/daroms-pilot ; bun daroms steps (état), steps ready <n> en fin d'étape ; seul l'utilisateur valide (/daroms-valider)."
   }
  ]
 }

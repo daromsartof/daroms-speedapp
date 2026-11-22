@@ -8,19 +8,25 @@
 ![Tamagui v3](https://img.shields.io/badge/Tamagui-v3-121a3a)
 ![Bun >= 1.3](https://img.shields.io/badge/Bun-%3E%3D%201.3-121a3a)
 
-**Une idée le matin, l'app sur ton téléphone le soir.**
+**Le framework mobile conçu pour les agents IA.** Claude construit, le framework le garde sur les rails, tu valides chaque étape.
 
 [![Démo : création d'une app avec npx, brand.ts modifié, table et écran générés, un hook qui refuse une couleur en dur, l'écran en clair et en sombre](https://raw.githubusercontent.com/daromsartof/daroms-speedapp/main/docs/public/demo.gif)](https://daromsartof.github.io/daroms-speedapp/demo.mp4)
 
-*Sorties réelles d'une app de démo : l'app a été créée en 42 s (mesurées). [Voir la démo complète de 50 s](https://daromsartof.github.io/daroms-speedapp/demo.mp4).*
+*Sorties réelles d'une app de démo : une commande crée l'app complète, puis générateurs et hooks de règles font le reste. [Voir la démo complète de 50 s](https://daromsartof.github.io/daroms-speedapp/demo.mp4).*
 
-Framework mobile **Expo + Tamagui + Supabase** conçu pour Claude Code. Le cœur fournit le thème, les composants, les données, les modules et la publication ; l'app n'écrit que son spécifique, sous des règles vérifiées à chaque fichier.
+Framework mobile **Expo + Tamagui + Supabase** conçu pour être piloté par un agent IA (Claude Code). Le cœur fournit le thème, les composants, les données, les modules et la publication ; l'agent n'écrit que le spécifique de ton app, dans des générateurs, des règles et des contrôles qu'il ne peut pas contourner.
 
-- **Générer avant d'écrire** : écran, table, module sortent de gabarits déterministes, sans IA. Claude ne remplit que le spécifique.
-- **Une marque, un thème** : 5 valeurs dans `brand.ts` donnent palettes OKLCH, thèmes clair et sombre, rayons, espacements et ressorts.
-- **Des règles vérifiées** : couleur en dur, Supabase dans un composant, texte hors i18n : un hook refuse l'écriture et dit quoi faire.
-- **Des modules activables** : auth, paiements, push, chat IA, photos, cartes... en une commande.
-- **Peu de tokens** : un noyau court toujours chargé, des règles chargées selon les fichiers touchés, un catalogue de composants à la place des sources, et les étapes mécaniques dans des sous-agents Sonnet ou Haiku à contexte neuf.
+## Ce qui le rend différent
+
+Les starters donnent du code et laissent l'agent deviner tes conventions. Les générateurs d'apps par IA produisent une app sur leur propre plateforme. daroms donne à l'agent un framework dans lequel travailler :
+
+- **Conçu pour l'agent, pas adapté après coup** : un noyau court toujours chargé, des règles chargées selon les fichiers touchés, un catalogue de composants à la place des sources, un routeur de contexte, et les étapes mécaniques dans des sous-agents Sonnet ou Haiku à contexte neuf.
+- **Générer, puis remplir** : écrans, tables (avec RLS) et modules sortent de gabarits déterministes, sans IA ; l'agent n'écrit que le spécifique.
+- **Des règles qui tiennent** : couleur en dur, Supabase dans un composant, texte hors i18n : un hook refuse l'écriture avant qu'elle n'arrive et dit quoi faire.
+- **Un goût mesuré** : `daroms shot` compte sur le rendu réel ce qui trahit une interface générée (teintes hors marque, rayons hors échelle, emoji, boutons sans nom...), et une critique notée sur 10 pilote la finition.
+- **Des validations humaines que l'agent ne peut pas falsifier** : `/daroms-pilot` suit les 9 étapes du cycle réel d'une app et s'arrête après chacune ; seul ton `/daroms-valider` le fait avancer.
+- **Une vraie app, à toi** : un dépôt Expo dans ton git et tes comptes, un fichier de marque (`brand.ts`) pour tout le thème, des modules activables (auth, paiements, push, chat IA, photos, cartes, suivi des plantages), builds EAS, conformité des stores et mises à jour OTA.
+- **Un coût lisible** : `daroms cost` chiffre chaque étape en tokens et en dollars.
 
 Documentation complète : **https://daromsartof.github.io/daroms-speedapp/**
 
@@ -46,17 +52,19 @@ Sans Supabase pour commencer : `--local` garde les données sur l'appareil, avec
 Ouvrir Claude Code dans l'app, puis :
 
 ```text
-/daroms-day Une app pour suivre ses habitudes de lecture
+/daroms-pilot Une app pour suivre ses habitudes de lecture
 ```
 
-| Moment | Skills | Résultat |
-|---|---|---|
-| Matin | `/daroms-idea`, `/daroms-new` | cahier `app.spec.md`, app créée, aperçu QR |
-| Midi | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data` | références Dribbble, Pinterest, Mobbin et direction choisie, marque et icône, wireframes, tables Supabase avec RLS |
-| Après-midi | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | écrans, modules, vérification, finition UX |
-| Soir | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit` | fiche store FR/EN, vidéo promo depuis les vrais écrans, build EAS, TestFlight et piste interne, puis `app.cost.md` : ce que l'app a coûté en tokens et en dollars |
+L'agent mène chaque étape, puis s'arrête et montre ce qu'il faut vérifier ; tu tapes `/daroms-valider`, ou `/daroms-corriger <consigne>`.
 
-23 skills, 3 sous-agents (designer, reviewer, store) et 6 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, statistiques de tokens). La méthode [ECC](https://ecc.tools) est embarquée : `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` et `ecc-typescript-patterns`, figés dans le cœur et traduits vers les commandes daroms par `daroms-ecc`. Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
+| Étapes | Skills | Résultat |
+|---|---|---|
+| 1. Cadrer | `daroms new` (terminal), `/daroms-idea` | app créée, aperçu QR, cahier `app.spec.md` |
+| 2-3. Concevoir et modéliser | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data`, `/daroms-module` | références et direction choisie, marque et icône vérifiée, wireframes, tables Supabase avec RLS, modules |
+| 4-5. Construire et vérifier | `/daroms-screen`, `/daroms-check`, `/daroms-polish` | écrans avec leurs 4 états, vérifications au vert, finition mesurée et notée |
+| 6-9. Conformité, publication, suivi | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | politique de confidentialité et conformité, fiche FR/EN, vidéo promo, build EAS, TestFlight et piste interne, suivi des plantages, puis `app.cost.md` |
+
+25 skills, 3 sous-agents (designer, reviewer, store) et 7 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, validation manuelle des étapes, statistiques de tokens). La méthode [ECC](https://ecc.tools) est embarquée : `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` et `ecc-typescript-patterns`, figés dans le cœur et traduits vers les commandes daroms par `daroms-ecc`. Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
 
 ## Exemple : une table et son écran
 
@@ -123,7 +131,7 @@ Toutes les options : [référence de la CLI](https://daromsartof.github.io/darom
 
 ## Documentation
 
-- [Tutoriel : ton app en un jour](https://daromsartof.github.io/daroms-speedapp/demarrer/tutoriel/)
+- [Tutoriel : de l'idée à l'app publiée](https://daromsartof.github.io/daroms-speedapp/demarrer/tutoriel/)
 - Guides : [écran](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-un-ecran/), [table](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-une-table/), [module](https://daromsartof.github.io/daroms-speedapp/guides/ajouter-un-module/), [formulaires](https://daromsartof.github.io/daroms-speedapp/guides/formulaires/), [marque](https://daromsartof.github.io/daroms-speedapp/guides/changer-la-marque/), [publier](https://daromsartof.github.io/daroms-speedapp/guides/publier/)
 - Référence : [composants](https://daromsartof.github.io/daroms-speedapp/reference/composants/), [manifest](https://daromsartof.github.io/daroms-speedapp/reference/manifest/), [tokens](https://daromsartof.github.io/daroms-speedapp/reference/tokens/), [règles](https://daromsartof.github.io/daroms-speedapp/reference/regles/)
 - Pour les agents : [`llms.txt`](https://daromsartof.github.io/daroms-speedapp/llms.txt), [`llms-full.txt`](https://daromsartof.github.io/daroms-speedapp/llms-full.txt), et chaque page en Markdown (suffixe `.md`)

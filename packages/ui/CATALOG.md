@@ -3,36 +3,37 @@
 
 Lire ce fichier, jamais les sources. Import : `import { Button, Screen } from '@daroms/ui'`.
 Primitives de mise en page : `XStack`, `YStack`, `ScrollView`, `Separator`, `Spacer`, `Theme` (aussi exportées).
+« + props de style » : le conteneur accepte les props de style Tamagui à tokens (`<ListItem py="tight" />`), après ses valeurs par défaut ; type `StyleProps`.
 
 | Composant | Props clés | Exemple |
 |---|---|---|
-| Avatar | name (initiales de repli, a11y) · uri · size: sm\|md\|lg\|xl | `<Avatar name={profile.display_name} uri={profile.avatar_url} size="lg" />` |
-| Badge | tone: neutral\|brand\|accent\|success\|warning\|danger · children (texte court) | `<Badge tone="success">{t('order.paid')}</Badge>` |
-| BarChart | data[{ key, label, value }] · label (a11y, requis) · max (défaut : plus grande valeur) · tone: brand\|accent\|success · height (token, défaut 40) · highlight (key mise en avant) | `<BarChart data={lastDays(entries, (e) => e.date).map((d) => ({ key: d.day, label: formatWeekday(d.day, 'narrow'), value: d.value }))} label={t('stats.week')} />` |
+| Avatar | name (initiales de repli, a11y) · uri · size: sm\|md\|lg\|xl · + props de style | `<Avatar name={profile.display_name} uri={profile.avatar_url} size="lg" />` |
+| Badge | tone: neutral\|brand\|accent\|success\|warning\|danger · children (texte court) · + props de style | `<Badge tone="success">{t('order.paid')}</Badge>` |
+| BarChart | data[{ key, label, value }] · label (a11y, requis) · max (défaut : plus grande valeur) · tone: brand\|accent\|success · height (token, défaut 40) · highlight (key mise en avant) · + props de style | `<BarChart data={lastDays(entries, (e) => e.date).map((d) => ({ key: d.day, label: formatWeekday(d.day, 'narrow'), value: d.value }))} label={t('stats.week')} />` |
 | Button | variant: primary\|secondary\|outline\|ghost\|danger · size: sm\|md\|lg (défaut lg) · loading · icon · iconAfter · fullWidth · haptic | `<Button icon={Plus} loading={create.isPending} onPress={submit}>{t('todos.add')}</Button>` |
 | Card | pressable (retour visuel) · flat (sans bordure) · padded (défaut true) · + props YStack | `<Card pressable onPress={() => open(item.id)}><Body>{item.title}</Body></Card>` |
-| Chip | label · selected · icon · onPress (filtres, tags) | `<Chip label={t('filters.today')} selected={filter === 'today'} onPress={() => setFilter('today')} />` |
-| Dialog | open · onOpenChange · title · description · confirmLabel · cancelLabel · destructive · loading · onConfirm | `<Dialog open={confirm} onOpenChange={setConfirm} title={t('todo.deleteTitle')} destructive onConfirm={remove} />` |
-| EmptyState | icon · title · description · actionLabel + onAction (textes par défaut fournis) | `<EmptyState icon={ListChecks} title={t('todos.emptyTitle')} actionLabel={t('todos.add')} onAction={openSheet} />` |
-| ErrorState | error (AppError traduite automatiquement) · title · description · onRetry (bouton Réessayer) | `<ErrorState error={query.error} onRetry={() => query.refetch()} />` |
+| Chip | label · selected · icon · onPress (filtres, tags) · + props de style | `<Chip label={t('filters.today')} selected={filter === 'today'} onPress={() => setFilter('today')} />` |
+| Dialog | open · onOpenChange · title · description · confirmLabel · cancelLabel · destructive · loading · onConfirm · + props de style (fenêtre) | `<Dialog open={confirm} onOpenChange={setConfirm} title={t('todo.deleteTitle')} destructive onConfirm={remove} />` |
+| EmptyState | icon · title · description · actionLabel + onAction (textes par défaut fournis) · + props de style | `<EmptyState icon={ListChecks} title={t('todos.emptyTitle')} actionLabel={t('todos.add')} onAction={openSheet} />` |
+| ErrorState | error (AppError traduite automatiquement) · title · description · onRetry (bouton Réessayer) · + props de style | `<ErrorState error={query.error} onRetry={() => query.refetch()} />` |
 | FormField | control · name · label · hint · + props Input (secureTextEntry, keyboardType...). Messages zod = clés i18n. testID e2e : field-<name> | `<FormField control={form.control} name="email" label={t('auth.email')} keyboardType="email-address" />` |
-| Header | title · subtitle · back (true \| fn) · right · large | `<Header title={t('todo.title')} back right={<IconButton icon={Trash2} label={t('actions.delete')} onPress={remove} />} />` |
+| Header | title · subtitle · back (true \| fn) · right · large · + props de style | `<Header title={t('todo.title')} back right={<IconButton icon={Trash2} label={t('actions.delete')} onPress={remove} />} />` |
 | IconButton | icon (requis) · label (requis, a11y) · variant (défaut ghost) · size: sm\|md\|lg | `<IconButton icon={Settings} label={t('settings.title')} onPress={open} />` |
-| Image | source (uri ou require) · alt (requis) · ratio · rounded (défaut card) · contentFit · placeholder (blurhash) | `<Image source={product.image_url} alt={product.name} ratio={4 / 3} />` |
+| Image | source (uri ou require) · alt (requis) · ratio · rounded (défaut card) · contentFit · placeholder (blurhash) · + props de style | `<Image source={product.image_url} alt={product.name} ratio={4 / 3} />` |
 | Input | value · onChangeText · placeholder · invalid · secureTextEntry · keyboardType · autoComplete | `<Input value={query} onChangeText={setQuery} placeholder={t('search.placeholder')} />` |
 | List | data · renderItem (item mémoïsé) · keyExtractor · loading · error · onRetry · empty (ou ListEmptyComponent) · onRefresh · refreshing · separators | `<List data={todos.data} loading={todos.isPending} error={todos.error} onRetry={todos.refetch} renderItem={renderTodo} />` |
-| ListItem | title · subtitle · icon · leading · value · trailing · chevron · destructive · onPress | `<ListItem title={item.title} subtitle={formatRelative(item.created_at)} chevron onPress={open} />` |
-| OnboardingPager | pages[{ key, icon, title, description }] · onDone · doneLabel | `<OnboardingPager pages={pages} onDone={finish} />` |
-| Paywall | title · subtitle · features[] · plans[{id,title,price,period,badge,trialDays}] · selectedId · onSelect · ctaLabel · onPurchase · onRestore · onClose · purchasing · termsUrl · privacyUrl | `<Paywall {...paywall} /> (branché par le module payments)` |
-| ProgressBar | value (0 à 1) · tone: brand\|accent\|success | `<ProgressBar value={done / total} tone="success" />` |
+| ListItem | title · subtitle · icon · leading · value · trailing · chevron · destructive · onPress · + props de style | `<ListItem title={item.title} subtitle={formatRelative(item.created_at)} chevron onPress={open} />` |
+| OnboardingPager | pages[{ key, icon, title, description }] · onDone · doneLabel · + props de style | `<OnboardingPager pages={pages} onDone={finish} />` |
+| Paywall | title · subtitle · features[] · plans[{id,title,price,period,badge,trialDays}] · selectedId · onSelect · ctaLabel · onPurchase · onRestore · onClose · purchasing · termsUrl · privacyUrl · + props de style (contenu) | `<Paywall {...paywall} /> (branché par le module payments)` |
+| ProgressBar | value (0 à 1) · tone: brand\|accent\|success · + props de style (piste) | `<ProgressBar value={done / total} tone="success" />` |
 | QueryView | query (useQuery) · children(data) · skeleton · empty (EmptyState) · isEmpty. Gère les 4 états d'un écran. | `<QueryView query={todos} empty={{ title: t('todos.empty') }}>{(items) => <TodoList items={items} />}</QueryView>` |
-| Screen | scroll · padded · header · footer · keyboard · onRefresh + refreshing · safeTop | `<Screen header={<Header title={t('home.title')} large />} onRefresh={q.refetch} refreshing={q.isRefetching}>...</Screen>` |
-| SegmentedControl | options [{ value, label }] · value · onChange (2 à 4 choix exclusifs) | `<SegmentedControl options={periods} value={period} onChange={setPeriod} />` |
-| SettingsList | sections[{ key, title, items[{ key, label, icon, type: link\|toggle\|action, value, checked, selected, onToggle, onPress, destructive }] }] | `<SettingsList sections={sections} /> (utilisé par le module settings)` |
-| Sheet | open · onOpenChange · title · snapPoints (défaut [60]) · scroll | `<Sheet open={open} onOpenChange={setOpen} title={t('todos.new')}><TodoForm onDone={() => setOpen(false)} /></Sheet>` |
-| Skeleton | w · h (tokens) · rounded. SkeletonList : rows, avatar | `<Skeleton w="66%" h="5" /> · <SkeletonList rows={5} avatar />` |
-| Stat | value (nombre ou texte formaté) · label · tone: default\|brand\|accent\|success · icon. Carte qui s'étire (flex 1) : en XStack pour une rangée de chiffres clés | `<XStack gap="stack"><Stat value={week} label={t('stats.week')} tone="brand" /><Stat value={streak} label={t('stats.streak')} icon={Flame} /></XStack>` |
-| Tabs | tabs [{ value, label, count }] · value · onChange (onglets soulignés, défilants) | `<Tabs tabs={[{ value: 'all', label: t('tabs.all') }]} value={tab} onChange={setTab} />` |
+| Screen | scroll · padded · header · footer · keyboard · onRefresh + refreshing · safeTop · + props de style (contenu) | `<Screen header={<Header title={t('home.title')} large />} onRefresh={q.refetch} refreshing={q.isRefetching}>...</Screen>` |
+| SegmentedControl | options [{ value, label }] · value · onChange (2 à 4 choix exclusifs) · + props de style | `<SegmentedControl options={periods} value={period} onChange={setPeriod} />` |
+| SettingsList | sections[{ key, title, items[{ key, label, icon, type: link\|toggle\|action, value, checked, selected, onToggle, onPress, destructive }] }] · + props de style | `<SettingsList sections={sections} /> (utilisé par le module settings)` |
+| Sheet | open · onOpenChange · title · snapPoints (défaut [60]) · scroll · + props de style (contenu) | `<Sheet open={open} onOpenChange={setOpen} title={t('todos.new')}><TodoForm onDone={() => setOpen(false)} /></Sheet>` |
+| Skeleton | w · h (tokens) · rounded · + props de style. SkeletonList : rows, avatar | `<Skeleton w="66%" h="5" /> · <SkeletonList rows={5} avatar />` |
+| Stat | value (nombre ou texte formaté) · label · tone: default\|brand\|accent\|success · icon · + props de style. Carte qui s'étire (flex 1) : en XStack pour une rangée de chiffres clés | `<XStack gap="stack"><Stat value={week} label={t('stats.week')} tone="brand" /><Stat value={streak} label={t('stats.streak')} icon={Flame} /></XStack>` |
+| Tabs | tabs [{ value, label, count }] · value · onChange (onglets soulignés, défilants) · + props de style | `<Tabs tabs={[{ value: 'all', label: t('tabs.all') }]} value={tab} onChange={setTab} />` |
 | Title | tone: default\|muted\|brand\|accent\|danger\|success · align: start\|center\|end | `<Title>{t('home.title')}</Title>` |
 | Heading | tone · align · level: 1\|2\|3 (taille 7, 6, 5) | `<Heading level={2}>{t('section.title')}</Heading>` |
 | Body | tone · align · weight: regular\|medium\|bold · size: '3'..'5' | `<Body tone="muted">{t('item.description')}</Body>` |

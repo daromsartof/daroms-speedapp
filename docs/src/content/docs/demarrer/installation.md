@@ -73,7 +73,7 @@ bun daroms shot /          # rendu web de l'accueil : erreurs et débordements
 Ouvrir Claude Code dans le dossier de l'app : au démarrage de session, le hook `daroms-sync` copie règles, skills et hooks de `core/_ai/` dans `.claude/`. Ensuite :
 
 ```text
-/daroms-day Une app pour suivre ses habitudes de lecture
+/daroms-pilot Une app pour suivre ses habitudes de lecture
 ```
 
-La journée complète est décrite dans le [tutoriel](/demarrer/tutoriel/).
+Le parcours complet est décrit dans le [tutoriel](/demarrer/tutoriel/).

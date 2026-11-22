@@ -2,15 +2,16 @@ import { haptic } from '@daroms/lib/haptics'
 import { SizableText, XStack } from 'tamagui'
 
 import type { IconComponent } from '../icons'
+import type { StyleProps } from './style-props'
 
-export type ChipProps = { label: string; selected?: boolean; icon?: IconComponent; onPress?: () => void }
+export type ChipProps = StyleProps & { label: string; selected?: boolean; icon?: IconComponent; onPress?: () => void }
 
 /**
  * @catalog Chip
- * @props label · selected · icon · onPress (filtres, tags)
+ * @props label · selected · icon · onPress (filtres, tags) · + props de style
  * @example <Chip label={t('filters.today')} selected={filter === 'today'} onPress={() => setFilter('today')} />
  */
-export function Chip({ label, selected = false, icon: Icon, onPress }: ChipProps) {
+export function Chip({ label, selected = false, icon: Icon, onPress, ...style }: ChipProps) {
   return (
     <XStack
       theme={selected ? 'brand' : undefined}
@@ -22,6 +23,7 @@ export function Chip({ label, selected = false, icon: Icon, onPress }: ChipProps
       py="1-5"
       gap="1-5"
       items="center"
+      {...style}
       role="button"
       aria-selected={selected}
       aria-label={label}

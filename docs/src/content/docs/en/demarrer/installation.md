@@ -73,7 +73,7 @@ Blank screen, QR code that does not load, native module missing in Expo Go: see 
 Open Claude Code in the app folder: when the session starts, the `daroms-sync` hook copies rules, skills and hooks from `core/_ai/` into `.claude/`. Then:
 
 ```text
-/daroms-day An app to track my reading habits
+/daroms-pilot An app to track my reading habits
 ```
 
-The full day is described in the [tutorial](/en/demarrer/tutoriel/).
+The full journey is described in the [tutorial](/en/demarrer/tutoriel/).
