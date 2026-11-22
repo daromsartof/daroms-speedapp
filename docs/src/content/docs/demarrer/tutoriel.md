@@ -9,7 +9,7 @@ sidebar:
 Objectif : partir d'une idée le matin et installer l'app sur un téléphone le soir, en laissant Claude faire le répétitif. Les durées sont celles de l'app pilote (Lecture, un suivi de lecture).
 
 :::note[En une commande]
-`/daroms-day <idée>` enchaîne toutes les étapes ci-dessous et s'arrête pour ta validation entre chacune. Ce tutoriel détaille ce qu'il fait, pour pouvoir lancer une étape seule.
+`/daroms-day <idée>` enchaîne toutes les étapes ci-dessous et s'arrête après chacune : tu vérifies la liste « À vérifier par vous », puis tu tapes `/daroms-valider` (ou `/daroms-corriger <consigne>`). L'agent ne peut pas passer à l'étape suivante sans toi ; `bun daroms steps` montre où en est le parcours. Ce tutoriel détaille ce qu'il fait, pour pouvoir lancer une étape seule.
 :::
 
 ## Prérequis (une fois)

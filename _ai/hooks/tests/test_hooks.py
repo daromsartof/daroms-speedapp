@@ -176,3 +176,58 @@ class Common(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+steps = load("daroms-steps")
+STEP_DEFS = json.loads((HOOKS.parent / "context" / "daroms-steps.json").read_text(encoding="utf-8"))
+
+
+class Steps(unittest.TestCase):
+    def state(self, **statuses):
+        return {"version": 1, "started": "2026-01-01", "steps": {k: {"status": v} for k, v in statuses.items()}}
+
+    def test_without_journey_nothing_happens(self):
+        self.assertIsNone(steps.gate("Skill", {"skill": "daroms-publish"}, STEP_DEFS, None))
+        updated, message = steps.on_prompt("/daroms-valider", STEP_DEFS, None)
+        self.assertIsNone(updated)
+        self.assertIn("aucun parcours", message)
+
+    def test_user_validation_moves_to_next_step(self):
+        updated, message = steps.on_prompt("/daroms-valider  tout est bon", STEP_DEFS, self.state(cadrage="review"))
+        self.assertEqual(updated["steps"]["cadrage"]["status"], "done")
+        self.assertEqual(updated["steps"]["cadrage"]["history"][-1]["by"], "utilisateur")
+        self.assertIn("Conception", message)
+
+    def test_correction_and_skip(self):
+        updated, message = steps.on_prompt("/daroms-corriger la cible est trop large", STEP_DEFS, self.state(cadrage="review"))
+        self.assertEqual(updated["steps"]["cadrage"]["status"], "changes")
+        self.assertIn("trop large", message)
+        updated, _ = steps.on_prompt("/daroms-corriger", STEP_DEFS, self.state(cadrage="review"))
+        self.assertIsNone(updated)
+        updated, _ = steps.on_prompt("/daroms-valider passer : pas de juriste", STEP_DEFS, self.state(cadrage="done", conception="done", donnees="done", developpement="done", qualite="done"))
+        self.assertEqual(updated["steps"]["conformite"]["status"], "skipped")
+        self.assertEqual(updated["steps"]["conformite"]["note"], "pas de juriste")
+
+    def test_other_messages_are_ignored(self):
+        self.assertEqual(steps.on_prompt("valide le code stp", STEP_DEFS, self.state()), (None, ""))
+
+    def test_gate_blocks_later_steps_only(self):
+        state = self.state(cadrage="review")
+        self.assertIn("attend la validation", steps.gate("Skill", {"skill": "daroms-brand"}, STEP_DEFS, state))
+        self.assertIsNone(steps.gate("Skill", {"skill": "daroms-idea"}, STEP_DEFS, state))
+        self.assertIsNone(steps.gate("Skill", {"skill": "daroms-commit"}, STEP_DEFS, state))
+        self.assertIsNone(steps.gate("Skill", {"skill": "daroms-brand"}, STEP_DEFS, self.state(cadrage="done")))
+
+    def test_agent_cannot_validate(self):
+        state = self.state()
+        self.assertIn("réservé", steps.gate("Skill", {"skill": "daroms-valider"}, STEP_DEFS, state))
+        self.assertIsNotNone(steps.gate("Write", {"file_path": "/app/app.steps.json"}, STEP_DEFS, state))
+        self.assertIsNotNone(steps.gate("Bash", {"command": "echo '{}' > app.steps.json"}, STEP_DEFS, state))
+        self.assertIsNotNone(steps.gate("Bash", {"command": "bun daroms steps validate 1"}, STEP_DEFS, state))
+        self.assertIsNone(steps.gate("Bash", {"command": "bun daroms steps ready 1 \"fait\""}, STEP_DEFS, state))
+
+    def test_current_step_starts(self):
+        state = self.state()
+        self.assertTrue(steps.mark_doing(STEP_DEFS, state, "Skill", {"skill": "daroms-idea"}))
+        self.assertEqual(state["steps"]["cadrage"]["status"], "doing")
+        self.assertFalse(steps.mark_doing(STEP_DEFS, state, "Skill", {"skill": "daroms-brand"}))

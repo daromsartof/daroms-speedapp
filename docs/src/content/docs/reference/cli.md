@@ -23,6 +23,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-
 | [`inspire`](#inspire) | aperçus d'inspiration à regarder avant le design |
 | [`db`](#db) | migrations et types Supabase |
 | [`build`, `submit`, `update`](#build-submit-update) | EAS |
+| [`steps`](#steps) | parcours `/daroms-day`, une validation manuelle par étape |
 | [`cost`](#cost) | ce que l'app a coûté en tokens et en dollars |
 | [`sync-ai`, `catalog`](#sync-ai-et-catalog) | couche IA, catalogue |
 | [`release-core`](#release-core) | version du cœur |
@@ -170,6 +171,19 @@ bun daroms update [canal] --message "..."
 ```
 
 Détail : [Publier](/guides/publier/).
+
+## steps
+
+```bash
+bun daroms steps                       # état des 9 étapes, l'étape en cours marquée
+bun daroms steps start                 # commence le parcours (app.steps.json)
+bun daroms steps show [n]              # objectif, skills, livrables, points à vérifier
+bun daroms steps ready <n> "<résumé>"  # fin d'étape : attend la validation de l'utilisateur
+bun daroms steps reset <n>             # repart de l'étape n
+bun daroms steps validate [n]          # validation au clavier (terminal interactif requis)
+```
+
+La validation se fait dans Claude Code en tapant `/daroms-valider` ; l'agent ne peut pas valider. Détail : [Hooks](/reference/hooks/#parcours-avec-validation-manuelle).
 
 ## cost
 

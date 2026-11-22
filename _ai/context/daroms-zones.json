@@ -333,6 +333,23 @@
     "core/modules/maps/README.md"
    ],
    "notes": "Map, useCurrentLocation, sortByDistance, openInMaps depuis @daroms/module-maps."
+  },
+  {
+   "name": "parcours",
+   "keywords": [
+    "parcours",
+    "etape",
+    "etapes",
+    "valider",
+    "validation",
+    "corriger",
+    "journee"
+   ],
+   "paths": [
+    "app.steps.json",
+    "core/_ai/context/daroms-steps.json"
+   ],
+   "notes": "/daroms-day ; bun daroms steps (état), steps ready <n> en fin d'étape ; seul l'utilisateur valide (/daroms-valider)."
   }
  ]
 }

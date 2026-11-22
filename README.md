@@ -58,7 +58,7 @@ Open Claude Code in the app, then:
 | Afternoon | `/daroms-screen`, `/daroms-module`, `/daroms-check`, `/daroms-polish` | screens, modules, checks, UX polish |
 | Evening | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit` | FR/EN store listing, promo video from the real screens, EAS build, TestFlight and internal track, then `app.cost.md`: what the app cost in tokens and dollars |
 
-23 skills, 3 subagents (designer, reviewer, store) and 6 hooks (sync, context router, rule checks, typecheck, `.env` protection, token stats). The [ECC](https://ecc.tools) method is built in: `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` and `ecc-typescript-patterns`, vendored in the core and mapped to daroms commands by `daroms-ecc`. Details: [skills](https://daromsartof.github.io/daroms-speedapp/en/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/en/reference/hooks/).
+25 skills, 3 subagents (designer, reviewer, store) and 7 hooks (sync, context router, rule checks, typecheck, `.env` protection, manual step approval, token stats). The [ECC](https://ecc.tools) method is built in: `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` and `ecc-typescript-patterns`, vendored in the core and mapped to daroms commands by `daroms-ecc`. Details: [skills](https://daromsartof.github.io/daroms-speedapp/en/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/en/reference/hooks/).
 
 ## Example: a table and its screen
 

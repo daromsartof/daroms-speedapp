@@ -9,7 +9,7 @@ sidebar:
 Goal: start from an idea in the morning and install the app on a phone by evening, letting Claude do the repetitive work. Durations come from the pilot app (Lecture, a reading tracker).
 
 :::note[One command]
-`/daroms-day <idea>` chains every step below and stops for your approval between each one. This tutorial details what it does, so you can also run a single step.
+`/daroms-day <idea>` chains every step below and stops after each one: you go through the "to check" list, then type `/daroms-valider` (or `/daroms-corriger <instruction>`). The agent cannot move to the next step without you; `bun daroms steps` shows where the journey stands. This tutorial details what it does, so you can also run a single step.
 :::
 
 ## Requirements (once)

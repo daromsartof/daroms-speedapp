@@ -1,36 +1,36 @@
 ---
 name: daroms-day
-description: Orchestrateur de la journée daroms - de l'idée à l'app publiée en une journée, étape par étape avec validation entre chaque étape.
+description: Parcours guidé de l'idée à l'app publiée et suivie - les 9 étapes du cycle réel (cadrage, conception, données, développement, qualité, conformité, publication, lancement, suivi), chacune validée à la main par l'utilisateur avant la suivante.
 argument-hint: "<idée de l'app>"
 disable-model-invocation: true
 ---
 
-# /daroms-day : une app en un jour
+# /daroms-day : parcours guidé, une validation manuelle par étape
 
 Idée : $ARGUMENTS
 
-Enchaîner les étapes ci-dessous. Après chacune : résumé de 3 lignes maximum, puis **demander la validation** (AskUserQuestion : Continuer / Ajuster / Arrêter). Ne jamais sauter une validation.
+1. `bun daroms steps start` puis `bun daroms steps` : le parcours est enregistré dans `app.steps.json` et reprend à l'étape en cours, d'une session à l'autre.
+2. Étape en cours : `bun daroms steps show` (objectif, skills, livrables, points à vérifier), puis faire le travail avec ses skills.
+3. Fin d'étape : `bun daroms steps ready <n> "<résumé en une ligne>"` affiche livrables, « À vérifier par vous » et les commandes. Montrer à l'utilisateur ce bloc, un résumé de 3 lignes et les chemins des livrables, **puis s'arrêter** : rien d'autre, aucune validation à sa place. Un hook refuse les skills des étapes suivantes tant qu'il n'a pas validé, et toute écriture de `app.steps.json`.
+4. Réponse de l'utilisateur, enregistrée par le hook :
+   - `/daroms-valider` : passer à l'étape suivante (point 2) ;
+   - `/daroms-corriger <consigne>` : appliquer la consigne (relancer le skill concerné avec la consigne en argument), puis revenir au point 3 ;
+   - `/daroms-valider passer : <raison>` : étape sautée, raison notée.
 
-| # | Étape | Skill | Livrable |
+| # | Étape | Skills | Travail sans skill dédié |
 |---|---|---|---|
-| 1 | Cadrage | `/daroms-idea` | `app.spec.md` validé |
-| 2 | Création | `/daroms-new` | app qui démarre, QR affiché |
-| 3 | Inspiration | `/daroms-inspire` | références web et direction dans `app.spec.md` |
-| 4 | Marque | `/daroms-brand` | `brand.ts`, icône, splash |
-| 5 | Design | `/daroms-design` | wireframes texte dans `app.spec.md` |
-| 6 | Données | `/daroms-data` | tables RLS, `api.ts` générés |
-| 7 | Écrans | `/daroms-screen <nom>` pour chaque écran du cahier | écrans 4 états |
-| 8 | Modules | `/daroms-module <slug>` si le cahier en liste | modules configurés |
-| 9 | Vérification | `/daroms-check` | tout vert |
-| 10 | Finition | `/daroms-polish` | revue UX appliquée |
-| 11 | Store | `/daroms-store` | fiche FR/EN, captures |
-| 12 | Build | `/daroms-build` | build preview installable |
-| 13 | Soumission | `/daroms-submit` (si comptes prêts) | TestFlight / piste interne |
-| 14 | Bilan | `/daroms-learn "<idée>"`, puis `bun daroms cost` | `app.cost.md` : tokens et prix par étape, modèle, session |
+| 1 | Cadrage et validation | `/daroms-idea`, `/daroms-new` | demander combien de personnes de la cible ont confirmé le besoin ; le noter dans `app.spec.md` |
+| 2 | Conception UX/UI | `/daroms-inspire`, `/daroms-brand`, `/daroms-design` | |
+| 3 | Architecture et données | `/daroms-data`, `/daroms-module` (si le cahier en liste ; proposer `crash`) | lister les comptes externes à créer |
+| 4 | Développement | `/daroms-screen <nom>` pour chaque écran, boucle principale d'abord | `/daroms-commit` après chaque écran |
+| 5 | Qualité | `/daroms-check`, `/daroms-polish` | rappeler la bêta externe (TestFlight, test fermé Google Play) |
+| 6 | Juridique et conformité | | `store/privacy.md` d'après les modules, brouillon de CGU dans `store/terms.md`, liste `.claude/rules-ondemand/daroms-store-compliance.md` cochée dans `app.spec.md` > Conformité |
+| 7 | Publication | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit` (sur demande explicite) | |
+| 8 | Lancement | | `app.spec.md` > Lancement : canaux de la cible, calendrier, message en une phrase, page web |
+| 9 | Suivi après lancement | `/daroms-update`, `/daroms-learn` | vérifier le module `crash` et l'analytique ; `bun daroms cost` ; prochaine version dans `app.spec.md` |
 
-Règles de la journée :
-- Une étape = un objectif. Ce fil garde le dialogue (étapes 1 à 5) et les résumés : les étapes 6 à 11, `/daroms-learn` et `/daroms-commit` tournent dans un sous-agent à contexte neuf (Sonnet ; Haiku pour learn et commit) qui lit `app.spec.md` et le code mais pas cette conversation. Lui passer en argument ce qui n'est écrit nulle part (nom d'écran, slug, consigne d'ajustement).
-- « Ajuster » après une étape en sous-agent : relancer le skill avec la consigne en argument, ne pas corriger ici.
-- Ordre des écrans : boucle principale d'abord, réglages et secondaires ensuite.
-- Commits par étape avec `/daroms-commit`.
-- Fin : `bun daroms cost` écrit `app.cost.md` ; afficher le total et les 3 étapes les plus chères, noter dans `app.spec.md` > Journal ce qui a ralenti, puis `/daroms-commit` (le rapport est versionné).
+Règles :
+- Une étape à la fois ; jamais deux étapes dans un même tour. L'utilisateur peut lancer lui-même n'importe quel skill : le hook ne bloque que l'agent.
+- Les skills en sous-agent (données, écrans, modules, vérification, finition, store) lisent `app.spec.md` et le code, pas cette conversation : leur passer en argument ce qui n'est écrit nulle part (nom d'écran, slug, consigne de correction).
+- Commits par étape avec `/daroms-commit` ; `app.steps.json` est versionné (historique des validations).
+- Fin du parcours : `bun daroms cost` écrit `app.cost.md` ; afficher le total et les 3 étapes les plus chères, noter dans `app.spec.md` > Journal ce qui a ralenti, puis `/daroms-commit`.
