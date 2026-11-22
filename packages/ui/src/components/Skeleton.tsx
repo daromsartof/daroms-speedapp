@@ -1,15 +1,16 @@
 import { useEffect } from 'react'
 import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated'
-import { XStack, YStack, type YStackProps } from 'tamagui'
+import { XStack, YStack } from 'tamagui'
+import type { StyleProps } from './style-props'
 
-export type SkeletonProps = Pick<YStackProps, 'w' | 'h' | 'rounded' | 'flex'>
+export type SkeletonProps = StyleProps
 
 /**
  * @catalog Skeleton
- * @props w · h (tokens) · rounded. SkeletonList : rows, avatar
+ * @props w · h (tokens) · rounded · + props de style. SkeletonList : rows, avatar
  * @example <Skeleton w="66%" h="5" /> · <SkeletonList rows={5} avatar />
  */
-export function Skeleton({ w = '100%', h = '4', rounded = 'md', flex }: SkeletonProps) {
+export function Skeleton({ w = '100%', h = '4', rounded = 'md', flex, ...styleProps }: SkeletonProps) {
   const opacity = useSharedValue(0.55)
   useEffect(() => {
     opacity.set(withRepeat(withTiming(1, { duration: 750 }), -1, true))
@@ -17,7 +18,7 @@ export function Skeleton({ w = '100%', h = '4', rounded = 'md', flex }: Skeleton
   const style = useAnimatedStyle(() => ({ opacity: opacity.get() }))
   return (
     <Animated.View style={[style, flex ? { flex: 1 } : null]} aria-hidden>
-      <YStack w={w} h={h} rounded={rounded} bg="skeleton" />
+      <YStack w={w} h={h} rounded={rounded} bg="skeleton" {...styleProps} />
     </Animated.View>
   )
 }

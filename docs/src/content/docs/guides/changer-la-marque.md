@@ -62,7 +62,26 @@ Toujours possible à la main : écrire `assets/source/icon.svg` (1024 x 1024, fo
 
 Méthode inspirée de [make-logo](https://github.com/arla6ka/design.how) (design.how, MIT), sans calque ni logo de marque en entrée. Aucune vérification ne vaut recherche d'antériorité : la faire avant de déposer la marque.
 
-## 3. Vérifier
+## 3. Personnaliser un composant
+
+Du plus large au plus local :
+
+1. **La marque** : les 5 valeurs de `brand.ts` changent tous les composants à la fois.
+2. **Les props et variantes** prévues : `Button variant="outline" size="md"`, `Card flat`, `Body tone="muted"`.
+3. **Les props de style** : chaque composant du catalogue qui a un conteneur (marqué « + props de style » dans `CATALOG.md`) accepte les props de style Tamagui à tokens, placées après ses valeurs par défaut :
+   ```tsx
+   <ListItem title={book.title} py="tight" />
+   <Header title={t('home.title')} borderBottomWidth={1} borderColor="separator" />
+   <Badge rounded="pill" px="3">{t('book.new')}</Badge>
+   <Screen gap="section">...</Screen>          // conteneur du contenu
+   <Sheet gap="section">...</Sheet>            // contenu de la feuille
+   ```
+   Ni gestionnaire, ni rôle, ni enfants : `onPress`, `role` et l'accessibilité restent ceux du composant. Pour un réglage répété, un petit composant de l'app qui passe ces props (type `StyleProps` de `@daroms/ui`).
+4. **Un composant à soi** dans `src/components/`, composé de `YStack` et `XStack` avec les tokens.
+
+`QueryView` (qui choisit l'état à afficher), `notify` (toasts) et `FormField` (ses props vont à l'`Input`) n'ont pas de conteneur propre. `core/` ne se modifie jamais depuis une app : une mise à jour l'écraserait.
+
+## 4. Vérifier
 
 ```bash
 bun daroms shot /_dev/kitchen-sink --capture

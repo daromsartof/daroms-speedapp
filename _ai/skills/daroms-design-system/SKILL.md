@@ -14,6 +14,7 @@ Quand un skill design propose une solution, la traduire ainsi :
 | Rayon, forme | `brand.radius` ; `rounded="card|button|chip|pill"` |
 | Typographie, hiérarchie | `Title`, `Heading level`, `Body`, `Caption`, `tone` ; police via `brand.font` |
 | Composant (carte, liste, modal, toast) | Composant du catalogue (`Card`, `List`, `Sheet`, `Dialog`, `notify`) |
+| Ajuster un composant (marges, fond, rayon, bordure) | ses props de style avec tokens : `<ListItem py="tight" />`, `<Badge rounded="pill" />`, `<Sheet gap="section" />` |
 | Icônes (SF Symbols, Material, Feather) | Lucide via `@daroms/ui/icons` (`bun daroms icons add`) |
 | Animations CSS, Framer Motion | `transition` + valeurs `enter:`/`press:`, Reanimated pour le geste |
 | États (hover, pressed, disabled) | `bg="card press:background-press"`, `opacity="1 disabled:0.5"` |

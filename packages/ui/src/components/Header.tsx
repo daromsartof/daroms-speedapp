@@ -6,8 +6,9 @@ import { XStack, YStack } from 'tamagui'
 import { ChevronLeft } from '../icons'
 import { IconButton } from './IconButton'
 import { Caption, Heading, Title } from './Text'
+import type { StyleProps } from './style-props'
 
-export type HeaderProps = {
+export type HeaderProps = Omit<StyleProps, 'right'> & {
   title: string
   subtitle?: string
   /** Bouton retour : true (router.back) ou fonction. */
@@ -20,15 +21,15 @@ export type HeaderProps = {
 
 /**
  * @catalog Header
- * @props title · subtitle · back (true | fn) · right · large
+ * @props title · subtitle · back (true | fn) · right · large · + props de style
  * @example <Header title={t('todo.title')} back right={<IconButton icon={Trash2} label={t('actions.delete')} onPress={remove} />} />
  */
-export function Header({ title, subtitle, back, right, large = false }: HeaderProps) {
+export function Header({ title, subtitle, back, right, large = false, ...style }: HeaderProps) {
   const router = useRouter()
   const t = useDaromsT()
   const goBack = typeof back === 'function' ? back : () => router.back()
   return (
-    <XStack items="center" gap="tight" px={back ? 'tight' : 'gutter'} pr="gutter" py="tight" minH="14">
+    <XStack items="center" gap="tight" px={back ? 'tight' : 'gutter'} pr="gutter" py="tight" minH="14" {...style}>
       {back ? <IconButton icon={ChevronLeft} label={t('a11y.back')} onPress={goBack} /> : null}
       <YStack flex={1}>
         {large ? (

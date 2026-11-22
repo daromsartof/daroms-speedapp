@@ -3,8 +3,9 @@ import { Dialog as TDialog, XStack } from 'tamagui'
 
 import { Button } from './Button'
 import { Body, Heading } from './Text'
+import type { StyleProps } from './style-props'
 
-export type DialogProps = {
+export type DialogProps = StyleProps & {
   open: boolean
   onOpenChange: (open: boolean) => void
   title: string
@@ -19,10 +20,10 @@ export type DialogProps = {
 
 /**
  * @catalog Dialog
- * @props open · onOpenChange · title · description · confirmLabel · cancelLabel · destructive · loading · onConfirm
+ * @props open · onOpenChange · title · description · confirmLabel · cancelLabel · destructive · loading · onConfirm · + props de style (fenêtre)
  * @example <Dialog open={confirm} onOpenChange={setConfirm} title={t('todo.deleteTitle')} destructive onConfirm={remove} />
  */
-export function Dialog({ open, onOpenChange, title, description, confirmLabel, cancelLabel, destructive = false, loading = false, onConfirm }: DialogProps) {
+export function Dialog({ open, onOpenChange, title, description, confirmLabel, cancelLabel, destructive = false, loading = false, onConfirm, ...style }: DialogProps) {
   const t = useDaromsT()
   return (
     <TDialog modal open={open} onOpenChange={onOpenChange}>
@@ -39,6 +40,7 @@ export function Dialog({ open, onOpenChange, title, description, confirmLabel, c
           transition="medium"
           opacity="1 enter:0 exit:0"
           scale="1 enter:0.95 exit:0.95"
+          {...style}
         >
           <TDialog.Title asChild>
             <Heading level={3}>{title}</Heading>

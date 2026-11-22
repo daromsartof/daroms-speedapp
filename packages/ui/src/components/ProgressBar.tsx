@@ -1,5 +1,6 @@
 import { useDaromsT } from '@daroms/i18n'
 import { YStack } from 'tamagui'
+import type { StyleProps } from './style-props'
 
 const FILL = {
   brand: { theme: 'brand', bg: 'background' },
@@ -9,10 +10,10 @@ const FILL = {
 
 /**
  * @catalog ProgressBar
- * @props value (0 à 1) · tone: brand|accent|success
+ * @props value (0 à 1) · tone: brand|accent|success · + props de style (piste)
  * @example <ProgressBar value={done / total} tone="success" />
  */
-export function ProgressBar({ value, tone = 'brand' }: { value: number; tone?: keyof typeof FILL }) {
+export function ProgressBar({ value, tone = 'brand', ...style }: StyleProps & { value: number; tone?: keyof typeof FILL }) {
   const t = useDaromsT()
   const percent = Math.round(Math.min(1, Math.max(0, value)) * 100)
   const fill = FILL[tone]
@@ -22,6 +23,7 @@ export function ProgressBar({ value, tone = 'brand' }: { value: number; tone?: k
       rounded="pill"
       bg="color-3"
       overflow="hidden"
+      {...style}
       role="progressbar"
       aria-valuenow={percent}
       aria-valuemin={0}

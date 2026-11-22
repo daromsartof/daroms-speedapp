@@ -108,6 +108,7 @@ def build_catalog(core: Path) -> str:
         "",
         "Lire ce fichier, jamais les sources. Import : `import { Button, Screen } from '@daroms/ui'`.",
         "Primitives de mise en page : `XStack`, `YStack`, `ScrollView`, `Separator`, `Spacer`, `Theme` (aussi exportées).",
+        "« + props de style » : le conteneur accepte les props de style Tamagui à tokens (`<ListItem py=\"tight\" />`), après ses valeurs par défaut ; type `StyleProps`.",
         "",
         "| Composant | Props clés | Exemple |",
         "|---|---|---|",

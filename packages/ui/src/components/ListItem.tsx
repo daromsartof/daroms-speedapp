@@ -4,8 +4,9 @@ import { XStack, YStack } from 'tamagui'
 
 import { ChevronRight, type IconComponent } from '../icons'
 import { Body, Caption } from './Text'
+import type { StyleProps } from './style-props'
 
-export type ListItemProps = {
+export type ListItemProps = StyleProps & {
   title: string
   subtitle?: string
   icon?: IconComponent
@@ -22,10 +23,10 @@ export type ListItemProps = {
 
 /**
  * @catalog ListItem
- * @props title · subtitle · icon · leading · value · trailing · chevron · destructive · onPress
+ * @props title · subtitle · icon · leading · value · trailing · chevron · destructive · onPress · + props de style
  * @example <ListItem title={item.title} subtitle={formatRelative(item.created_at)} chevron onPress={open} />
  */
-export function ListItem({ title, subtitle, icon: Icon, leading, value, trailing, chevron, destructive, onPress }: ListItemProps) {
+export function ListItem({ title, subtitle, icon: Icon, leading, value, trailing, chevron, destructive, onPress, ...style }: ListItemProps) {
   const color = destructive ? 'red-600 dark:red-400' : 'color'
   return (
     <XStack
@@ -35,6 +36,7 @@ export function ListItem({ title, subtitle, icon: Icon, leading, value, trailing
       py="stack"
       minH="14"
       bg={onPress ? 'transparent press:background-press' : 'transparent'}
+      {...style}
       role={onPress ? 'button' : undefined}
       aria-label={subtitle ? `${title}, ${subtitle}` : title}
       onPress={

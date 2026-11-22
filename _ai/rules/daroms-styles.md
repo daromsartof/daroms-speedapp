@@ -16,5 +16,6 @@ paths:
 - Sous-thème local : `<YStack theme="soft" bg="background">` ; `brand` pour un plein, `danger|success|warning` teintés.
 - Texte : `Title`, `Heading level={1|2|3}`, `Body`, `Caption` avec `tone="muted|brand|danger|success"` ; tailles `size="1".."10"`.
 - Icônes : `import { Plus } from '@daroms/ui/icons'` ; `<Plus size="5" color="color-9" />`. Icône absente : `bun daroms icons add Nom`.
-- Composant d'app réutilisé : `src/features/<x>/components/` (ou `src/components/` si partagé), styled(YStack, {...}) avec tokens.
+- Ajuster un composant du catalogue : ses props de style, avec tokens (`<ListItem py="tight" />`, `<Header borderBottomWidth={0} />`) ; jamais copier ni modifier `core/`.
+- Composant d'app réutilisé : `src/features/<x>/components/` (ou `src/components/` si partagé), styled(YStack, {...}) avec tokens ; un réglage récurrent d'un composant du catalogue : petit composant qui lui passe ses props de style (type `StyleProps`).
 - Mode sombre automatique : n'utiliser que des clés de thème ; vérifier avec `bun daroms shot /route --dark`.

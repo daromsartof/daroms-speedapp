@@ -7,15 +7,16 @@ import { ScrollView, XStack, YStack, type ScrollViewRef } from 'tamagui'
 import type { IconComponent } from '../icons'
 import { Button } from './Button'
 import { Body, Title } from './Text'
+import type { StyleProps } from './style-props'
 
 export type OnboardingPage = { key: string; icon?: IconComponent; title: string; description: string }
 
 /**
  * @catalog OnboardingPager
- * @props pages[{ key, icon, title, description }] · onDone · doneLabel
+ * @props pages[{ key, icon, title, description }] · onDone · doneLabel · + props de style
  * @example <OnboardingPager pages={pages} onDone={finish} />
  */
-export function OnboardingPager({ pages, onDone, doneLabel }: { pages: OnboardingPage[]; onDone: () => void; doneLabel?: string }) {
+export function OnboardingPager({ pages, onDone, doneLabel, ...style }: StyleProps & { pages: OnboardingPage[]; onDone: () => void; doneLabel?: string }) {
   const t = useDaromsT()
   const { width } = useWindowDimensions()
   const insets = useSafeAreaInsets()
@@ -33,7 +34,7 @@ export function OnboardingPager({ pages, onDone, doneLabel }: { pages: Onboardin
   }
 
   return (
-    <YStack flex={1} bg="background" pt={insets.top} pb={insets.bottom + 16}>
+    <YStack flex={1} bg="background" pt={insets.top} pb={insets.bottom + 16} {...style}>
       <XStack justify="flex-end" px="gutter" minH="12">
         {last ? null : <Button variant="ghost" size="sm" onPress={onDone}>{t('actions.skip')}</Button>}
       </XStack>
