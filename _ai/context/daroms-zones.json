@@ -267,6 +267,22 @@
    "notes": "track('nom', props) depuis @daroms/module-analytics."
   },
   {
+   "name": "plantages",
+   "module": "crash",
+   "keywords": [
+    "crash",
+    "crashs",
+    "plantage",
+    "plantages",
+    "sentry",
+    "diagnostic"
+   ],
+   "paths": [
+    "core/modules/crash/README.md"
+   ],
+   "notes": "reportError(error, contexte) depuis @daroms/module-crash ; EXPO_PUBLIC_SENTRY_DSN."
+  },
+  {
    "name": "chat IA",
    "module": "ai-chat",
    "keywords": [

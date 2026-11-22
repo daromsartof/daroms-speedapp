@@ -19,7 +19,7 @@ An **Expo + Tamagui + Supabase** mobile framework built for Claude Code. The cor
 - **Generate before writing**: screens, tables and modules come from deterministic templates, no AI involved. Claude only fills in what is specific.
 - **One brand, one theme**: 5 values in `brand.ts` produce OKLCH palettes, light and dark themes, radii, spacing and springs.
 - **Enforced rules**: hard-coded color, Supabase inside a component, text outside i18n: a hook rejects the write and says what to do instead.
-- **Opt-in modules**: auth, payments, push, AI chat, photos, maps... one command each.
+- **Opt-in modules**: auth, payments, push, AI chat, photos, maps, crash reporting... one command each.
 - **Low token cost**: a short always-loaded core, rules loaded only for the files being touched, a component catalog instead of sources, and mechanical steps run in fresh-context Sonnet or Haiku subagents.
 
 Full documentation: **https://daromsartof.github.io/daroms-speedapp/en/**

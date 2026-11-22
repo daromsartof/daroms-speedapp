@@ -2,7 +2,17 @@ const fs = require('node:fs')
 const path = require('node:path')
 const { getDefaultConfig } = require('expo/metro-config')
 
-const config = getDefaultConfig(__dirname)
+// Module crash : avec @sentry/react-native installé, Sentry ajoute des identifiants de debug aux bundles
+// et aux source maps (traces lisibles en production) ; sinon la config Expo par défaut.
+function resolveSentryMetro() {
+  try {
+    return require.resolve('@sentry/react-native/metro', { paths: [__dirname] })
+  } catch {
+    return undefined
+  }
+}
+const sentryMetro = resolveSentryMetro()
+const config = sentryMetro ? require(sentryMetro).getSentryExpoConfig(__dirname) : getDefaultConfig(__dirname)
 
 // Le cœur (sous-module core/) contient les paquets du workspace : Metro doit le surveiller,
 // y compris quand core/ est un lien symbolique (développement du cœur).

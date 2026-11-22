@@ -1,0 +1,19 @@
+{
+  "name": "@daroms/module-crash",
+  "version": "0.5.2",
+  "private": true,
+  "type": "module",
+  "description": "Suivi des plantages avec Sentry : erreurs JS, plantages natifs, écran et version, source maps",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@daroms/app": "workspace:*",
+    "@daroms/data": "workspace:*",
+    "@daroms/i18n": "workspace:*",
+    "@daroms/lib": "workspace:*",
+    "@daroms/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "@sentry/react-native": "*"
+  }
+}

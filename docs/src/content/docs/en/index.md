@@ -43,7 +43,7 @@ The full walkthrough, command by command: [Your app in a day](/en/demarrer/tutor
 | Light and dark themes | `brand.ts` and its 5 values: 11-shade OKLCH palettes, 8 sub-themes, radii, spacing and springs derived from the tone. |
 | Components | 32 `@daroms/ui` components with loading, empty, error, accessibility and haptics built in, and 102 Lucide icons. |
 | A data layer | `g table` writes the migration with RLS, the zod schema and TanStack Query hooks. With `--local`, the same hooks keep data on the device. |
-| Common features | 9 modules, one command each: auth, onboarding, settings, payments, push, analytics, ai-chat, camera, maps. |
+| Common features | 10 modules, one command each: auth, onboarding, settings, payments, push, analytics, crash, ai-chat, camera, maps. |
 | A starting point | Variants `list-detail`, `tracker`, `ai-chat`, `social`, `shop` and `blank`, each with its modules, tables and screens. |
 | Tooling | The `daroms` CLI, from `new` to `submit`, and 22 Claude skills that chain it. |
 

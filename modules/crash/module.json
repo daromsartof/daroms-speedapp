@@ -1,0 +1,7 @@
+{
+  "title": "Suivi des plantages",
+  "description": "Erreurs JavaScript et plantages natifs envoyés à Sentry : écran, version, identifiant utilisateur (pas d'e-mail par défaut), source maps envoyées au build EAS",
+  "dependencies": ["@sentry/react-native"],
+  "env": ["EXPO_PUBLIC_SENTRY_DSN"],
+  "defaultConfig": { "organization": "", "project": "", "tracesSampleRate": 0.1, "sendDefaultPii": false, "enableInDev": false }
+}

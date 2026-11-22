@@ -47,4 +47,14 @@ export async function update(args: Args) {
   const message = flag(args, 'message') ?? fail('--message "description de la mise à jour" requis')
   await ensureEasProject(root)
   await run(eas('update', '--channel', channel, '--message', message, '--non-interactive'), { cwd: root })
+  await uploadUpdateSourcemaps(root)
+}
+
+/** Module crash : envoie à Sentry les source maps de la mise à jour (dist/), pour des traces lisibles. */
+async function uploadUpdateSourcemaps(root: string) {
+  const crash = (await loadManifest(root)).modules.crash as { organization?: string; project?: string } | undefined
+  if (!crash?.organization || !crash.project) return
+  log.step('source maps de la mise à jour vers Sentry')
+  const code = await run(['bunx', '@sentry/expo-upload-sourcemaps', 'dist'], { cwd: root, allowFailure: true })
+  if (code !== 0) log.warn('envoi des source maps impossible : SENTRY_AUTH_TOKEN dans .env.local, ou `bunx eas-cli env:exec production "bunx @sentry/expo-upload-sourcemaps dist"`')
 }
