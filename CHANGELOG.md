@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.9.0 (2026-11-23)
+
+### Nouveautés
+- garde-fous issus de la recherche (paquets inventés, consignes périmées, validation par observation, accessibilité, pièges d'interface)
+
 ## v0.8.0 (2026-11-23)
 
 ### Nouveautés
