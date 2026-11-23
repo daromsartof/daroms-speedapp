@@ -6,12 +6,18 @@ import { animationPresets } from '@tamagui/animation-helpers'
 import { createTamagui } from 'tamagui'
 
 import type { Brand } from './brand'
+import { brandGradients, setDirection } from './direction'
 import { createBrandFonts } from './fonts'
 import { createBrandTheme } from './themes'
 import { semanticRadius, semanticSpace, springs, Z_INDEX } from './tone'
 
 export function createBrandConfig(brand: Brand) {
-  const { colorTokens, themes } = createBrandTheme(brand)
+  const { colorTokens, themes, palettes } = createBrandTheme(brand)
+  setDirection(brand.direction)
+  const gradients = brandGradients(brand.direction, palettes)
+  // 3 arrêts toujours définis (un dégradé à 2 couleurs répète la dernière)
+  const stops = (name: string, g: { light: string[]; dark: string[] }) =>
+    Object.fromEntries([0, 1, 2].map((i) => [`${name}-${i + 1}`, { light: g.light[Math.min(i, g.light.length - 1)]!, dark: g.dark[Math.min(i, g.dark.length - 1)]! }]))
   const base = createV6Config({ themes, colorTokens })
   const space = semanticSpace(brand)
   return createTamagui({
@@ -28,6 +34,10 @@ export function createBrandConfig(brand: Brand) {
       overlay: { light: 'rgba(0,0,0,0.4)', dark: 'rgba(0,0,0,0.6)' },
       skeleton: { light: colorTokens['surface-200'], dark: colorTokens['surface-800'] },
       separator: { light: colorTokens['surface-200'], dark: colorTokens['surface-800'] },
+      // dégradés de la direction artistique : gradient-1..3 (marque), halo-1..3 (fonds clairs)
+      ...stops('gradient', gradients.brand),
+      ...stops('halo', gradients.halo),
+      'on-gradient': gradients.on,
     },
     fonts: createBrandFonts(brand),
     animations: createAnimations({ ...animationPresets, ...springs(brand) }),

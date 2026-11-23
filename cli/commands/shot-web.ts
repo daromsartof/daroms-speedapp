@@ -34,7 +34,8 @@ export async function inspectPage({ url, route, dark, width, shotPath, forceShot
   const scheme = dark ? 'dark' : 'light'
   const report: PageReport = { route, scheme, errors: [], warnings: [], overflows: [], texts: [], taste: [] }
   try {
-    const page = await browser.newPage({ viewport: { width, height: 844 }, colorScheme: scheme, deviceScaleFactor: 1, locale })
+    // « réduire les animations » : entrées et flottements à leur état final, captures reproductibles
+    const page = await browser.newPage({ viewport: { width, height: 844 }, colorScheme: scheme, deviceScaleFactor: 1, locale, reducedMotion: 'reduce' })
     page.on('console', (msg) => {
       const text = msg.text().split('\n')[0]!.slice(0, 220)
       if (IGNORED.some((re) => re.test(text))) return

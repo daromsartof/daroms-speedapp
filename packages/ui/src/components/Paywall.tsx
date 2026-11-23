@@ -3,10 +3,13 @@ import { haptic } from '@daroms/lib/haptics'
 import { Linking } from 'react-native'
 import { XStack, YStack } from 'tamagui'
 
-import { Check, Crown, X } from '../icons'
+import { Check, X } from '../icons'
 import { Badge } from './Badge'
 import { Button } from './Button'
+import { Gradient } from './Gradient'
 import { IconButton } from './IconButton'
+import { Illustration } from './Illustration'
+import { Reveal } from './Reveal'
 import { Screen } from './Screen'
 import type { StyleProps } from './style-props'
 import { Body, Caption, Heading, Title } from './Text'
@@ -72,12 +75,13 @@ export function Paywall({
         </>
       }
     >
-      <YStack items="center" gap="stack" pt="section">
-        <YStack theme="brand" bg="background" w="16" h="16" rounded="pill" items="center" justify="center">
-          <Crown size="8" color="color" />
-        </YStack>
-        <Title align="center">{title}</Title>
-        {subtitle ? <Body tone="muted" align="center">{subtitle}</Body> : null}
+      <YStack position="relative" z="base" items="center" gap="stack" pt="stack" pb="stack" rounded="sheet" overflow="hidden">
+        <Gradient kind="halo" />
+        <Illustration name="spark" size="sm" />
+        <Reveal delay={100}>
+          <Title align="center">{title}</Title>
+          {subtitle ? <Body tone="muted" align="center">{subtitle}</Body> : null}
+        </Reveal>
       </YStack>
       <YStack gap="inline" py="stack">
         {features.map((feature) => (

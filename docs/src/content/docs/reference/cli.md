@@ -22,6 +22,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-
 | [`assets`](#assets) | icônes, splash, favicon depuis un SVG |
 | [`logo`](#logo) | directions d'icône sur une grille, vérifiées |
 | [`inspire`](#inspire) | aperçus d'inspiration et références de mouvement à regarder avant le design |
+| [`art`](#art) | illustration générée aux couleurs de la marque (facultatif, clé API de l'utilisateur) |
 | [`db`](#db) | migrations et types Supabase |
 | [`build`, `submit`, `update`](#build-submit-update) | EAS |
 | [`steps`](#steps) | parcours `/daroms-pilot`, une validation manuelle par étape |
@@ -44,6 +45,7 @@ npx @daromsart/daroms-speed-app new <slug> [options]
 | `--font` | `inter` | `inter` ou `system` |
 | `--radius` | `lg` | `none`, `sm`, `md`, `lg`, `xl`, `full` |
 | `--tone` | `pro` | `playful`, `pro`, `minimal` |
+| `--direction` | `soft` | direction artistique : `clean`, `editorial`, `soft`, `vivid` ([Marque](/reference/marque/#direction-artistique)) |
 | `--bundle` | `com.daroms.<slug>` | identifiant iOS et Android |
 | `--modules a,b` | - | modules en plus de ceux de la variante |
 | `--supabase <ref>` | - | `manifest.supabase.projectRef` |
@@ -53,7 +55,7 @@ npx @daromsart/daroms-speed-app new <slug> [options]
 | `--link` | - | lien symbolique vers le cœur (développement du cœur) |
 | `--no-git` | - | ni `git init` ni commit initial |
 
-Étapes : copie du template, variante, substitution des valeurs, `git init`, cœur (sous-module, copie ou lien), `bun install`, manifest, modules, registre, tables et écrans de la variante, icônes, types de routes, couche IA, commit initial.
+Étapes : copie du template, variante, substitution des valeurs, `git init`, cœur (sous-module, copie ou lien), `bun install`, manifest, modules, registre, tables et écrans de la variante, police des titres, icône de départ (l'initiale sur le dégradé de la marque, avec reflet et ombre), icônes, types de routes, couche IA, commit initial.
 
 ## dev
 
@@ -69,7 +71,11 @@ Expo Go par défaut (aperçu immédiat). `--dev-client` : build de développemen
 bun daroms doctor [--quick]
 ```
 
-Node, `.env`, manifest, cohérence de l'app (écrans, onglets, clés i18n FR = EN), règles, TypeScript, ESLint, expo-doctor. `--quick` saute les étapes lentes.
+Node, `.env`, manifest, cohérence de l'app (écrans, onglets, clés i18n FR = EN), consignes IA à jour, règles, TypeScript, ESLint, expo-doctor. `--quick` saute les étapes lentes.
+
+Textes de première impression : avertit tant qu'un texte d'onboarding ou d'accueil est encore celui du gabarit (« Bienvenue », « Tout ce qu'il faut, au même endroit ») ; `/daroms-idea` les écrit d'après le cahier.
+
+Consignes IA à jour : un chemin cité entre accents graves dans `CLAUDE.md` ou un fichier `.claude/**/app-*` (règle, skill, agent de l'app) qui n'existe plus donne un avertissement. Un agent suit une consigne périmée plutôt que le code ; le noyau lui dit que le code fait foi, et ce contrôle dit quelle consigne mettre à jour.
 
 ## g
 
@@ -173,6 +179,14 @@ Décompose une animation d'interface (vidéo mp4 ou webm, gif, page qui expose `
 
 Demande `ffmpeg` (`brew install ffmpeg` ou `apt install ffmpeg`).
 
+## art
+
+```bash
+bun daroms art <nom> "<sujet>" [--kind illustration|scene|icon] [--provider openai|recraft] [--print]
+```
+
+Illustration générée par une API d'images, avec votre clé (`OPENAI_API_KEY` ou `RECRAFT_API_KEY`, exportée dans le terminal ; jamais dans `.env` de l'app ni dans le code). Le prompt impose les couleurs exactes de la marque, le dégradé de la direction et le style des illustrations intégrées, et interdit texte, logo et photoréalisme. L'image va dans `assets/art/<nom>.png` ; à regarder avant de l'utiliser (`<Image source={require('~/assets/art/<nom>.png')} />`). `--print` affiche le prompt sans appeler l'API. Facultatif : les 10 scènes de `Illustration` suffisent pour une première version.
+
 ## db
 
 ```bash
@@ -200,10 +214,10 @@ bun daroms steps start                 # commence le parcours (app.steps.json)
 bun daroms steps show [n]              # objectif, skills, livrables, points à vérifier
 bun daroms steps ready <n> "<résumé>"  # fin d'étape : attend la validation de l'utilisateur
 bun daroms steps reset <n>             # repart de l'étape n
-bun daroms steps validate [n]          # validation au clavier (terminal interactif requis)
+bun daroms steps validate [n]          # validation au clavier : pose la question de l'étape (terminal interactif requis)
 ```
 
-La validation se fait dans Claude Code en tapant `/daroms-valider` ; l'agent ne peut pas valider. Détail : [Hooks](/reference/hooks/#parcours-avec-validation-manuelle).
+La validation se fait dans Claude Code en tapant `/daroms-valider <réponse>`, la réponse à la question d'observation de l'étape (sans réponse, rien n'est enregistré) ; l'agent ne peut pas valider. Détail : [Hooks](/reference/hooks/#parcours-avec-validation-manuelle).
 
 ## cost
 

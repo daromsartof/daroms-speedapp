@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'bun:test'
 
-import { directionProblems, iconFiles, logoColors, markDefs, placement, primitive, SAFE_RADIUS, type Direction } from '../lib/logo'
+import { defineBrand } from '../../packages/theme/src/brand'
+import { directionProblems, iconFiles, logoColors, logoGradient, markDefs, placement, primitive, SAFE_RADIUS, starterDirection, type Direction } from '../lib/logo'
 import { bbox, holes, iou, maxRadius, normalize, strokeWidth, type Mask } from '../lib/logo-check'
 import { sheetSvg, wrap } from '../lib/logo-sheet'
 
-const brand = { primary: '#2F6F5E', accent: '#F2A541', font: 'inter', radius: 'lg', tone: 'pro' } as const
+const brand = { primary: '#2F6F5E', accent: '#F2A541', font: 'inter', radius: 'lg', tone: 'pro', direction: 'clean' } as const
 const colors = logoColors(brand)
 const disc: Direction = {
   name: 'coche',
@@ -77,12 +78,34 @@ describe('recettes de logo', () => {
     expect((Math.hypot(40, 40) / 2) * fg.scale).toBeLessThanOrEqual(SAFE_RADIUS)
   })
 
-  it('écrit les quatre fichiers source, sans dégradé', () => {
+  it('écrit les quatre fichiers source ; un fond uni reste un aplat, sans relief', () => {
     const files = iconFiles(disc, { x: 4, y: 4, w: 40, h: 40 }, colors)
     expect(Object.keys(files)).toEqual(['icon.svg', 'foreground.svg', 'background.svg', 'monochrome.svg'])
     expect(Object.values(files).join('')).not.toContain('Gradient')
+    expect(Object.values(files).join('')).not.toContain('filter')
     expect(files['monochrome.svg']).toContain('fill="#ffffff"')
     expect(files['background.svg']).toContain(colors.primary)
+  })
+
+  it('fond en dégradé : dégradé de la direction, reflet, ombre portée ; version à plat pour les mesures', () => {
+    const soft = defineBrand({ primary: '#4F46E5', accent: '#F97316', direction: 'soft' })
+    const stops = logoGradient(soft)
+    expect(stops).toHaveLength(3)
+    const { direction, bbox } = starterDirection('C')
+    expect(directionProblems(direction, logoColors(soft), stops)).toEqual([])
+    const files = iconFiles(direction, bbox, logoColors(soft), { stops })
+    expect(files['icon.svg']).toContain('fill="url(#bgG)"')
+    expect(files['icon.svg']).toContain('url(#hl)')
+    expect(files['icon.svg']).toContain('filter="url(#sh)"')
+    expect(files['monochrome.svg']).not.toContain('filter')
+    const flat = iconFiles(direction, bbox, logoColors(soft), { stops, flat: true })
+    expect(flat['icon.svg']).not.toContain('Gradient')
+  })
+
+  it('refuse un dégradé illisible sous l’encre, sur chacune de ses nuances', () => {
+    const soft = defineBrand({ primary: '#4F46E5', accent: '#F97316', direction: 'soft' })
+    const { direction } = starterDirection('A')
+    expect(directionProblems({ ...direction, ink: 'primary' }, logoColors(soft), logoGradient(soft)).join(' ')).toContain('contraste')
   })
 })
 

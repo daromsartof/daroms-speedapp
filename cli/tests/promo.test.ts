@@ -53,17 +53,17 @@ describe('vidéo promo', () => {
   })
 
   it('tire les couleurs de la marque et garde un texte lisible sur l’aplat', () => {
-    const dark = promoColors({ primary: '#2F3A8F', accent: '#F2A541', font: 'inter', radius: 'lg', tone: 'pro' })
+    const dark = promoColors({ primary: '#2F3A8F', accent: '#F2A541', font: 'inter', radius: 'lg', tone: 'pro', direction: 'clean' })
     expect(dark.panel).toBe('#2F3A8F')
     expect(dark.onPanel).toBe(dark.bg)
-    const light = promoColors({ primary: '#FFD84D', accent: '#2F3A8F', font: 'inter', radius: 'lg', tone: 'pro' })
+    const light = promoColors({ primary: '#FFD84D', accent: '#2F3A8F', font: 'inter', radius: 'lg', tone: 'pro', direction: 'clean' })
     expect(light.onPanel).toBe(light.ink)
   })
 
   it('échappe les textes dans la page de composition', () => {
     const html = promoPage({
       layout: layout('vertical'),
-      colors: promoColors({ primary: '#2F3A8F', accent: '#F2A541', font: 'inter', radius: 'lg', tone: 'pro' }),
+      colors: promoColors({ primary: '#2F3A8F', accent: '#F2A541', font: 'inter', radius: 'lg', tone: 'pro', direction: 'clean' }),
       overshoot: 1.1,
       radius: 12,
       ...timeline(2),

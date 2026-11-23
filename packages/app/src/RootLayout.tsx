@@ -20,10 +20,12 @@ export type RootLayoutOptions = {
   supabase: { url?: string; key?: string }
   /** Charge Inter (brand.font === 'inter'). */
   loadInter?: boolean
+  /** Police des titres de la direction artistique (src/generated/fonts.ts). */
+  fonts?: Record<string, number>
 }
 
 /** Fabrique le layout racine : i18n, Supabase, modules, polices, splash, providers, pile. */
-export function createRootLayout({ config, modules, locales, supabase, loadInter = true }: RootLayoutOptions) {
+export function createRootLayout({ config, modules, locales, supabase, loadInter = true, fonts = {} }: RootLayoutOptions) {
   void SplashScreen.preventAutoHideAsync().catch(() => undefined)
   const manifest = getManifest()
   const resolved = resolveModules(modules, manifest.modules)
@@ -35,7 +37,7 @@ export function createRootLayout({ config, modules, locales, supabase, loadInter
   const modals = resolved.flatMap(({ module }) => module.modals ?? [])
 
   return function RootLayout() {
-    const [loaded, error] = useFonts(loadInter ? interFontFiles : {})
+    const [loaded, error] = useFonts(loadInter ? { ...interFontFiles, ...fonts } : fonts)
     // le splash est masqué par GateKeeper quand les gates des modules sont prêtes
     if (!loaded && !error) return null
     return (

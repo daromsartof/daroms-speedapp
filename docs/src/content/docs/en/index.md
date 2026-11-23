@@ -25,7 +25,7 @@ Requirements: Bun >= 1.3, Node >= 22.18, Git, Python 3, and Expo Go on your phon
 
 ## Nine steps, one approval each
 
-`/daroms-pilot <idea>` runs the real lifecycle of an app and stops after each step: nothing moves on without your `/daroms-valider`, and the agent cannot approve in your place.
+`/daroms-pilot <idea>` runs the real lifecycle of an app and stops after each step: nothing moves on without your `/daroms-valider` and your answer to its question (something you actually looked at), and the agent cannot approve in your place.
 
 | Steps | Skills | What happens |
 |---|---|---|

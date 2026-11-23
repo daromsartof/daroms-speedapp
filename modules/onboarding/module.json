@@ -1,6 +1,6 @@
 {
   "title": "Onboarding",
-  "description": "Pages d'accueil au premier lancement (icône, titre, texte), affichées une fois",
+  "description": "Pages d'accueil au premier lancement (illustration animée, titre, texte), affichées une fois",
   "routes": [
     {
       "file": "app/onboarding.tsx",
@@ -11,17 +11,17 @@
     "version": 1,
     "pages": [
       {
-        "icon": "Sparkles",
+        "illustration": "welcome",
         "titleKey": "onboarding.page1Title",
         "descriptionKey": "onboarding.page1Description"
       },
       {
-        "icon": "Zap",
+        "illustration": "focus",
         "titleKey": "onboarding.page2Title",
         "descriptionKey": "onboarding.page2Description"
       },
       {
-        "icon": "Heart",
+        "illustration": "spark",
         "titleKey": "onboarding.page3Title",
         "descriptionKey": "onboarding.page3Description"
       }
