@@ -5,6 +5,7 @@ export {
   defineBrand,
   type Brand,
   type BrandInput,
+  type Direction,
   type RadiusPreset,
   type Tone,
 } from './brand'
@@ -27,6 +28,7 @@ export {
   type BrandTheme,
   type BrandThemeName,
 } from './themes'
+export { brandGradients, DIRECTIONS, DISPLAY_FAMILY, displayFontFile, getDirection, setDirection, type DirectionSpec, type GradientColors } from './direction'
 export {
   DURATIONS,
   semanticRadius,

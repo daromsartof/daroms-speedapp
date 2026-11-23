@@ -4,6 +4,8 @@ import { join, relative } from 'node:path'
 import { staleReferences } from '../lib/ai-refs'
 import type { Args } from '../lib/args'
 import { capture, tail } from '../lib/exec'
+import { syncFonts } from '../lib/fonts'
+import { firstImpressionDefaults, unchangedTexts } from '../lib/placeholders'
 import { walk } from '../lib/fsx'
 import { color, log } from '../lib/log'
 import { loadManifest } from '../lib/manifest'
@@ -53,6 +55,11 @@ export async function doctor(args: Args) {
   const reference = keySets[0] ?? new Set<string>()
   const missing = keySets.flatMap((set, i) => [...reference].filter((k) => !set.has(k)).map((k) => `${locales[i]!.split('/').pop()}: ${k}`))
   checks.push({ name: 'clés i18n identiques dans toutes les langues', ok: missing.length === 0, detail: missing.slice(0, 10).join('\n') })
+  const appTexts = Object.fromEntries(locales.map((f) => [f.split('/').pop()!.replace('.json', ''), JSON.parse(readFileSync(f, 'utf8')) as object]))
+  const generic = unchangedTexts(appTexts, firstImpressionDefaults())
+  checks.push({ name: 'textes de première impression écrits pour l\'app', ok: generic.length === 0, detail: `${generic.join(', ')}\nTextes du gabarit : /daroms-idea les écrit d'après le cahier (onboarding, accueil).`, warn: true })
+
+  if (await syncFonts(root)) checks.push({ name: 'police des titres resynchronisée avec brand.ts (src/generated/fonts.ts)', ok: true })
 
   // consignes propres à l'app (fichiers app-*, CLAUDE.md) qui citent un fichier disparu
   const aiFiles = [join(root, 'CLAUDE.md'), ...walk(join(root, '.claude')).filter((f) => /\/app-[^/]+(\.md|\/SKILL\.md)$/.test(f))].filter(existsSync)

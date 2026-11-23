@@ -3,6 +3,7 @@ import { withTailwindTypeScale } from '@tamagui/config/v6-base'
 import { createFont, isWeb } from 'tamagui'
 
 import type { Brand } from './brand'
+import { DIRECTIONS, DISPLAY_FAMILY } from './direction'
 import { TONES } from './tone'
 
 /** Taille de police par niveau typographique. */
@@ -58,14 +59,24 @@ export function createBrandFonts(brand: Brand) {
     letterSpacing: { 1: 0, 4: 0 },
     ...(face ? { face } : {}),
   })
-  const heading = createFont({
-    family,
-    size: FONT_SIZES,
-    lineHeight: lineHeights(1.2),
-    weight: { 1: tone.headingWeight, 4: tone.headingWeight },
-    letterSpacing: { 1: 0, 6: tone.headingTracking, 9: tone.headingTracking * 2 },
-    ...(face ? { face } : {}),
-  })
+  // police de titre de la direction : un seul fichier, déjà à la graisse du ton (pas de gras simulé)
+  const display = DIRECTIONS[brand.direction].display
+  const heading = display
+    ? createFont({
+        family: isWeb ? `${DISPLAY_FAMILY}, ${family}` : DISPLAY_FAMILY,
+        size: FONT_SIZES,
+        lineHeight: lineHeights(display.family === 'Fraunces' ? 1.15 : 1.2),
+        weight: { 1: '400', 4: '400' },
+        letterSpacing: { 1: 0, 6: tone.headingTracking, 9: tone.headingTracking * 2 },
+      })
+    : createFont({
+        family,
+        size: FONT_SIZES,
+        lineHeight: lineHeights(1.2),
+        weight: { 1: tone.headingWeight, 4: tone.headingWeight },
+        letterSpacing: { 1: 0, 6: tone.headingTracking, 9: tone.headingTracking * 2 },
+        ...(face ? { face } : {}),
+      })
   return {
     body: withTailwindTypeScale(body),
     heading: withTailwindTypeScale(heading),

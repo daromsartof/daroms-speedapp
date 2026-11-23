@@ -39,7 +39,7 @@ export function interFile(root: string, weight: 'Medium' | 'Bold'): string | und
 /** Capture un écran à 3x (390 x 844 pt) ; renvoie l'image et les erreurs de console vues. */
 export async function captureScreen(browser: Browser, url: string, scene: PromoSpec['scenes'][number], locale: string) {
   const scheme = scene.dark ? 'dark' : 'light'
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, colorScheme: scheme, locale })
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, colorScheme: scheme, locale, reducedMotion: 'reduce' })
   const errors: string[] = []
   page.on('pageerror', (error) => errors.push(error.message.split('\n')[0]!))
   page.on('console', (msg) => {

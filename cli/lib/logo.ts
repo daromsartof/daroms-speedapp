@@ -2,6 +2,7 @@
 // des formes et dessinent mal les courbes : une direction = des formes simples, combinées, en unités de grille.
 // Méthode inspirée de make-logo (design.how, MIT) ; ni calque, ni logo de marque en entrée.
 import { contrastRatio } from '../../packages/theme/src/color'
+import { brandGradients } from '../../packages/theme/src/direction'
 import { createBrandPalettes } from '../../packages/theme/src/themes'
 import type { Brand } from '../../packages/theme/src/brand'
 
@@ -23,27 +24,42 @@ export type Shape = Common &
   )
 
 export const KINDS = ['monogram', 'negative', 'stencil', 'symbol', 'wordmark', 'construction'] as const
-export const COLORS = ['primary', 'accent', 'light', 'dark', 'white'] as const
+export const COLORS = ['primary', 'accent', 'light', 'dark', 'white', 'gradient'] as const
 export type ColorRef = (typeof COLORS)[number]
-export type Direction = { name: string; idea: string; kind: (typeof KINDS)[number]; grid?: number; background: ColorRef; ink: ColorRef; mark: Shape[] }
+/** `depth` : reflet en haut du fond et ombre portée sous le symbole (défaut : oui sur un fond en dégradé). */
+export type Direction = { name: string; idea: string; kind: (typeof KINDS)[number]; grid?: number; background: ColorRef; ink: ColorRef; depth?: boolean; mark: Shape[] }
 
 /** Couleurs autorisées : celles de brand.ts et ses neutres, jamais une couleur inventée. */
 export function logoColors(brand: Brand): Record<ColorRef, string> {
   const { surface } = createBrandPalettes(brand)
-  return { primary: brand.primary, accent: brand.accent, light: surface[1]!, dark: surface[10]!, white: '#ffffff' }
+  return { primary: brand.primary, accent: brand.accent, light: surface[1]!, dark: surface[10]!, white: '#ffffff', gradient: logoGradient(brand)[0]! }
+}
+
+/** Dégradé de l'icône : celui de la direction artistique (au moins deux nuances de la marque). */
+export function logoGradient(brand: Brand): string[] {
+  const p = createBrandPalettes(brand)
+  const stops = brandGradients(brand.direction, p).brand.light
+  return stops.length > 1 && new Set(stops).size > 1 ? stops : [p.brand[4]!, p.brand[6]!]
+}
+
+/** Contraste le plus faible entre deux références de couleur (sur chaque arrêt d'un dégradé). */
+export function minContrast(a: ColorRef, b: ColorRef, colors: Record<ColorRef, string>, stops: string[]): number {
+  const values = (ref: ColorRef) => (ref === 'gradient' ? stops : [colors[ref]])
+  return Math.min(...values(a).flatMap((x) => values(b).map((y) => contrastRatio(x, y))))
 }
 
 const half = (v: unknown) => typeof v === 'number' && Number.isFinite(v) && Math.abs(v * 2 - Math.round(v * 2)) < 1e-9
 
 /** Problèmes d'une direction (vide = conforme). */
-export function directionProblems(d: Direction, colors: Record<ColorRef, string>): string[] {
+export function directionProblems(d: Direction, colors: Record<ColorRef, string>, stops: string[] = [colors.gradient]): string[] {
   const at = `« ${d.name ?? '?'} »`
   const p: string[] = []
   if (!/^[a-z0-9-]{2,24}$/.test(d.name ?? '')) p.push(`${at} : name en minuscules, chiffres, tirets (2 à 24)`)
   if (!d.idea || d.idea.length > 120) p.push(`${at} : idea, une phrase de 120 caractères au plus`)
   if (!KINDS.includes(d.kind)) p.push(`${at} : kind parmi ${KINDS.join(', ')}`)
   if (!COLORS.includes(d.background) || !COLORS.includes(d.ink)) p.push(`${at} : background et ink parmi ${COLORS.join(', ')}`)
-  else if (contrastRatio(colors[d.background], colors[d.ink]) < 3) p.push(`${at} : contraste ink/background ${contrastRatio(colors[d.background], colors[d.ink]).toFixed(1)}:1 (min 3:1)`)
+  else if (d.background === d.ink) p.push(`${at} : background et ink identiques`)
+  else if (minContrast(d.background, d.ink, colors, stops) < 3) p.push(`${at} : contraste ink/background ${minContrast(d.background, d.ink, colors, stops).toFixed(1)}:1 (min 3:1, sur chaque nuance du dégradé)`)
   const grid = d.grid ?? 48
   if (!Array.isArray(d.mark) || d.mark.length < 1 || d.mark.length > 12) p.push(`${at} : mark, 1 à 12 formes`)
   ;(d.mark ?? []).forEach((s, i) => {
@@ -160,20 +176,51 @@ export function placement(bbox: Box, target: 'icon' | 'foreground'): { scale: nu
   return { scale: n(scale), tx: n(ICON / 2 - (bbox.x + bbox.w / 2) * scale), ty: n(ICON / 2 - (bbox.y + bbox.h / 2) * scale) }
 }
 
-/** Les quatre fichiers source d'une direction : icône, premier plan et fond Android, couche monochrome. */
-export function iconFiles(d: Direction, bbox: Box, colors: Record<ColorRef, string>) {
+export type IconStyle = { stops?: string[]; flat?: boolean }
+
+/**
+ * Les quatre fichiers source d'une direction : icône, premier plan et fond Android, couche monochrome.
+ * Fond ou encre `gradient` : dégradé de la direction en diagonale ; `depth` : reflet en haut, ombre portée douce.
+ * `flat` : mêmes formes en aplats (mesures de lisibilité sur des couleurs franches).
+ */
+export function iconFiles(d: Direction, bbox: Box, colors: Record<ColorRef, string>, style: IconStyle = {}) {
   const { defs, id } = markDefs(d)
+  const stops = style.stops ?? [colors.gradient]
+  const flat = style.flat ?? false
+  const depth = !flat && (d.depth ?? d.background === 'gradient')
   const svg = (body: string) => `<svg xmlns="http://www.w3.org/2000/svg" width="${ICON}" height="${ICON}" viewBox="0 0 ${ICON} ${ICON}">${body}</svg>`
-  const place = (target: 'icon' | 'foreground', fill: string) => {
+  const gradient = (gid: string) =>
+    `<linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">${stops.map((c, i) => `<stop offset="${n(stops.length > 1 ? i / (stops.length - 1) : 0)}" stop-color="${c}"/>`).join('')}</linearGradient>`
+  const paint = (ref: ColorRef, gid: string) => (ref === 'gradient' && !flat ? `url(#${gid})` : colors[ref])
+  const effects =
+    gradient('bgG') +
+    gradient('inkG') +
+    '<radialGradient id="hl" cx="0.28" cy="0.08" r="0.9"><stop offset="0" stop-color="#ffffff" stop-opacity="0.32"/><stop offset="0.6" stop-color="#ffffff" stop-opacity="0"/></radialGradient>' +
+    '<linearGradient id="vg" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stop-color="#000000" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity="0.08"/></linearGradient>' +
+    '<filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="22" stdDeviation="26" flood-color="#000000" flood-opacity="0.24"/></filter>'
+  const place = (target: 'icon' | 'foreground', fill: string, shadow: boolean) => {
     const { scale, tx, ty } = placement(bbox, target)
-    return `<defs>${defs}</defs><g transform="translate(${tx} ${ty}) scale(${scale})" ${inkGroup(fill, d.grid ?? 48)}><use href="#${id}"/></g>`
+    const mark = `<g transform="translate(${tx} ${ty}) scale(${scale})" ${inkGroup(fill, d.grid ?? 48)}><use href="#${id}"/></g>`
+    return shadow ? `<g filter="url(#sh)">${mark}</g>` : mark
   }
-  const bg = `<rect width="${ICON}" height="${ICON}" fill="${colors[d.background]}"/>`
+  const needs = depth || (!flat && (d.background === 'gradient' || d.ink === 'gradient'))
+  const head = `<defs>${needs ? effects : ''}${defs}</defs>`
+  const bg = `<rect width="${ICON}" height="${ICON}" fill="${paint(d.background, 'bgG')}"/>` + (depth ? `<rect width="${ICON}" height="${ICON}" fill="url(#hl)"/><rect width="${ICON}" height="${ICON}" fill="url(#vg)"/>` : '')
+  const ink = paint(d.ink, 'inkG')
   return {
-    'icon.svg': svg(bg + place('icon', colors[d.ink])),
-    'foreground.svg': svg(place('foreground', colors[d.ink])),
-    'background.svg': svg(bg),
-    'monochrome.svg': svg(place('foreground', '#ffffff')),
+    'icon.svg': svg(head + bg + place('icon', ink, depth)),
+    'foreground.svg': svg(head + place('foreground', ink, depth)),
+    'background.svg': svg(head + bg),
+    'monochrome.svg': svg(`<defs>${defs}</defs>` + place('foreground', '#ffffff', false)),
+  }
+}
+
+/** Icône de départ de `daroms new` : l'initiale, bâtie comme une direction (fond en dégradé, relief). */
+export function starterDirection(initial: string): { direction: Direction; bbox: Box } {
+  return {
+    direction: { name: 'initiale', idea: "L'initiale de l'app sur le dégradé de la marque.", kind: 'monogram', background: 'gradient', ink: 'white', mark: [{ shape: 'glyph', text: initial, cx: 24, cy: 24, size: 30, weight: 800 }] },
+    // boîte élargie : la lettre occupe environ 40 % de l'icône, comme une capitale bien posée
+    bbox: { x: 8, y: 8, w: 32, h: 32 },
   }
 }
 

@@ -1,7 +1,7 @@
 import { useModuleConfig } from '@daroms/app'
 import { useDaromsT, useTranslateKey } from '@daroms/i18n'
 import { Chip, EmptyState, Header, IconButton, Input, List, Screen, XStack, YStack } from '@daroms/ui'
-import { Send, SquarePen, Sparkles } from '@daroms/ui/icons'
+import { Send, SquarePen } from '@daroms/ui/icons'
 import { useState } from 'react'
 
 import type { ChatMessage } from './api'
@@ -49,7 +49,7 @@ export function ChatScreen() {
         ListFooterComponent={errorText ? <ChatBubble message={{ id: 'error', role: 'assistant', content: errorText }} error /> : null}
         ListEmptyComponent={
           <YStack gap="stack" pt="section">
-            <EmptyState icon={Sparkles} title={t('emptyTitle')} description={t('emptyDescription')} />
+            <EmptyState illustration="chat" title={t('emptyTitle')} description={t('emptyDescription')} />
             <XStack gap="inline" flexWrap="wrap" justify="center">
               {suggestions.map((key) => (
                 <Chip key={key} label={translate(key)} onPress={() => submit(translate(key))} />

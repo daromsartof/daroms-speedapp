@@ -3,6 +3,7 @@ import { basename, join, resolve } from 'node:path'
 
 import { bool, flag, type Args } from '../lib/args'
 import { capture, run } from '../lib/exec'
+import { syncFonts } from '../lib/fonts'
 import { copyDir, readJson, substitute, writeJson } from '../lib/fsx'
 import { color, fail, log } from '../lib/log'
 import { loadManifest, saveManifest } from '../lib/manifest'
@@ -10,6 +11,7 @@ import { addModule, installModules, writeRegistry } from '../lib/modules'
 import { appRoot, CORE_DIR } from '../lib/paths'
 import { regenerateRouteTypes } from '../lib/routes'
 import { generateAssets } from './assets'
+import { writeStarterIcon } from './logo'
 import { syncAi } from './ai'
 
 const DEFAULT_CORE_URL = 'https://github.com/daromsartof/daroms-speedapp.git'
@@ -113,6 +115,7 @@ export async function newApp(args: Args) {
     FONT: flag(args, 'font') ?? 'inter',
     RADIUS: flag(args, 'radius') ?? 'lg',
     TONE: flag(args, 'tone') ?? 'pro',
+    DIRECTION: flag(args, 'direction') ?? 'soft',
     INITIAL: name.trim()[0]?.toUpperCase() ?? 'A',
     SUPABASE_REF: flag(args, 'supabase') ?? 'xxxx',
   }
@@ -137,6 +140,8 @@ export async function newApp(args: Args) {
   if (Object.keys(modules).length) await installModules(dest)
   await runVariant(dest, extra, bool(args, 'local'))
 
+  await syncFonts(dest)
+  await writeStarterIcon(dest, vars.INITIAL)
   await generateAssets(dest)
   await regenerateRouteTypes(dest)
   await syncAi(dest, true)
@@ -171,6 +176,7 @@ export async function dev(args: Args) {
   if (bool(args, 'ios')) cmd.push('--ios')
   if (bool(args, 'tunnel')) cmd.push('--tunnel')
   if (bool(args, 'clear')) cmd.push('--clear')
+  if (await syncFonts(root)) log.info('src/generated/fonts.ts mis à jour (direction de brand.ts)')
   if (!existsSync(join(root, '.env'))) log.warn('.env absent : copier .env.example (Supabase désactivé en attendant)')
   const native = Object.keys((await loadManifest(root)).modules).filter((m) => NATIVE_ONLY.includes(m))
   if (!devClient && native.length) {

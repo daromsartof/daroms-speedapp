@@ -17,7 +17,8 @@ export function OnboardingScreen() {
   const router = useRouter()
   const pages: OnboardingPage[] = config.pages.map((page, i) => ({
     key: String(i),
-    icon: getIcon(page.icon),
+    illustration: page.illustration,
+    icon: page.icon ? getIcon(page.icon) : undefined,
     title: translate(page.titleKey),
     description: translate(page.descriptionKey),
   }))

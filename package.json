@@ -73,6 +73,9 @@
     "prepublishOnly": "bun run check"
   },
   "devDependencies": {
+    "@expo-google-fonts/fraunces": "0.4.1",
+    "@expo-google-fonts/plus-jakarta-sans": "0.4.2",
+    "@expo-google-fonts/sora": "0.4.2",
     "@hookform/resolvers": "^6.0.0",
     "@react-native/jest-preset": "^0.88.0",
     "@resvg/resvg-js": "^2.6.2",

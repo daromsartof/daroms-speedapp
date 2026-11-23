@@ -4,6 +4,7 @@ import { join } from 'node:path'
 import { bool, flag, type Args } from '../lib/args'
 import { capture, has, run, tail } from '../lib/exec'
 import { color, fail, log } from '../lib/log'
+import { syncFonts } from '../lib/fonts'
 import { loadBrand, loadManifest } from '../lib/manifest'
 import { appRoot } from '../lib/paths'
 import { failing, type BrandRef } from '../lib/taste'
@@ -27,6 +28,7 @@ async function configHash(root: string): Promise<string> {
 
 /** Démarre `expo start --web` en arrière-plan si nécessaire (réutilisé tant que la config ne change pas). */
 export async function ensureWebServer(root: string, port: number) {
+  await syncFonts(root)
   const hashFile = Bun.file(join(root, '.daroms', 'web.config-hash'))
   const hash = await configHash(root)
   const stale = (await hashFile.exists()) && (await hashFile.text()) !== hash

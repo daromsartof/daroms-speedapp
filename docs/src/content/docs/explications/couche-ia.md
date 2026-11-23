@@ -36,7 +36,8 @@ Chaque réponse relit tout le contexte. Sur l'app Chapitre, faite en une seule s
 | `idea`, `inspire`, `brand`, `design`, `fix` | fil principal (dialogue, erreur sous les yeux) | celui de la session |
 | `data`, `screen`, `module`, `check`, `polish`, `store` | sous-agent à contexte neuf (`context: fork`) | Sonnet, effort moyen |
 | `learn`, `commit` | sous-agent à contexte neuf | Haiku |
-| agents `daroms-designer`, `daroms-reviewer`, `daroms-store` | sous-agent | Sonnet, effort moyen |
+| agent `daroms-designer` | sous-agent | Opus, effort élevé : le juge doit voir mieux que celui qui construit |
+| agents `daroms-reviewer`, `daroms-store` | sous-agent | Sonnet, effort moyen |
 
 Un sous-agent charge `CLAUDE.md` et les règles, et les hooks vérifient ses écritures. Il ne voit pas la conversation (le cahier et le code portent l'état) et ne peut pas poser de question ; seul son résumé revient dans le fil principal. Un skill d'app (`app-*`) suit la même règle : `/daroms-skill-new` la rappelle.
 

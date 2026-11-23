@@ -11,7 +11,7 @@ const lazy = <K extends string>(path: string, name: K) => async (args: Args) => 
 }
 
 const COMMANDS: Record<string, Command> = {
-  new: { describe: 'new <slug> [--name --variant --local --primary --accent --tone --radius --font --modules a,b --copy|--link]', run: lazy('./commands/project', 'newApp') },
+  new: { describe: 'new <slug> [--name --variant --local --primary --accent --tone --direction clean|editorial|soft|vivid --radius --font --modules a,b --copy|--link]', run: lazy('./commands/project', 'newApp') },
   dev: { describe: 'serveur Expo + QR pour Expo Go [--dev-client --web --android --ios --tunnel --clear]', run: lazy('./commands/project', 'dev') },
   doctor: { describe: 'diagnostic complet (env, manifest, règles, types, lint, expo-doctor) [--quick]', run: lazy('./commands/project', 'doctor') },
   g: { describe: 'g screen|feature|table|module <nom> [options] (table --local : données sur l appareil)', run: lazy('./commands/generate', 'generate') },
@@ -24,6 +24,7 @@ const COMMANDS: Record<string, Command> = {
   e2e: { describe: 'flows Maestro (e2e/*.yaml) [fichier] [--go : dans Expo Go] [--driver : pré-lance le pilote Android]', run: lazy('./commands/quality', 'e2e') },
   assets: { describe: 'icône, adaptive icon, splash, favicon depuis assets/source/icon.svg', run: lazy('./commands/assets', 'assets') },
   logo: { describe: 'logo [--use <nom> --force --spec assets/source/logo.json] : construit et vérifie les directions d icône, planche dans .daroms/logo/ ; --use installe la choisie', run: lazy('./commands/logo', 'logo') },
+  art: { describe: 'art <nom> "<sujet>" [--kind illustration|scene|icon --provider openai|recraft --print] : illustration générée aux couleurs de la marque (clé API de l utilisateur), dans assets/art/', run: lazy('./commands/art', 'art') },
   inspire: { describe: "inspire <url...> [--clear] | --frames <vidéo ou gif> : aperçus d'inspiration (image ou page), ou planche horodatée et timing d'une référence de mouvement, dans .daroms/inspiration/", run: lazy('./commands/inspire', 'inspire') },
   db: { describe: 'db new <nom> | push | types | reset', run: lazy('./commands/db', 'db') },
   build: { describe: 'build [preview|production|development] [--platform ios|android|all]', run: lazy('./commands/ship', 'build') },

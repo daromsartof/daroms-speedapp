@@ -7,7 +7,8 @@
   "types": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./icons": "./src/icons/index.ts"
+    "./icons": "./src/icons/index.ts",
+    "./illustrations": "./src/illustrations/scenes.ts"
   },
   "dependencies": {
     "@daroms/i18n": "workspace:*",
