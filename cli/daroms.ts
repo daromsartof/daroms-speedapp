@@ -24,7 +24,7 @@ const COMMANDS: Record<string, Command> = {
   e2e: { describe: 'flows Maestro (e2e/*.yaml) [fichier] [--go : dans Expo Go] [--driver : pré-lance le pilote Android]', run: lazy('./commands/quality', 'e2e') },
   assets: { describe: 'icône, adaptive icon, splash, favicon depuis assets/source/icon.svg', run: lazy('./commands/assets', 'assets') },
   logo: { describe: 'logo [--use <nom> --force --spec assets/source/logo.json] : construit et vérifie les directions d icône, planche dans .daroms/logo/ ; --use installe la choisie', run: lazy('./commands/logo', 'logo') },
-  inspire: { describe: "inspire <url...> [--clear] : télécharge des aperçus d'inspiration (image ou page) dans .daroms/inspiration/", run: lazy('./commands/inspire', 'inspire') },
+  inspire: { describe: "inspire <url...> [--clear] | --frames <vidéo ou gif> : aperçus d'inspiration (image ou page), ou planche horodatée et timing d'une référence de mouvement, dans .daroms/inspiration/", run: lazy('./commands/inspire', 'inspire') },
   db: { describe: 'db new <nom> | push | types | reset', run: lazy('./commands/db', 'db') },
   build: { describe: 'build [preview|production|development] [--platform ios|android|all]', run: lazy('./commands/ship', 'build') },
   submit: { describe: 'submit [--platform ios|android|all] : TestFlight / piste interne', run: lazy('./commands/ship', 'submit') },

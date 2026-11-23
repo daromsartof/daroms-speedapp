@@ -1,6 +1,6 @@
 ---
 name: daroms-inspire
-description: Recherche d'inspiration avant tout design - maquettes et apps publiées sur Dribbble, Pinterest, Behance, Mobbin, Screens Design, aperçus regardés, puis direction visuelle choisie avec l'utilisateur et écrite dans app.spec.md > Inspiration.
+description: Recherche d'inspiration avant tout design - maquettes et apps publiées sur Dribbble, Pinterest, Behance, Mobbin, Screens Design, aperçus regardés, références de mouvement mesurées image par image, puis direction visuelle choisie avec l'utilisateur et écrite dans app.spec.md > Inspiration.
 argument-hint: "[écran ou style à explorer]"
 ---
 
@@ -27,5 +27,18 @@ Focus : $ARGUMENTS (vide : toute l'app, boucle principale d'abord)
    Motifs : Stat en tête, Card par moment de la journée, BarChart 7 jours, Sheet de saisie rapide
    À éviter : glassmorphism, dégradés lourds, plus d'un accent
    ```
-8. S'inspirer, ne pas copier : garder des motifs et des principes ; aucune image, aucun logo, aucune illustration ni aucun texte repris dans l'app.
-9. **Stop** : afficher la direction retenue et ses 3 meilleures références (liens). Suite : `/daroms-brand` puis `/daroms-design`.
+8. Mouvement : pour 2 ou 3 moments clés de l'app (ouverture d'une feuille, validation de l'action principale, passage d'un écran à l'autre), chercher une référence d'interaction :
+   - pages publiques de `60fps.design` (description et étiquettes du shot), shots animés de `dribbble.com`, animations de `lottiefiles.com` et `rive.app` ;
+   - `bun daroms inspire --frames <url de la vidéo, du gif ou de la page>` (ou un fichier local, par exemple un enregistrement d'écran de l'utilisateur ; `--start` et `--duration` en secondes pour viser le moment) range la vidéo et sa planche d'images horodatées dans `.daroms/inspiration/`, et affiche départ, arrêt et durée de chaque phase ;
+   - Read sur la planche : les images surlignées bougent, la barre orange dit combien ; lire l'ordre (qui part en premier), la courbe (vite puis lent) et les rebonds ;
+   - traduire selon `.claude/rules-ondemand/daroms-animations.md` (préréglage, courbe, ressort du ton) ; noter dans `## Inspiration`, sous-section `### Mouvement` :
+   ```
+   ### Mouvement
+   | Moment | Référence | Mesuré | Traduction |
+   |---|---|---|---|
+   | Feuille de saisie | https://60fps.design/... | 1 phase, 320 ms, décélérée | ressort medium du ton, entrée emphasized-decelerate |
+   | Tâche terminée | lottiefiles.com/... | 2 phases : 180 ms puis rebond 120 ms | scale press:0.97 fast puis bouncy ; haptique légère |
+   ```
+   Même règle qu'en 5 : un site qui refuse la lecture automatique est sauté.
+9. S'inspirer, ne pas copier : garder des motifs et des principes ; aucune image, aucun logo, aucune illustration, aucune animation Lottie ou Rive ni aucun texte repris dans l'app.
+10. **Stop** : afficher la direction retenue, ses 3 meilleures références (liens) et les moments de mouvement. Suite : `/daroms-brand` puis `/daroms-design`.

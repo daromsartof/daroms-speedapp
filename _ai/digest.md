@@ -15,7 +15,7 @@ Règles à la demande : lire `.claude/rules-ondemand/<nom>.md` quand le sujet ar
 - **daroms-state** : Serveur = TanStack Query ; local persistant = @daroms/lib/storage ; global UI = Zustand, un store par feature, rare.
 - **daroms-styles** : Composants @daroms/ui et tokens Tamagui v3 uniquement ; ni hex, ni nombre magique, ni StyleSheet, ni style inline.
 - **daroms-tests** : Tests unitaires jest-expo à côté du code ; flows Maestro dans e2e/ ; pas de réseau dans les tests.
-- **daroms-animations** (à la demande) : transition Tamagui pour les états simples ; Reanimated 4 pour le geste et le continu.
+- **daroms-animations** (à la demande) : transition Tamagui pour les états simples ; Reanimated 4 pour le geste et le continu ; durées et courbes tirées des préréglages de la marque.
 - **daroms-core-dev** (à la demande) : Travailler dans le dépôt daroms-speed-app (et non dans core/ d'une app), tester, publier une version.
 - **daroms-eas** (à la demande) : Profils development, preview, production ; canaux OTA ; version runtime = version de l'app.
 - **daroms-store-compliance** (à la demande) : Points de refus fréquents à vérifier avant chaque soumission.

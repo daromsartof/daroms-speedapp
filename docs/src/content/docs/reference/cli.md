@@ -21,7 +21,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-
 | [`test`, `e2e`](#test-et-e2e) | tests unitaires, flows Maestro |
 | [`assets`](#assets) | icônes, splash, favicon depuis un SVG |
 | [`logo`](#logo) | directions d'icône sur une grille, vérifiées |
-| [`inspire`](#inspire) | aperçus d'inspiration à regarder avant le design |
+| [`inspire`](#inspire) | aperçus d'inspiration et références de mouvement à regarder avant le design |
 | [`db`](#db) | migrations et types Supabase |
 | [`build`, `submit`, `update`](#build-submit-update) | EAS |
 | [`steps`](#steps) | parcours `/daroms-pilot`, une validation manuelle par étape |
@@ -156,11 +156,22 @@ Construit les 1 à 6 directions de `assets/source/logo.json` dans `.daroms/logo/
 ```bash
 bun daroms inspire <url...> [--clear]
 bun daroms inspire
+bun daroms inspire --frames <url ou fichier> [--fps 30] [--start s] [--duration s] [--cols 6]
 ```
 
 Télécharge dans `.daroms/inspiration/` (non versionné) l'image de chaque URL : image directe, ou page dont il prend l'aperçu (`og:image`). Claude regarde ensuite ces fichiers pendant `/daroms-inspire`. 12 adresses au plus, 8 Mo au plus par image, formats png, jpg, webp et gif ; `index.json` garde la source de chaque fichier. Sans argument : liste les aperçus ; `--clear` vide le dossier d'abord.
 
 La commande s'annonce comme `daroms-inspire` et ne contourne rien : une page qui refuse la lecture automatique (Dribbble et Behance le font souvent) est signalée puis sautée ; garder alors le lien et l'extrait de la recherche.
+
+### Références de mouvement (`--frames`)
+
+Décompose une animation d'interface (vidéo mp4 ou webm, gif, page qui expose `og:video` ou une balise `<video>`, ou fichier local comme un enregistrement d'écran) en planche d'images horodatées : `.daroms/inspiration/NN-source-frames.png`. ffmpeg mesure la différence entre deux images successives ; la commande affiche le départ, l'arrêt, le pic et la durée de chaque phase, puis le préréglage de marque le plus proche (`fast` 160 ms, `medium` 280 ms, `slow` 420 ms). Sur la planche, les images des phases de mouvement sont surlignées et une barre dit combien chaque image bouge.
+
+- 12 s analysées par défaut (`--start` et `--duration` pour viser le moment), 48 images au plus sur la planche, 25 Mo au plus par vidéo ; précision d'une image (33 ms à 30 i/s).
+- Un creux d'une ou deux images ne coupe pas une phase ; deux phases ou plus signalent un rebond, un décalage ou un enchaînement.
+- Gratuit et local : aucune bibliothèque payante ; la traduction en préréglages suit la règle [daroms-animations](/reference/regles/#daroms-animations), qui donne aussi les valeurs publiées par Material 3.
+
+Demande `ffmpeg` (`brew install ffmpeg` ou `apt install ffmpeg`).
 
 ## db
 
