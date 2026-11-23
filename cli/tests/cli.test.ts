@@ -110,5 +110,6 @@ describe('inspire', () => {
   it('numérote les fichiers par hôte source', () => {
     expect(nextFileName([], 'https://www.pinterest.com/pin/1/', 'webp')).toBe('01-pinterest-com.webp')
     expect(nextFileName(['01-dribbble-com.png', '02-mobbin-com.jpg', 'index.json'], 'https://dribbble.com/shots/2', 'png')).toBe('03-dribbble-com.png')
+    expect(nextFileName(['01-dribbble-com.png'], '/home/me/Screen Recording 2026.mov', 'mp4')).toBe('02-screen-recording-2026.mp4')
   })
 })

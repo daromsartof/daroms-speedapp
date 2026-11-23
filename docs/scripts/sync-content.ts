@@ -252,6 +252,18 @@ function readRules(dir: string, onDemand: boolean): Rule[] {
     })
 }
 
+/** Descend d'un niveau les titres d'un corps de règle (hors blocs de code) : ils restent sous le `## nom` de la règle. */
+function demoteHeadings(markdown: string): string {
+  let fence = false
+  return markdown
+    .split('\n')
+    .map((line) => {
+      if (/^\s*(```|~~~)/.test(line)) fence = !fence
+      return !fence && /^#{1,5} /.test(line) ? `#${line}` : line
+    })
+    .join('\n')
+}
+
 function rulesPage(rules: Rule[]) {
   const table = rules
     .map((r) => `| [${r.name}](#${r.name}) | ${cell(r.summary)} | ${r.onDemand ? 'à la demande' : r.paths.map(code).join(', ')} |`)
@@ -262,7 +274,7 @@ function rulesPage(rules: Rule[]) {
         `## ${r.name}`,
         `> ${r.summary}`,
         r.onDemand ? 'Chargement : lue quand le sujet arrive (le digest la liste).' : `Chargement : quand Claude lit ou écrit ${r.paths.map(code).join(', ')}.`,
-        r.body,
+        demoteHeadings(r.body),
       ].join('\n\n'),
     )
     .join('\n\n')

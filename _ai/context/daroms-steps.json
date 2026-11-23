@@ -131,7 +131,8 @@
     "daroms-submit"
    ],
    "deliverables": [
-    "store/listing.fr.md et .en.md, captures",
+    "store/listing.fr.md et .en.md",
+    "captures aux tailles exactes des stores et visuel principal Google Play (daroms screenshots)",
     "vidéo promo (facultatif)",
     "build production, soumission TestFlight et piste interne"
    ],

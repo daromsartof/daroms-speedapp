@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
 
-import { autoStills, layout, parseSpec, promoColors, SIZES, textProblems, timeline, TIMING } from '../lib/promo'
+import { autoStills, FEATURE_GRAPHIC, layout, parseSpec, pngInfo, promoColors, SIZES, slideLayout, STORE_SIZES, textProblems, timeline, TIMING } from '../lib/promo'
 import { promoPage } from '../lib/promo-page'
 
 const scene = (route: string, fr: string, en = 'Short caption') => ({ route, caption: { fr, en } })
@@ -76,5 +76,33 @@ describe('vidéo promo', () => {
     })
     expect(html).not.toContain('<b>')
     expect(html).toContain('&#60;script&#62;')
+  })
+
+  it('pose légende et téléphone entier dans chaque taille des stores', () => {
+    for (const { w, h } of [...Object.values(STORE_SIZES), FEATURE_GRAPHIC]) {
+      const { phone, caption } = slideLayout(w, h)
+      expect(phone.x).toBeGreaterThanOrEqual(0)
+      expect(phone.x + phone.w).toBeLessThanOrEqual(w)
+      if (h > w) {
+        expect(phone.y + phone.h).toBeLessThanOrEqual(h)
+        expect(phone.y).toBeGreaterThan(caption.y + caption.h)
+      }
+    }
+    expect(STORE_SIZES['iphone-6.9']).toMatchObject({ w: 1320, h: 2868 })
+  })
+
+  it('lit taille et canal alpha dans l’en-tête PNG', () => {
+    const header = (colorType: number) => {
+      const b = new Uint8Array(33)
+      b.set([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82])
+      new DataView(b.buffer).setUint32(16, 1320)
+      new DataView(b.buffer).setUint32(20, 2868)
+      b[24] = 8
+      b[25] = colorType
+      return b
+    }
+    expect(pngInfo(header(2))).toEqual({ width: 1320, height: 2868, colorType: 2 })
+    expect(pngInfo(header(6))?.colorType).toBe(6)
+    expect(pngInfo(new Uint8Array([1, 2, 3]))).toBeUndefined()
   })
 })

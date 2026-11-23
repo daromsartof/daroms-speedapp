@@ -64,7 +64,7 @@ The agent runs each step, then stops and shows what to check; you type `/daroms-
 | 1. Scope | `daroms new` (terminal), `/daroms-idea` | app created, QR preview, `app.spec.md` brief |
 | 2-3. Design and model | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data`, `/daroms-module` | references and a chosen direction, brand and a checked icon, wireframes, Supabase tables with RLS, modules |
 | 4-5. Build and verify | `/daroms-screen`, `/daroms-check`, `/daroms-polish` | screens with their 4 states, all checks green, measured and scored polish |
-| 6-9. Comply, publish, monitor | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | privacy policy and compliance, FR/EN listing, promo video, EAS build, TestFlight and internal track, crash reporting, then `app.cost.md` |
+| 6-9. Comply, publish, monitor | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | privacy policy and compliance, FR/EN listing, store screenshots at exact sizes, promo video, EAS build, TestFlight and internal track, crash reporting, then `app.cost.md` |
 
 25 skills, 3 subagents (designer, reviewer, store) and 7 hooks (sync, context router, rule checks, typecheck, `.env` protection, manual step approval, token stats). The [ECC](https://ecc.tools) method is built in: `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` and `ecc-typescript-patterns`, vendored in the core and mapped to daroms commands by `daroms-ecc`. Details: [skills](https://daromsartof.github.io/daroms-speedapp/en/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/en/reference/hooks/).
 
