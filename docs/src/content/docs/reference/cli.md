@@ -69,7 +69,9 @@ Expo Go par défaut (aperçu immédiat). `--dev-client` : build de développemen
 bun daroms doctor [--quick]
 ```
 
-Node, `.env`, manifest, cohérence de l'app (écrans, onglets, clés i18n FR = EN), règles, TypeScript, ESLint, expo-doctor. `--quick` saute les étapes lentes.
+Node, `.env`, manifest, cohérence de l'app (écrans, onglets, clés i18n FR = EN), consignes IA à jour, règles, TypeScript, ESLint, expo-doctor. `--quick` saute les étapes lentes.
+
+Consignes IA à jour : un chemin cité entre accents graves dans `CLAUDE.md` ou un fichier `.claude/**/app-*` (règle, skill, agent de l'app) qui n'existe plus donne un avertissement. Un agent suit une consigne périmée plutôt que le code ; le noyau lui dit que le code fait foi, et ce contrôle dit quelle consigne mettre à jour.
 
 ## g
 
@@ -200,10 +202,10 @@ bun daroms steps start                 # commence le parcours (app.steps.json)
 bun daroms steps show [n]              # objectif, skills, livrables, points à vérifier
 bun daroms steps ready <n> "<résumé>"  # fin d'étape : attend la validation de l'utilisateur
 bun daroms steps reset <n>             # repart de l'étape n
-bun daroms steps validate [n]          # validation au clavier (terminal interactif requis)
+bun daroms steps validate [n]          # validation au clavier : pose la question de l'étape (terminal interactif requis)
 ```
 
-La validation se fait dans Claude Code en tapant `/daroms-valider` ; l'agent ne peut pas valider. Détail : [Hooks](/reference/hooks/#parcours-avec-validation-manuelle).
+La validation se fait dans Claude Code en tapant `/daroms-valider <réponse>`, la réponse à la question d'observation de l'étape (sans réponse, rien n'est enregistré) ; l'agent ne peut pas valider. Détail : [Hooks](/reference/hooks/#parcours-avec-validation-manuelle).
 
 ## cost
 
