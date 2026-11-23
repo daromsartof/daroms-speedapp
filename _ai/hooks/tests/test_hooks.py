@@ -23,6 +23,8 @@ context = load("daroms-context")
 sync = load("daroms-sync")
 stats = load("daroms-session-stats")
 deps = load("daroms-deps")
+core_lock = load("daroms-core-lock")
+push_guard = load("daroms-push-guard")
 import daroms_common as common  # noqa: E402
 
 
@@ -107,6 +109,96 @@ class Deps(unittest.TestCase):
             self.assertEqual(calls, [])
             self.assertEqual(deps.decide("bun add react fake-pkg", root, fake)[0], "deny")
             self.assertEqual(deps.decide("bun add offline-pkg", root, fake)[0], "allow")
+
+
+class CoreLock(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.app = Path(self.tmp.name) / "app"
+        (self.app / "core" / "_ai").mkdir(parents=True)
+        (self.app / "core" / "packages" / "ui").mkdir(parents=True)
+        (self.app / "src").mkdir()
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def bash(self, command, cwd=None):
+        return core_lock.decide({"tool_name": "Bash", "tool_input": {"command": command}, "cwd": str(cwd or self.app)}, self.app, env={})
+
+    def test_write_tools_refused_inside_core_only(self):
+        edit = lambda path: core_lock.decide({"tool_name": "Edit", "tool_input": {"file_path": path}, "cwd": str(self.app)}, self.app, env={})
+        self.assertIsNotNone(edit(str(self.app / "core" / "packages" / "ui" / "x.tsx")))
+        self.assertIsNotNone(edit("core/_ai/rules/x.md"))
+        self.assertIsNone(edit(str(self.app / "src" / "x.tsx")))
+        self.assertIsNone(edit(str(self.app / "core-notes.md")))
+
+    def test_shell_writes_into_core_are_refused(self):
+        for command in [
+            "echo x > core/packages/ui/a.ts",
+            "sed -i 's/a/b/' core/cli/daroms.ts",
+            "cp src/x.ts core/packages/ui/x.ts",
+            "rm -rf core/modules/auth",
+            "mv core/a.ts src/a.ts",
+            "git -C core commit -am wip",
+            "cd core && git stash",
+            "cd core && echo x >> README.md",
+            "cat src/a.ts | tee core/a.ts",
+            "python3 -c \"open('core/x','w').write('y')\"",
+        ]:
+            self.assertIsNotNone(self.bash(command), command)
+
+    def test_reads_and_versioned_updates_stay_allowed(self):
+        for command in [
+            "cat core/packages/ui/CATALOG.md",
+            "grep -rn Button core/packages/ui/src",
+            "cp core/template/brand.ts src/brand.example.ts",
+            "git -C core status",
+            "git -C core fetch --tags && git -C core checkout v0.10.0",
+            "git submodule update --init core",
+            "cd core && git log --oneline -3",
+            "bun daroms doctor > /dev/null",
+            "echo ok > src/notes.txt",
+        ]:
+            self.assertIsNone(self.bash(command), command)
+
+    def test_unlock_and_core_repo(self):
+        data = {"tool_name": "Bash", "tool_input": {"command": "echo x > core/a.ts"}, "cwd": str(self.app)}
+        self.assertIsNone(core_lock.decide(data, self.app, env={"DAROMS_CORE_UNLOCK": "1"}))
+        repo = Path(self.tmp.name) / "core-repo"
+        (repo / "_ai").mkdir(parents=True)
+        (repo / "packages" / "ui").mkdir(parents=True)
+        self.assertIsNone(core_lock.decide({"tool_name": "Write", "tool_input": {"file_path": str(repo / "_ai" / "x.md")}, "cwd": str(repo)}, repo, env={}))
+
+
+class PushGuard(unittest.TestCase):
+    def check(self, command, head="feature/x"):
+        return push_guard.push_violation(command, Path("/repo"), branch=lambda _repo: head)
+
+    def test_refuses_main_explicit_or_implicit(self):
+        self.assertEqual(self.check("git push origin main"), "main")
+        self.assertEqual(self.check("git push origin HEAD:refs/heads/main"), "main")
+        self.assertEqual(self.check("git push -f origin +master"), "master")
+        self.assertEqual(self.check("git push origin :main"), "main")
+        self.assertEqual(self.check("git push", head="main"), "main")
+        self.assertEqual(self.check("git push -u origin HEAD", head="main"), "main")
+        self.assertEqual(self.check("git push --follow-tags", head="main"), "main")
+        self.assertIsNotNone(self.check("git push --all origin"))
+        self.assertEqual(self.check("cd core && git push origin main"), "main")
+
+    def test_allows_feature_branches_and_tags(self):
+        self.assertIsNone(self.check("git push -u origin claude/nifty"))
+        self.assertIsNone(self.check("git push"))
+        self.assertIsNone(self.check("git push origin main:feature/copy"))
+        self.assertIsNone(self.check("git push origin v1.2.0", head="main"))
+        self.assertIsNone(self.check("git push origin --tags", head="main"))
+        self.assertIsNone(self.check('git commit -m "push main"', head="main"))
+
+    def test_reads_current_branch_of_real_repo(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            import subprocess
+            subprocess.run(["git", "init", "-q", "-b", "main", tmp], check=True)
+            self.assertEqual(push_guard.current_branch(Path(tmp)), "main")
+            self.assertEqual(push_guard.push_violation("git push", Path(tmp)), "main")
 
 
 class DenyEnv(unittest.TestCase):

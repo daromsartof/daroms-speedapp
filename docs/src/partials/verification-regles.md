@@ -12,6 +12,8 @@
 | RLS sur chaque table, pas de `service_role` dans l'app | générateur `g table`, agent `daroms-reviewer` |
 | 4 états par écran | générateur `g screen`, `QueryView` / `List`, agent `daroms-reviewer` |
 | `.env` jamais lu | permissions `deny`, hook `daroms-deny-env` |
+| `core/` jamais modifié depuis une app | permissions `deny` (Edit, Write), hook `daroms-core-lock` (outils et shell) |
+| Jamais de push sur `main` par l'agent | hook `daroms-push-guard` ; règle de branche GitHub côté serveur |
 | Actions nommées pour les lecteurs d'écran | typage (`IconButton` exige `label`), hook (zone pressable sans `aria-label`), mesure « actions sans nom » de `daroms shot` |
 | Paquet installé existant sur npm | hook `daroms-deps` |
 | Pièges d'interface absents (case précochée, résiliation cachée...) | grille de `/daroms-polish`, liste de conformité des stores |

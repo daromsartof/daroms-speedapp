@@ -2,7 +2,7 @@
 
 App mobile Expo SDK 58 (Expo Router, React Native 0.88, New Architecture) + Tamagui v3 + Supabase.
 Objectif : livrer vite un code propre. Le cœur (`core/`, sous-module) fournit tout le répétitif ;
-l'app n'écrit que son spécifique. Ne jamais modifier `core/` depuis une app.
+l'app n'écrit que son spécifique. `core/` est en lecture seule (hook `daroms-core-lock`) ; jamais de push sur `main` : une branche puis une PR (hook `daroms-push-guard`).
 
 ## Priorités
 - Le code existant fait foi sur l'état du projet (fichiers, noms, API, conventions en place) : si une règle, un skill ou ce fichier décrit autre chose que ce qui existe, suivre le code, signaler l'écart en une ligne et proposer de mettre la règle à jour. Les interdits ci-dessous restent : un code qui les viole se corrige.
