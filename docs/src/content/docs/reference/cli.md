@@ -17,6 +17,7 @@ Dans une app : `bun daroms <commande>`. Hors app : `npx @daromsart/daroms-speed-
 | [`module`](#module) | active, retire, liste les modules |
 | [`shot`](#shot) | contrôle visuel d'une route |
 | [`promo`](#promo) | vidéo promo depuis les vrais écrans |
+| [`screenshots`](#screenshots) | captures des stores aux tailles exactes |
 | [`test`, `e2e`](#test-et-e2e) | tests unitaires, flows Maestro |
 | [`assets`](#assets) | icônes, splash, favicon depuis un SVG |
 | [`logo`](#logo) | directions d'icône sur une grille, vérifiées |
@@ -115,6 +116,14 @@ bun daroms promo [--locale en | --all] [--stills [auto|1,3.5]] [--audio son.wav]
 ```
 
 Lit `store/promo.json` (format, accroche, 2 à 5 écrans légendés, fin), capture chaque route à 3x, compose aux couleurs de `brand.ts` et rend `store/promo/promo-<langue>.mp4` avec `poster-<langue>.png`. `--stills` écrit seulement des images fixes dans `.daroms/promo/`. Détail : [Publier](/guides/publier/#vidéo-promo).
+
+## screenshots
+
+```bash
+bun daroms screenshots [--locale en | --all] [--tablet] [--spec store/promo.json] [--port 8099]
+```
+
+Captures marketing depuis les écrans de `store/promo.json`, aux tailles exactes d'App Store Connect et de Google Play (iPhone 6,9 et 6,5 pouces, Android ; iPad et tablette Android avec `--tablet`), plus le visuel principal Google Play 1024 x 500, dans `store/screenshots/<langue>/`. PNG RGB sans alpha, taille et format vérifiés. Détail : [Publier](/guides/publier/#captures-pour-les-stores).
 
 ## test et e2e
 

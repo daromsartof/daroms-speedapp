@@ -35,6 +35,27 @@ Avant chaque soumission, relire `.claude/rules-ondemand/daroms-store-compliance.
 - permission demandée trop tôt, sans texte clair, ou inutilisée ;
 - écran vide ou « bientôt » ; pas de compte de test dans les notes de revue.
 
+## Captures pour les stores
+
+`bun daroms screenshots` produit les captures marketing à partir des vrais écrans de l'app : chaque écran de `store/promo.json` dans un téléphone, avec sa légende, aux couleurs de `brand.ts`, une série par langue.
+
+```bash
+bun daroms screenshots              # langue par défaut du manifest
+bun daroms screenshots --all        # toutes les langues
+bun daroms screenshots --tablet     # ajoute iPad 13 pouces et tablette Android
+```
+
+| Dossier | Taille | Store |
+|---|---|---|
+| `iphone-6.9/` | 1320 x 2868 | App Store |
+| `iphone-6.5/` | 1284 x 2778 | App Store |
+| `android-phone/` | 1080 x 1920 | Google Play |
+| `ipad-13/` (`--tablet`) | 2064 x 2752 | App Store |
+| `android-tablet/` (`--tablet`) | 1440 x 2560 | Google Play |
+| `feature-graphic.png` | 1024 x 500 | Google Play (visuel principal, obligatoire) |
+
+Tout part dans `store/screenshots/<langue>/`. Chaque image est réencodée en PNG RGB sans canal alpha (App Store Connect refuse l'alpha), puis vérifiée : une taille ou un format faux fait échouer la commande. Les légendes sont celles de la vidéo promo, avec les mêmes règles (6 mots, 32 caractères, ni emoji ni tiret long). Demande ffmpeg, comme la vidéo.
+
 ## Vidéo promo
 
 `bun daroms promo` fait une vidéo de 10 à 17 s à partir des vrais écrans de l'app : une accroche avec l'icône, 2 à 5 écrans dans un téléphone, chacun avec sa légende, puis une carte de fin. Couleurs, police et rebond des animations viennent de `brand.ts` (le rebond suit `tone`). Les textes sont dans `store/promo.json`, refusés au-delà de 6 mots ou 32 caractères, avec emoji ou tiret long.
@@ -66,4 +87,4 @@ EAS envoie l'arbre de travail : vérifier que `core/` est bien présent (`git su
 
 ## Avec Claude
 
-`/daroms-store` (fiche FR/EN, mots-clés, captures, confidentialité, via l'agent `daroms-store`), `/daroms-promo` (vidéo promo : écrit `store/promo.json`, relit les images fixes, rend la vidéo), `/daroms-build`, `/daroms-submit`, `/daroms-update`. `/daroms-submit` ne se lance que sur demande explicite.
+`/daroms-store` (fiche FR/EN, mots-clés, captures aux tailles des stores avec `daroms screenshots`, confidentialité, via l'agent `daroms-store`), `/daroms-promo` (vidéo promo : écrit `store/promo.json`, relit les images fixes, rend la vidéo), `/daroms-build`, `/daroms-submit`, `/daroms-update`. `/daroms-submit` ne se lance que sur demande explicite.

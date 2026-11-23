@@ -15,6 +15,8 @@ export type PageData = {
   end: string
   scenes: { img: string; caption: string }[]
   fonts: { medium?: string; bold?: string }
+  /** Numéro « 01 » au-dessus de chaque légende (vidéo) ; masqué pour les captures des stores. */
+  labels?: boolean
 }
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
@@ -31,7 +33,7 @@ export function promoPage(d: PageData): string {
     .join('')
   const shots = d.scenes.map((s, i) => `<img class="shot" id="shot${i}" src="${s.img}" alt="">`).join('')
   return `<!doctype html><html><head><meta charset="utf-8"><style>
-${font(500, d.fonts.medium)}${font(700, d.fonts.bold)}
+${font(500, d.fonts.medium)}${font(700, d.fonts.bold)}${d.labels === false ? '.lab{display:none}' : ''}
 *{box-sizing:border-box;margin:0}
 html,body{width:${L.w}px;height:${L.h}px;overflow:hidden;background:${C.bg};font-family:P,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .abs{position:absolute}
@@ -44,6 +46,7 @@ html,body{width:${L.w}px;height:${L.h}px;overflow:hidden;background:${C.bg};font
 .line{font-weight:500;font-size:${Math.round(L.caption.size * 0.6)}px;margin-top:${Math.round(L.caption.size * 0.3)}px;max-width:${Math.round(L.w * 0.8)}px}
 #hook .name{color:${C.ink}} #hook .line{color:${C.muted}}
 #end .name{color:${C.onPanel}} #end .line{color:${C.onPanel};opacity:.86}
+#end .icon{box-shadow:0 0 0 ${Math.max(2, Math.round(iconSize * 0.035))}px ${C.onPanel}55}
 #phone{left:${L.phone.x - bezel}px;top:${L.phone.y - bezel}px;width:${L.phone.w + bezel * 2}px;height:${L.phone.h + bezel * 2}px;padding:${bezel}px;background:${C.bezel};border-radius:${screenRadius + bezel}px}
 #screen{position:relative;width:100%;height:100%;overflow:hidden;border-radius:${screenRadius}px;background:${C.bg}}
 .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}

@@ -108,3 +108,43 @@ export function promoColors(brand: Brand) {
   const onPanel = contrastRatio(brand.primary, surface[0]!) >= 3 ? surface[0]! : surface[10]!
   return { bg: surface[0]!, ink: surface[10]!, muted: surface[7]!, bezel: surface[10]!, panel: brand.primary, onPanel, accent: accent[4]!, label: main[6]! }
 }
+
+/** Captures des stores : tailles acceptées par App Store Connect et Google Play (portrait). */
+export const STORE_SIZES = {
+  'iphone-6.9': { w: 1320, h: 2868, store: 'App Store' },
+  'iphone-6.5': { w: 1284, h: 2778, store: 'App Store' },
+  'android-phone': { w: 1080, h: 1920, store: 'Google Play' },
+  'ipad-13': { w: 2064, h: 2752, store: 'App Store', tablet: true },
+  'android-tablet': { w: 1440, h: 2560, store: 'Google Play', tablet: true },
+} as const
+export type StoreSize = keyof typeof STORE_SIZES
+/** Visuel principal de la fiche Google Play (obligatoire). */
+export const FEATURE_GRAPHIC = { w: 1024, h: 500 } as const
+
+/** Mise en page d'une image fixe à une taille quelconque : légende en haut, téléphone entier en bas, aplat de marque. */
+export function slideLayout(w: number, h: number): Layout {
+  if (h < w) {
+    const base = layout('landscape')
+    const [sx, sy] = [w / base.w, h / base.h]
+    const box = (b: Box): Box => ({ x: Math.round(b.x * sx), y: Math.round(b.y * sy), w: Math.round(b.w * sx), h: Math.round(b.h * sy) })
+    return { w, h, phone: box(base.phone), caption: { ...box(base.caption), size: Math.round(base.caption.size * Math.min(sx, sy)) }, panel: box(base.panel) }
+  }
+  const tablet = h / w < 1.5
+  const pad = Math.round(w * 0.08)
+  const size = Math.round(w * (tablet ? 0.058 : 0.08))
+  const caption = { x: pad, y: Math.round(h * 0.055), w: w - pad * 2, h: Math.round(size * 3.2), size }
+  const margin = Math.round(h * 0.04)
+  const room = h - (caption.y + caption.h + Math.round(h * 0.03)) - margin
+  const ph = Math.round(Math.min(room, (tablet ? 0.5 : 0.7) * w * SCREEN_RATIO))
+  const pw = Math.round(ph / SCREEN_RATIO)
+  const panelY = Math.round(h * 0.58)
+  return { w, h, phone: { x: Math.round((w - pw) / 2), y: h - ph - margin, w: pw, h: ph }, caption, panel: { x: 0, y: panelY, w, h: h - panelY } }
+}
+
+/** En-tête d'un PNG : dimensions et type de couleur (2 = RGB sans alpha, 6 = RGBA). */
+export function pngInfo(png: Uint8Array): { width: number; height: number; colorType: number } | undefined {
+  const signature = [137, 80, 78, 71, 13, 10, 26, 10]
+  if (png.length < 26 || signature.some((b, i) => png[i] !== b)) return undefined
+  const view = new DataView(png.buffer, png.byteOffset, png.byteLength)
+  return { width: view.getUint32(16), height: view.getUint32(20), colorType: png[25]! }
+}

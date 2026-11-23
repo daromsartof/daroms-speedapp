@@ -16,7 +16,7 @@ import { ensureWebServer } from './quality'
 
 type Browser = import('playwright-core').Browser
 
-async function launch(root: string): Promise<Browser> {
+export async function launch(root: string): Promise<Browser> {
   let pw: typeof import('playwright-core')
   try {
     pw = (await import(join(root, 'node_modules', 'playwright-core'))) as typeof import('playwright-core')
@@ -26,9 +26,9 @@ async function launch(root: string): Promise<Browser> {
   return pw.chromium.launch().catch(() => pw.chromium.launch({ channel: 'chrome' }))
 }
 
-const dataUrl = async (file: string, type: string) => `data:${type};base64,${Buffer.from(await Bun.file(file).arrayBuffer()).toString('base64')}`
+export const dataUrl = async (file: string, type: string) => `data:${type};base64,${Buffer.from(await Bun.file(file).arrayBuffer()).toString('base64')}`
 
-function interFile(root: string, weight: 'Medium' | 'Bold'): string | undefined {
+export function interFile(root: string, weight: 'Medium' | 'Bold'): string | undefined {
   try {
     return createRequire(join(root, 'package.json')).resolve(`@tamagui/font-inter/otf/Inter-${weight}.otf`)
   } catch {
@@ -37,7 +37,7 @@ function interFile(root: string, weight: 'Medium' | 'Bold'): string | undefined 
 }
 
 /** Capture un écran à 3x (390 x 844 pt) ; renvoie l'image et les erreurs de console vues. */
-async function captureScreen(browser: Browser, url: string, scene: PromoSpec['scenes'][number], locale: string) {
+export async function captureScreen(browser: Browser, url: string, scene: PromoSpec['scenes'][number], locale: string) {
   const scheme = scene.dark ? 'dark' : 'light'
   const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, colorScheme: scheme, locale })
   const errors: string[] = []

@@ -62,7 +62,7 @@ L'agent mène chaque étape, puis s'arrête et montre ce qu'il faut vérifier ; 
 | 1. Cadrer | `daroms new` (terminal), `/daroms-idea` | app créée, aperçu QR, cahier `app.spec.md` |
 | 2-3. Concevoir et modéliser | `/daroms-inspire`, `/daroms-brand`, `/daroms-design`, `/daroms-data`, `/daroms-module` | références et direction choisie, marque et icône vérifiée, wireframes, tables Supabase avec RLS, modules |
 | 4-5. Construire et vérifier | `/daroms-screen`, `/daroms-check`, `/daroms-polish` | écrans avec leurs 4 états, vérifications au vert, finition mesurée et notée |
-| 6-9. Conformité, publication, suivi | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | politique de confidentialité et conformité, fiche FR/EN, vidéo promo, build EAS, TestFlight et piste interne, suivi des plantages, puis `app.cost.md` |
+| 6-9. Conformité, publication, suivi | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | politique de confidentialité et conformité, fiche FR/EN, captures aux tailles des stores, vidéo promo, build EAS, TestFlight et piste interne, suivi des plantages, puis `app.cost.md` |
 
 25 skills, 3 sous-agents (designer, reviewer, store) et 7 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, validation manuelle des étapes, statistiques de tokens). La méthode [ECC](https://ecc.tools) est embarquée : `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` et `ecc-typescript-patterns`, figés dans le cœur et traduits vers les commandes daroms par `daroms-ecc`. Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
 

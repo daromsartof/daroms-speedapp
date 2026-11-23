@@ -13,7 +13,7 @@ effort: medium
 Format : $ARGUMENTS (vide : `vertical`, pour Google Play et les réseaux sociaux ; `landscape` pour une chaîne YouTube)
 
 1. Lire `app.spec.md` (pitch, cible, ton, boucle principale) et le manifest (écrans, langues, `monetization`).
-2. Écrire `store/promo.json` (la CLI refuse tout texte hors règles) :
+2. Écrire `store/promo.json` (la CLI refuse tout texte hors règles ; les mêmes légendes servent aux captures des stores, `bun daroms screenshots`) :
    ```json
    {
      "format": "vertical",
