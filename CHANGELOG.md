@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.10.0 (2026-11-23)
+
+### Corrections
+- texte des boutons, écrans d'accueil en dégradé plein pour vivid, halo sombre adouci
+- versions attendues par le dernier correctif d'Expo SDK 58, doc à jour des garde-fous
+
+### Nouveautés
+- directions artistiques, dégradés, illustrations animées, icône en relief, juge plus exigeant
+
 ## v0.9.0 (2026-11-23)
 
 ### Nouveautés
