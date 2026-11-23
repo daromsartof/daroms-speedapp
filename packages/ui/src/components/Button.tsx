@@ -59,10 +59,8 @@ export function Button({
       aria-busy={loading}
       icon={loading ? <Spinner color="color" /> : icon}
       w={fullWidth || gradient ? '100%' : undefined}
-      bg={gradient ? 'transparent press:shadow-2' : undefined}
-      color={gradient ? 'on-gradient' : undefined}
-      borderWidth={gradient ? 0 : undefined}
-      scale={gradient ? undefined : '1 press:0.97'}
+      // n'écrire bg et color que pour le dégradé : une valeur undefined écraserait la couleur du thème
+      {...(gradient ? { bg: 'transparent press:shadow-2', color: 'on-gradient', borderWidth: 0 } : { scale: '1 press:0.97' })}
       transition="fast"
       onPress={(event) => {
         if (kind) haptic(kind)

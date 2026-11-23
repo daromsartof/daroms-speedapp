@@ -29,6 +29,9 @@ export function OnboardingPager({ pages, onDone, doneLabel, ...style }: StylePro
   const scroller = useRef<ScrollViewRef>(null)
   const [index, setIndex] = useState(0)
   const last = index === pages.length - 1
+  // vivid : écran en dégradé plein, texte clair ; soft : halo clair
+  const bold = getDirection().gradient === 'vivid'
+  const onBold = bold ? { color: 'on-gradient' as const } : {}
 
   const onScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     setIndex(Math.round(event.nativeEvent.contentOffset.x / width))
@@ -41,9 +44,9 @@ export function OnboardingPager({ pages, onDone, doneLabel, ...style }: StylePro
 
   return (
     <YStack position="relative" z="base" flex={1} bg="background" pt={insets.top} pb={insets.bottom + 16} {...style}>
-      {getDirection().halo ? <Gradient kind="halo" /> : null}
+      {bold ? <Gradient kind="brand" angle={160} /> : getDirection().halo ? <Gradient kind="halo" /> : null}
       <XStack justify="flex-end" px="gutter" minH="12">
-        {last ? null : <Button variant="ghost" size="sm" onPress={onDone}>{t('actions.skip')}</Button>}
+        {last ? null : <Button variant="ghost" size="sm" onPress={onDone} {...onBold}>{t('actions.skip')}</Button>}
       </XStack>
       <ScrollView ref={scroller} horizontal pagingEnabled showsHorizontalScrollIndicator={false} onMomentumScrollEnd={onScrollEnd} flex={1} contentContainerStyle={{ flexGrow: 1 }}>
         {pages.map(({ key, illustration, icon: Icon, title, description }, i) => (
@@ -56,19 +59,19 @@ export function OnboardingPager({ pages, onDone, doneLabel, ...style }: StylePro
               </YStack>
             ) : null}
             <Reveal delay={150}>
-              <Title align="center">{title}</Title>
-              <Body tone="muted" align="center" size="5">{description}</Body>
+              <Title align="center" {...onBold}>{title}</Title>
+              <Body tone={bold ? undefined : 'muted'} align="center" size="5" {...onBold} opacity={bold ? 0.88 : 1}>{description}</Body>
             </Reveal>
           </YStack>
         ))}
       </ScrollView>
       <XStack justify="center" gap="tight" py="section" aria-hidden>
         {pages.map((page, i) => (
-          <YStack key={page.key} h="2" w={i === index ? '6' : '2'} rounded="pill" bg={i === index ? 'brand-500' : 'color-4'} transition="fast" />
+          <YStack key={page.key} h="2" w={i === index ? '6' : '2'} rounded="pill" bg={bold ? 'on-gradient' : i === index ? 'brand-500' : 'color-4'} opacity={bold && i !== index ? 0.45 : 1} transition="fast" />
         ))}
       </XStack>
       <YStack px="gutter">
-        <Button fullWidth onPress={next}>{last ? (doneLabel ?? t('actions.continue')) : t('actions.next')}</Button>
+        <Button fullWidth variant={bold ? 'secondary' : 'primary'} onPress={next}>{last ? (doneLabel ?? t('actions.continue')) : t('actions.next')}</Button>
       </YStack>
     </YStack>
   )

@@ -1,7 +1,7 @@
 import { getDirection } from '@daroms/theme'
 import { useId } from 'react'
 import Svg, { Defs, LinearGradient, RadialGradient, Rect, Stop } from 'react-native-svg'
-import { useTheme, YStack } from 'tamagui'
+import { useTheme, useThemeName, YStack } from 'tamagui'
 
 import type { StyleProps } from './style-props'
 
@@ -31,6 +31,8 @@ export function gradientVector(angle: number) {
 export function Gradient({ kind = 'brand', angle = 135, ...style }: StyleProps & { kind?: GradientKind; angle?: number }) {
   const id = `g${useId().replace(/[^a-zA-Z0-9]/g, '')}`
   const colors = useGradientColors(kind)
+  // en sombre, des lueurs plus discrètes : le halo éclaire sans délaver le fond
+  const glow = useThemeName().startsWith('dark') ? 0.55 : 1
   const v = gradientVector(angle)
   return (
     <YStack position="absolute" t="0" l="0" r="0" b="0" z={-1} overflow="hidden" pointerEvents="none" aria-hidden {...style}>
@@ -45,11 +47,11 @@ export function Gradient({ kind = 'brand', angle = 135, ...style }: StyleProps &
           ) : (
             <>
               <RadialGradient id={`${id}a`} cx="0.15" cy="0.1" r="0.75">
-                <Stop offset="0" stopColor={colors[0]} stopOpacity="1" />
+                <Stop offset="0" stopColor={colors[0]} stopOpacity={glow} />
                 <Stop offset="1" stopColor={colors[0]} stopOpacity="0" />
               </RadialGradient>
               <RadialGradient id={`${id}b`} cx="0.95" cy="0.55" r="0.7">
-                <Stop offset="0" stopColor={colors[1]} stopOpacity="0.9" />
+                <Stop offset="0" stopColor={colors[1]} stopOpacity={0.9 * glow} />
                 <Stop offset="1" stopColor={colors[1]} stopOpacity="0" />
               </RadialGradient>
             </>
