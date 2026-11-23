@@ -9,7 +9,7 @@ sidebar:
 Objectif : partir d'une idée et arriver à une app publiée et suivie. L'agent fait tout le répétitif dans le cadre du framework (générateurs, règles, contrôles) ; tu valides chaque étape. Exemple suivi : Lecture, un suivi de lecture.
 
 :::note[En une commande]
-`/daroms-pilot <idée>` mène toutes les étapes ci-dessous et s'arrête après chacune : tu vérifies la liste « À vérifier par vous », puis tu tapes `/daroms-valider` (ou `/daroms-corriger <consigne>`). L'agent ne peut pas passer à l'étape suivante sans toi ; `bun daroms steps` montre où en est le parcours. Ce tutoriel détaille ce qu'il fait, pour pouvoir lancer une étape seule.
+`/daroms-pilot <idée>` mène toutes les étapes ci-dessous et s'arrête après chacune : tu vérifies la liste « À vérifier par vous », puis tu tapes `/daroms-valider <réponse>` avec la réponse à la question de l'étape, une chose que tu as regardée (ou `/daroms-corriger <consigne>`). L'agent ne peut pas passer à l'étape suivante sans toi ; `bun daroms steps` montre où en est le parcours. Ce tutoriel détaille ce qu'il fait, pour pouvoir lancer une étape seule.
 :::
 
 ## Prérequis (une fois)

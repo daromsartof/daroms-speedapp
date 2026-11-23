@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, relative } from 'node:path'
 
+import { staleReferences } from '../lib/ai-refs'
 import type { Args } from '../lib/args'
 import { capture, tail } from '../lib/exec'
 import { walk } from '../lib/fsx'
@@ -52,6 +53,11 @@ export async function doctor(args: Args) {
   const reference = keySets[0] ?? new Set<string>()
   const missing = keySets.flatMap((set, i) => [...reference].filter((k) => !set.has(k)).map((k) => `${locales[i]!.split('/').pop()}: ${k}`))
   checks.push({ name: 'clés i18n identiques dans toutes les langues', ok: missing.length === 0, detail: missing.slice(0, 10).join('\n') })
+
+  // consignes propres à l'app (fichiers app-*, CLAUDE.md) qui citent un fichier disparu
+  const aiFiles = [join(root, 'CLAUDE.md'), ...walk(join(root, '.claude')).filter((f) => /\/app-[^/]+(\.md|\/SKILL\.md)$/.test(f))].filter(existsSync)
+  const stale = aiFiles.flatMap((f) => staleReferences(readFileSync(f, 'utf8'), (p) => existsSync(join(root, p))).map((p) => `${relative(root, f)} : ${p}`))
+  checks.push({ name: 'consignes IA à jour (chemins cités existants)', ok: stale.length === 0, detail: `${stale.slice(0, 10).join('\n')}\nMettre la consigne à jour : le code fait foi.`, warn: true })
 
   checks.push(await command('règles daroms (hook check-rules sur src/ et app/)', ['python3', 'core/_ai/hooks/daroms-check-rules.py', '--all'], root))
   await regenerateRouteTypes(root)

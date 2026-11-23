@@ -16,9 +16,9 @@ Méthode :
    - clarté : une action principale par écran, comprise en 2 s ; hiérarchie Title > Heading > Body > Caption ;
    - composition : rythme `gutter`, `section`, `stack` ; alignements ; densité adaptée au ton ; textes ni trop longs ni coupés ;
    - finition : contraste, sombre sans couleur figée, transitions d'apparition sobres, retour haptique sur les actions ;
-   - accessibilité et états : 4 états présents, cibles >= 44 pt, `aria-label` des boutons icônes ;
+   - accessibilité et états : 4 états présents, cibles >= 44 pt, `aria-label` des boutons icônes et des zones pressables ;
    - caractère : ce qui rend l'app reconnaissable ; un écran qui irait à n'importe quelle app plafonne à 6.
-4. Points critiques : tout ce qui fait générique ou modèle d'IA (écran interchangeable, icône dans un cercle partout, accent sans rôle, texte vague), toute mesure en défaut, tout état manquant.
+4. Points critiques : tout ce qui fait générique ou modèle d'IA (écran interchangeable, icône dans un cercle partout, accent sans rôle, texte vague), toute mesure en défaut, tout état manquant, tout piège d'interface (case précochée, fermeture cachée ou retardée, culpabilisation au refus, faux compte à rebours, essai sans prix ni date de facturation : liste dans `.claude/rules-ondemand/daroms-store-compliance.md`).
 5. Corrections classées par impact sur l'impression d'ensemble ; chacune dit ce qu'on voit, pourquoi ça compte et comment corriger (composants, props, tokens exacts). Au moins une correction augmente le caractère ou l'impact, pas seulement le poli ; mieux vaut quelques grosses améliorations que beaucoup de détails.
    Uniquement les composants et tokens du catalogue (jamais de hex, de nombre magique, de librairie). Jamais « plus beau », « plus moderne » : nommer l'élément, la valeur actuelle et la valeur visée.
 

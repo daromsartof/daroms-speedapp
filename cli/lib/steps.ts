@@ -1,6 +1,7 @@
 // Parcours /daroms-pilot : état des étapes (app.steps.json), lu et mis à jour par la CLI.
 // Les validations viennent de l'utilisateur (hook daroms-steps sur /daroms-valider, ou `steps validate` au terminal).
-export type StepDef = { id: string; title: string; goal: string; skills: string[]; deliverables: string[]; checks: string[] }
+/** `observe` : question dont l'utilisateur tape la réponse avec /daroms-valider (une observation, pas un simple oui). */
+export type StepDef = { id: string; title: string; goal: string; skills: string[]; deliverables: string[]; checks: string[]; observe?: string }
 export type StepsDefs = { steps: StepDef[]; free: string[] }
 export type StepStatus = 'todo' | 'doing' | 'review' | 'changes' | 'done' | 'skipped'
 export type StepEntry = { status: StepStatus; summary?: string; note?: string; history?: { status: StepStatus; at: string; by: string; note?: string }[] }
@@ -59,6 +60,8 @@ export function resetFrom(defs: StepsDefs, state: StepsState, ref: string, at: s
 export function validate(defs: StepsDefs, state: StepsState, ref: string, at: string, note?: string): StepsState {
   const i = findStep(defs, ref)
   if (currentIndex(defs, state) !== i) throw new Error('seule l\'étape en cours se valide')
+  const question = defs.steps[i]!.observe
+  if (question && !note?.trim()) throw new Error(`réponse attendue : ${question}`)
   push(state, defs.steps[i]!.id, 'done', 'utilisateur (terminal)', at, note)
   return state
 }
@@ -83,6 +86,7 @@ export function renderGate(defs: StepsDefs, index: number, summary?: string): st
     ...s.deliverables.map((d) => `  - ${d}`),
     'À vérifier par vous :',
     ...s.checks.map((c) => `  [ ] ${c}`),
-    'Tapez /daroms-valider pour passer à la suite, /daroms-corriger <consigne> pour une correction, ou /daroms-valider passer : <raison> pour sauter l\'étape.',
+    ...(s.observe ? [`Question : ${s.observe}`] : []),
+    `Tapez ${s.observe ? '/daroms-valider <votre réponse>' : '/daroms-valider'} pour passer à la suite, /daroms-corriger <consigne> pour une correction, ou /daroms-valider passer : <raison> pour sauter l'étape.`,
   ]
 }

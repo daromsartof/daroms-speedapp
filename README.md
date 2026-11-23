@@ -57,7 +57,7 @@ Open Claude Code in the app, then:
 /daroms-pilot An app to track my reading habits
 ```
 
-The agent runs each step, then stops and shows what to check; you type `/daroms-valider`, or `/daroms-corriger <instruction>`.
+The agent runs each step, then stops and shows what to check; you type `/daroms-valider <answer>` with the answer to its question (something you looked at on your phone, not a plain yes), or `/daroms-corriger <instruction>`.
 
 | Steps | Skills | Result |
 |---|---|---|
@@ -66,7 +66,7 @@ The agent runs each step, then stops and shows what to check; you type `/daroms-
 | 4-5. Build and verify | `/daroms-screen`, `/daroms-check`, `/daroms-polish` | screens with their 4 states, all checks green, measured and scored polish |
 | 6-9. Comply, publish, monitor | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | privacy policy and compliance, FR/EN listing, store screenshots at exact sizes, promo video, EAS build, TestFlight and internal track, crash reporting, then `app.cost.md` |
 
-25 skills, 3 subagents (designer, reviewer, store) and 7 hooks (sync, context router, rule checks, typecheck, `.env` protection, manual step approval, token stats). The [ECC](https://ecc.tools) method is built in: `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` and `ecc-typescript-patterns`, vendored in the core and mapped to daroms commands by `daroms-ecc`. Details: [skills](https://daromsartof.github.io/daroms-speedapp/en/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/en/reference/hooks/).
+25 skills, 3 subagents (designer, reviewer, store) and 8 hooks (sync, context router, rule checks, typecheck, `.env` protection, npm package check, manual step approval, token stats). The [ECC](https://ecc.tools) method is built in: `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` and `ecc-typescript-patterns`, vendored in the core and mapped to daroms commands by `daroms-ecc`. Details: [skills](https://daromsartof.github.io/daroms-speedapp/en/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/en/reference/hooks/).
 
 ## Example: a table and its screen
 

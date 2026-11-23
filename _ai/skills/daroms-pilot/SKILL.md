@@ -14,7 +14,7 @@ Idée : $ARGUMENTS
 2. Étape en cours : `bun daroms steps show` (objectif, skills, livrables, points à vérifier), puis faire le travail avec ses skills.
 3. Fin d'étape : `bun daroms steps ready <n> "<résumé en une ligne>"` affiche livrables, « À vérifier par vous » et les commandes. Montrer à l'utilisateur ce bloc, un résumé de 3 lignes et les chemins des livrables, **puis s'arrêter** : rien d'autre, aucune validation à sa place. Un hook refuse les skills des étapes suivantes tant qu'il n'a pas validé, et toute écriture de `app.steps.json`.
 4. Réponse de l'utilisateur, enregistrée par le hook :
-   - `/daroms-valider` : passer à l'étape suivante (point 2) ;
+   - `/daroms-valider <réponse>` : la réponse à la question d'observation de l'étape (une valeur lue sur le téléphone ou dans un service, pas un simple oui) ; passer à l'étape suivante (point 2). Si la réponse contredit les livrables (autre nombre d'appuis, autre texte affiché), le dire avant de continuer ;
    - `/daroms-corriger <consigne>` : appliquer la consigne (relancer le skill concerné avec la consigne en argument), puis revenir au point 3 ;
    - `/daroms-valider passer : <raison>` : étape sautée, raison notée.
 

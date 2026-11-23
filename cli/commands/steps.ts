@@ -64,10 +64,15 @@ export async function steps(args: Args) {
       const i = ref ? findStep(defs, ref) : currentIndex(defs, state)
       if (i === undefined) return log.ok('parcours terminé')
       const rl = createInterface({ input: process.stdin, output: process.stdout })
-      const answer = await rl.question(`Valider l'étape ${i + 1} « ${defs.steps[i]!.title} » ? Tapez oui : `)
+      const question = defs.steps[i]!.observe
+      // une observation plutôt qu'un oui : le biais d'automatisation résiste aux consignes, pas à une question concrète
+      const answer = question
+        ? await rl.question(`Étape ${i + 1} « ${defs.steps[i]!.title} ». ${question}\nVotre réponse (vide = non validée) : `)
+        : await rl.question(`Valider l'étape ${i + 1} « ${defs.steps[i]!.title} » ? Tapez oui : `)
       rl.close()
-      if (answer.trim().toLowerCase() !== 'oui') return log.warn('non validée')
-      guard(() => validate(defs, state, String(i + 1), now(), rest.join(' ').trim() || undefined))
+      if (question ? !answer.trim() : answer.trim().toLowerCase() !== 'oui') return log.warn('non validée')
+      const note = [question ? answer.trim() : '', rest.join(' ').trim()].filter(Boolean).join(' ; ')
+      guard(() => validate(defs, state, String(i + 1), now(), note || undefined))
       save()
       break
     }

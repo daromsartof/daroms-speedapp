@@ -55,7 +55,7 @@ Ouvrir Claude Code dans l'app, puis :
 /daroms-pilot Une app pour suivre ses habitudes de lecture
 ```
 
-L'agent mène chaque étape, puis s'arrête et montre ce qu'il faut vérifier ; tu tapes `/daroms-valider`, ou `/daroms-corriger <consigne>`.
+L'agent mène chaque étape, puis s'arrête et montre ce qu'il faut vérifier ; tu tapes `/daroms-valider <réponse>` avec la réponse à sa question (une chose regardée sur ton téléphone, pas un simple oui), ou `/daroms-corriger <consigne>`.
 
 | Étapes | Skills | Résultat |
 |---|---|---|
@@ -64,7 +64,7 @@ L'agent mène chaque étape, puis s'arrête et montre ce qu'il faut vérifier ; 
 | 4-5. Construire et vérifier | `/daroms-screen`, `/daroms-check`, `/daroms-polish` | écrans avec leurs 4 états, vérifications au vert, finition mesurée et notée |
 | 6-9. Conformité, publication, suivi | `/daroms-store`, `/daroms-promo`, `/daroms-build`, `/daroms-submit`, `/daroms-update` | politique de confidentialité et conformité, fiche FR/EN, captures aux tailles des stores, vidéo promo, build EAS, TestFlight et piste interne, suivi des plantages, puis `app.cost.md` |
 
-25 skills, 3 sous-agents (designer, reviewer, store) et 7 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, validation manuelle des étapes, statistiques de tokens). La méthode [ECC](https://ecc.tools) est embarquée : `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` et `ecc-typescript-patterns`, figés dans le cœur et traduits vers les commandes daroms par `daroms-ecc`. Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
+25 skills, 3 sous-agents (designer, reviewer, store) et 8 hooks (synchronisation, routeur de contexte, vérification des règles, typecheck, protection de `.env`, paquets npm vérifiés, validation manuelle des étapes, statistiques de tokens). La méthode [ECC](https://ecc.tools) est embarquée : `ecc-tdd-workflow`, `ecc-security-review`, `ecc-accessibility` et `ecc-typescript-patterns`, figés dans le cœur et traduits vers les commandes daroms par `daroms-ecc`. Détail : [skills](https://daromsartof.github.io/daroms-speedapp/reference/skills/), [hooks](https://daromsartof.github.io/daroms-speedapp/reference/hooks/).
 
 ## Exemple : une table et son écran
 

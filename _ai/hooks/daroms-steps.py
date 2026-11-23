@@ -98,6 +98,11 @@ def on_prompt(prompt: str, defs: dict, state: dict | None) -> tuple[dict | None,
     if skip:
         record(state, step["id"], "skipped", skip.group(1).strip() or "sans raison donnée")
         verb = "sautée"
+    elif step.get("observe") and not rest:
+        return None, (
+            f"daroms-steps : validation non enregistrée, la réponse manque. Demander à l'utilisateur de taper "
+            f"/daroms-valider <réponse> à la question : « {step['observe']} »."
+        )
     else:
         record(state, step["id"], "done", rest)
         verb = "validée"

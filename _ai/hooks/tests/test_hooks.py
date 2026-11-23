@@ -22,6 +22,7 @@ env = load("daroms-deny-env")
 context = load("daroms-context")
 sync = load("daroms-sync")
 stats = load("daroms-session-stats")
+deps = load("daroms-deps")
 import daroms_common as common  # noqa: E402
 
 
@@ -62,6 +63,50 @@ class CheckRules(unittest.TestCase):
             file.write_text("const a = 1\n")
             text, full = rules.proposed("Edit", {"old_string": "1", "new_string": "2"}, file)
             self.assertEqual((text, full), ("2", "const a = 2\n"))
+
+
+class Pressables(unittest.TestCase):
+    def test_custom_pressable_needs_a_label(self):
+        text = "<YStack\n  p=\"4\"\n  onPress={() => open(x > 1)}\n>\n  <Heart />\n</YStack>"
+        problems = rules.check("src/features/x/components/Like.tsx", text)
+        self.assertIn("ligne 1 : <YStack onPress> sans aria-label", " ".join(problems))
+
+    def test_labelled_or_catalog_components_pass(self):
+        self.assertEqual(rules.unlabelled_pressables("<Pressable aria-label={t('like')} onPress={like}>"), [])
+        self.assertEqual(rules.unlabelled_pressables("<Button onPress={save}>{t('save')}</Button>"), [])
+        self.assertEqual(rules.unlabelled_pressables("<YStack p=\"4\" gap=\"stack\">"), [])
+
+
+class Deps(unittest.TestCase):
+    def test_finds_added_packages(self):
+        self.assertEqual(deps.packages_in("bun add zod@3 @tanstack/react-query -d"), ["zod", "@tanstack/react-query"])
+        self.assertEqual(deps.packages_in("cd app && bunx expo install expo-haptics; npm i ./local lodash"), ["expo-haptics", "lodash"])
+        self.assertEqual(deps.packages_in("CI=1 pnpm add left-pad"), ["left-pad"])
+        self.assertEqual(deps.packages_in("bun install"), [])
+        self.assertEqual(deps.packages_in("git commit -m 'bun add zod'"), [])
+        self.assertIsNone(deps.package_name("github:user/repo"))
+
+    def test_verdicts(self):
+        self.assertEqual(deps.verdict("x", None, None)[0], "deny")
+        self.assertEqual(deps.verdict("x", {"name": "x"}, 12)[0], "ask")
+        self.assertIsNone(deps.verdict("x", {"name": "x"}, 90000))
+
+    def test_decide_skips_declared_and_tolerates_offline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "package.json").write_text(json.dumps({"dependencies": {"zod": "^3"}}))
+            calls = []
+
+            def fake(name):
+                calls.append(name)
+                if name == "offline-pkg":
+                    raise OSError("timeout")
+                return (None, None) if name == "fake-pkg" else ({"name": name}, 10000)
+
+            self.assertIsNone(deps.decide("bun add zod", root, fake))
+            self.assertEqual(calls, [])
+            self.assertEqual(deps.decide("bun add react fake-pkg", root, fake)[0], "deny")
+            self.assertEqual(deps.decide("bun add offline-pkg", root, fake)[0], "allow")
 
 
 class DenyEnv(unittest.TestCase):
@@ -197,6 +242,11 @@ class Steps(unittest.TestCase):
         self.assertEqual(updated["steps"]["cadrage"]["status"], "done")
         self.assertEqual(updated["steps"]["cadrage"]["history"][-1]["by"], "utilisateur")
         self.assertIn("Conception", message)
+
+    def test_validation_needs_an_observed_answer(self):
+        updated, message = steps.on_prompt("/daroms-valider", STEP_DEFS, self.state(cadrage="review"))
+        self.assertIsNone(updated)
+        self.assertIn("Combien de personnes", message)
 
     def test_correction_and_skip(self):
         updated, message = steps.on_prompt("/daroms-corriger la cible est trop large", STEP_DEFS, self.state(cadrage="review"))
