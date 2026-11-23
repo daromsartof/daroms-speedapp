@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.8.0 (2026-11-23)
+
+### Nouveautés
+- références de mouvement gratuites, mesurées image par image
+- captures des stores aux tailles exactes depuis les vrais écrans
+
 ## v0.7.0 (2026-11-22)
 
 ### Nouveautés
