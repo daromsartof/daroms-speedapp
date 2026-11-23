@@ -1,6 +1,6 @@
 {
   "name": "@daroms/module-crash",
-  "version": "0.5.2",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "description": "Suivi des plantages avec Sentry : erreurs JS, plantages natifs, écran et version, source maps",

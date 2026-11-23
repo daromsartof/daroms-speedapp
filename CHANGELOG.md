@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.7.0 (2026-11-22)
+
+### Nouveautés
+- positionnement « framework conçu pour les agents IA », sans notion de temps
+- parcours en 9 étapes, chacune validée à la main par l'utilisateur
+- module de suivi des plantages avec Sentry
+- props de style sur le conteneur de 20 composants
+- directions d'icône sur une grille, vérifiées, couche monochrome Android
+
+### Documentation
+- l'app se crée au terminal, le parcours se déroule dedans
+
+### Corrections
+- l'installation des dépendances natives juge les paquets présents
+
+## v0.6.0 (2026-11-21)
+
+### Nouveautés
+- grille de critique notée pour daroms-designer
+- vidéo promo depuis les vrais écrans de l'app
+- mesures de goût sur le rendu
+
+### Corrections
+- le serveur web suit les modifications d'écran
+
+### Documentation
+- lien vers Daroms'Art en pied de page, llms.txt et README
+
 ## v0.5.2 (2026-11-03)
 
 ### Documentation
