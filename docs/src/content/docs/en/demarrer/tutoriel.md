@@ -9,7 +9,7 @@ sidebar:
 Goal: go from an idea to a published, monitored app. The agent does all the repetitive work inside the framework (generators, rules, checks); you approve each step. Example used: Lecture, a reading tracker.
 
 :::note[One command]
-`/daroms-pilot <idea>` runs every step below and stops after each one: you go through the "to check" list, then type `/daroms-valider` (or `/daroms-corriger <instruction>`). The agent cannot move to the next step without you; `bun daroms steps` shows where the journey stands. This tutorial details what it does, so you can also run a single step.
+`/daroms-pilot <idea>` runs every step below and stops after each one: you go through the "to check" list, then type `/daroms-valider <answer>` with the answer to the step's question, something you actually looked at (or `/daroms-corriger <instruction>`). The agent cannot move to the next step without you; `bun daroms steps` shows where the journey stands. This tutorial details what it does, so you can also run a single step.
 :::
 
 ## Requirements (once)

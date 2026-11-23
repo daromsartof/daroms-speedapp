@@ -1,6 +1,6 @@
 ---
 title: Hooks de la couche IA
-description: Les 7 hooks Claude Code du framework - synchronisation, routeur de contexte, vérification des règles, typecheck, protection de .env, validation manuelle des étapes, statistiques de session - avec leur événement et leur effet.
+description: Les 8 hooks Claude Code du framework - synchronisation, routeur de contexte, vérification des règles, typecheck, protection de .env, paquets npm vérifiés, validation manuelle des étapes, statistiques de session - avec leur événement et leur effet.
 ---
 
 Les hooks vivent dans `core/_ai/hooks/` (Python 3, testés par `bun run test:hooks`) et sont déclarés dans `core/_ai/settings.json`, fusionné dans `.claude/settings.json` de l'app. Leurs messages sont courts : ils coûtent peu de tokens à l'agent.
@@ -13,6 +13,7 @@ Les hooks vivent dans `core/_ai/hooks/` (Python 3, testés par `bun run test:hoo
 | `daroms-check-rules.py` | PreToolUse Edit, Write, MultiEdit | refuse une écriture qui viole une règle, avec la correction attendue |
 | `daroms-typecheck.py` | PostToolUse Edit, Write, MultiEdit | `tsc` incrémental et ESLint limités au fichier touché, 20 lignes au plus |
 | `daroms-deny-env.py` | PreToolUse Bash | bloque toute lecture de `.env` (en plus des permissions `deny` sur Read et Edit) |
+| `daroms-deps.py` | PreToolUse Bash | `bun add`, `npm i`, `expo install`... : refuse un paquet absent de npm (nom inventé par le modèle), demande confirmation sous 500 téléchargements par semaine ; paquets déjà dans `package.json` non vérifiés, registre injoignable : laisse passer avec un avertissement |
 | `daroms-steps.py prompt` | UserPromptSubmit | parcours `/daroms-pilot` : enregistre `/daroms-valider` et `/daroms-corriger` tapés par l'utilisateur dans `app.steps.json` ; seul un message humain passe par ce hook |
 | `daroms-steps.py gate` | PreToolUse Skill, Edit, Write, MultiEdit, Bash | refuse à l'agent les skills d'une étape tant que les précédentes ne sont pas validées, et toute écriture de `app.steps.json` ; sans parcours en cours, ne fait rien |
 | `daroms-session-stats.py` | Stop | tokens et durée de la session dans `.claude/stats.jsonl` ; alerte affichée à l'utilisateur (hors contexte de Claude) quand le contexte relu à chaque réponse dépasse 150 k tokens, puis tous les 60 k ; seuil `DAROMS_CONTEXT_WARN` en milliers, `0` coupe |
@@ -28,6 +29,7 @@ Sur le contenu proposé (nouveau texte uniquement) :
 - texte en dur dans le JSX : `t('cle')` + clés FR/EN ;
 - emoji ou tiret long dans un texte ;
 - librairie UI ou jeu d'icônes tiers ;
+- zone pressable maison (`Pressable`, `YStack onPress`...) sans `aria-label` : les lecteurs d'écran n'annoncent rien (Button, IconButton et ListItem sont déjà nommés) ;
 - route `app/**` qui ne se limite pas à une réexportation ;
 - fichier de plus de 200 lignes.
 
@@ -45,9 +47,11 @@ Un refus se corrige, il ne se contourne pas. `daroms doctor` lance le même cont
 
 `/daroms-pilot` suit les 9 étapes du cycle réel d'une app (cadrage, conception, données, développement, qualité, conformité, publication, lancement, suivi), définies dans `core/_ai/context/daroms-steps.json`. À la fin de chaque étape, l'agent lance `bun daroms steps ready <n> "<résumé>"`, montre les livrables et la liste « À vérifier par vous », puis s'arrête.
 
+Chaque étape pose aussi une question d'observation (« Quel texte affiche l'état vide de l'écran principal sur votre téléphone ? ») : la validation demande cette réponse, pas un simple oui. Le biais d'automatisation résiste à la formation et aux consignes ([Parasuraman et Manzey, 2010](https://journals.sagepub.com/doi/10.1177/0018720810376055)) ; une question concrète oblige à regarder.
+
 | Vous tapez | Effet (écrit par le hook, pas par l'agent) |
 |---|---|
-| `/daroms-valider [note]` | étape validée, l'agent passe à la suivante |
+| `/daroms-valider <réponse>` | étape validée avec la réponse à sa question d'observation (sans réponse : rien n'est enregistré), l'agent passe à la suivante |
 | `/daroms-corriger <consigne>` | étape à corriger, l'agent applique la consigne puis représente la fin d'étape |
 | `/daroms-valider passer : <raison>` | étape sautée, raison notée |
 

@@ -25,8 +25,9 @@ describe('parcours daroms-pilot', () => {
 
   it('avance après validation et repart d une étape', () => {
     const state = startState(at)
-    validate(defs, state, '1', at, 'ok')
-    validate(defs, state, '2', at)
+    validate(defs, state, '1', at, '6 personnes')
+    expect(() => validate(defs, state, '2', at)).toThrow('réponse attendue')
+    validate(defs, state, '2', at, '2 appuis')
     expect(currentIndex(defs, state)).toBe(2)
     expect(renderStatus(defs, state)[2]!.startsWith('>')).toBe(true)
     resetFrom(defs, state, '2', at)
@@ -39,6 +40,12 @@ describe('parcours daroms-pilot', () => {
     expect(gate).toContain('[ ]')
     expect(gate).toContain('/daroms-valider')
     expect(gate).toContain('/daroms-corriger')
+    expect(gate).toContain('Question : Combien de personnes')
+    expect(gate).toContain('/daroms-valider <votre réponse>')
+  })
+
+  it('pose une question d observation à chaque étape', () => {
+    for (const step of defs.steps) expect(step.observe?.endsWith('?')).toBe(true)
   })
 
   it('chaque skill du parcours existe et n appartient qu à une étape', () => {

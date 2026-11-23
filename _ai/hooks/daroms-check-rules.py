@@ -3,7 +3,8 @@
 
 Vérifie le texte proposé (nouveau contenu) : couleur hex/rgb, StyleSheet.create, `any`,
 Supabase hors api.ts, texte en dur dans le JSX, emoji, tiret long, nombre magique de style,
-style inline, route non mince, fichier > 200 lignes. Message court et précis.
+style inline, route non mince, fichier > 200 lignes, zone pressable maison sans aria-label.
+Message court et précis.
 Mode `--all` (daroms doctor) : analyse src/, app/ et locales/ ; code de sortie 1 si violation.
 """
 from __future__ import annotations
@@ -35,6 +36,8 @@ RULES: list[tuple[re.Pattern[str], str, tuple[str, ...]]] = [
 SUPABASE_IMPORT = re.compile(r"from\s+['\"]@supabase/|import\s*\{[^}]*\b(?:db|getSupabase|localTable)\b[^}]*\}\s*from\s+['\"]@daroms/data['\"]")
 UI_LIBS = re.compile(r"from\s+['\"](?:react-native-paper|native-base|@rneui/|@expo/vector-icons|react-native-vector-icons|lucide-react-native|@tamagui/lucide-icons)")
 REEXPORT = re.compile(r"^export\s*(?:\{[^}]*\}|\*)\s*from\s*['\"][^'\"]+['\"];?$")
+PRESSABLE = re.compile(r"<(Pressable|TouchableOpacity|TouchableHighlight|TouchableWithoutFeedback|YStack|XStack|Stack|View)\b")
+LABELLED = re.compile(r"\b(?:aria-label|accessibilityLabel|aria-labelledby)=")
 SKIP = ("src/generated/", "src/types/db.ts", "src/icons/lucide/", "supabase/functions/")
 
 
@@ -49,6 +52,31 @@ def applies(rel: str) -> bool:
     if any(rel.startswith(s) for s in SKIP) or ".test." in rel or rel.endswith(".d.ts"):
         return False
     return rel.startswith(("src/", "app/", "locales/"))
+
+
+def opening_tags(text: str):
+    """(nom, attributs, ligne) de chaque balise ouvrante pressable candidate ; les accolades JSX sont sautées."""
+    for match in PRESSABLE.finditer(text):
+        depth, i = 0, match.end()
+        while i < len(text):
+            c = text[i]
+            if c == "{":
+                depth += 1
+            elif c == "}":
+                depth -= 1
+            elif c == ">" and depth == 0:
+                break
+            i += 1
+        yield match.group(1), text[match.end() : i], text.count("\n", 0, match.start()) + 1
+
+
+def unlabelled_pressables(text: str) -> list[str]:
+    """Zones pressables maison sans nom pour les lecteurs d'écran (77 % des apps Android ont ce défaut)."""
+    return [
+        f"ligne {line} : <{tag} onPress> sans aria-label : nommer l'action (aria-label={{t('...')}}) ou utiliser Button, IconButton, ListItem"
+        for tag, attrs, line in opening_tags(text)
+        if re.search(r"\bonPress=", attrs) and not LABELLED.search(attrs)
+    ]
 
 
 def check(rel: str, text: str, full: str | None = None) -> list[str]:
@@ -69,6 +97,8 @@ def check(rel: str, text: str, full: str | None = None) -> list[str]:
                 problems.append(f"ligne {number} : données (Supabase, localTable) uniquement dans src/features/<x>/api.ts")
             if UI_LIBS.search(line):
                 problems.append(f"ligne {number} : librairie UI/icônes tierce : @daroms/ui et @daroms/ui/icons")
+    if suffix == ".tsx":
+        problems.extend(unlabelled_pressables(text))
     content = full if full is not None else text
     if rel.startswith("app/") and suffix == ".tsx":
         body = [l for l in content.splitlines() if l.strip() and not l.strip().startswith("//")]

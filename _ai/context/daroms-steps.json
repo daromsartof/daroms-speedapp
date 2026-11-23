@@ -1,5 +1,5 @@
 {
- "comment": "Pilote /daroms-pilot : les étapes du cycle réel d'une app. Chaque étape se termine par une validation manuelle (/daroms-valider). Les skills listés sont refusés à l'agent tant que les étapes précédentes ne sont pas validées.",
+ "comment": "Pilote /daroms-pilot : les étapes du cycle réel d'une app. Chaque étape se termine par une validation manuelle (/daroms-valider). Les skills listés sont refusés à l'agent tant que les étapes précédentes ne sont pas validées. Chaque étape pose une question d'observation : /daroms-valider attend la réponse (lue sur le téléphone ou dans un service), pas un simple oui, pour éviter la validation machinale.",
  "free": [
   "daroms-commit",
   "daroms-fix",
@@ -26,7 +26,8 @@
     "Le MVP tient en une phrase et la liste « hors périmètre » vous convient",
     "Au moins 5 personnes de la cible ont confirmé le besoin (entretiens, page d'attente) ; sinon, le noter dans app.spec.md",
     "L'app démarre sur votre téléphone"
-   ]
+   ],
+   "observe": "Combien de personnes de la cible ont confirmé le besoin (0 si aucune) ?"
   },
   {
    "id": "conception",
@@ -47,7 +48,8 @@
     "L'icône choisie se reconnaît sur votre écran d'accueil",
     "L'action principale s'atteint en 3 appuis au plus",
     "Les wireframes ont été montrés à 3 personnes de la cible"
-   ]
+   ],
+   "observe": "En combien d'appuis atteignez-vous l'action principale sur les wireframes ?"
   },
   {
    "id": "donnees",
@@ -65,7 +67,8 @@
     "Chaque donnée du cahier a sa table",
     "Qui peut lire et écrire quoi vous convient (règles RLS)",
     "Les modules choisis sont les bons (auth, paiements, crash...) et leurs comptes externes existent (Supabase, Sentry, RevenueCat)"
-   ]
+   ],
+   "observe": "Quelle table garde les données de l'utilisateur, et qui d'autre peut les lire ?"
   },
   {
    "id": "developpement",
@@ -83,7 +86,8 @@
     "Chaque écran du cahier existe et fait ce qui est écrit",
     "Testé sur votre téléphone, y compris les états vide et erreur",
     "Textes FR et EN relus"
-   ]
+   ],
+   "observe": "Quel texte affiche l'état vide de l'écran principal sur votre téléphone ?"
   },
   {
    "id": "qualite",
@@ -101,7 +105,8 @@
     "Essayée sur un vieil Android et un petit écran, en mode sombre, réseau coupé",
     "Les notes de la grille de critique vous conviennent",
     "Bêta externe lancée (TestFlight ; Google Play : 12 testeurs pendant 14 jours pour un compte personnel récent)"
-   ]
+   ],
+   "observe": "Sur quel appareil le plus ancien l'app a-t-elle tourné, et quelle est la note la plus basse de la grille ?"
   },
   {
    "id": "conformite",
@@ -118,7 +123,8 @@
     "La suppression du compte est possible dans l'app (si inscription)",
     "La recherche d'antériorité du nom et du logo est faite",
     "Un juriste a relu si l'app traite des données sensibles (santé, enfants, paiements)"
-   ]
+   ],
+   "observe": "Quelle est l'adresse de votre politique de confidentialité publiée ?"
   },
   {
    "id": "publication",
@@ -141,7 +147,8 @@
     "Comptes développeur actifs (Apple 99 $ par an, Google 25 $)",
     "Le build installé sur votre téléphone fonctionne",
     "Soumission envoyée (la revue Apple prend souvent 1 à 3 jours)"
-   ]
+   ],
+   "observe": "Quel numéro de version et de build est installé sur votre téléphone ?"
   },
   {
    "id": "lancement",
@@ -155,7 +162,8 @@
     "Les canaux choisis sont ceux où se trouve la cible",
     "La page web de l'app est en ligne",
     "Le message tient en une phrase et dit le bénéfice"
-   ]
+   ],
+   "observe": "Quelle est l'adresse de la page web de l'app ?"
   },
   {
    "id": "suivi",
@@ -175,7 +183,8 @@
     "Un premier relevé de rétention existe",
     "Les avis des stores sont lus et ont une réponse",
     "La prochaine version est planifiée"
-   ]
+   ],
+   "observe": "Combien de plantages Sentry a-t-il reçus depuis le lancement ?"
   }
  ]
 }
